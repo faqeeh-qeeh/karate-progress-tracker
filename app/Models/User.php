@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'role_id'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -28,5 +28,68 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function hasRole(string $roleName): bool
+    {
+        if (!$this->role) {
+            return false;
+        }
+
+        return strcasecmp($this->role->nama, $roleName) === 0;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('admin');
+    }
+
+    public function isSenpai(): bool
+    {
+        return $this->hasRole('Senpai');
+    }
+
+    public function isKohai(): bool
+    {
+        return $this->hasRole('Kohai');
+    }
+
+    public function getDashboardRoute(): string
+    {
+        if ($this->isAdmin()) {
+            return route('admin.dashboard');
+        } elseif ($this->isSenpai()) {
+            return route('senpai.dashboard');
+        } elseif ($this->isKohai()) {
+            return route('kohai.dashboard');
+        }
+
+        return route('login');
+    }
+
+    public function kumiteAsSenpai(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(KumiteReport::class, 'senpai_id');
+    }
+
+    public function kumiteAsAka(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(KumiteReport::class, 'aka_kohai_id');
+    }
+
+    public function kumiteAsAo(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(KumiteReport::class, 'ao_kohai_id');
+    }
+
+    public function allKohaiKumiteReports()
+    {
+        return KumiteReport::where('aka_kohai_id', $this->id)
+            ->orWhere('ao_kohai_id', $this->id);
     }
 }
