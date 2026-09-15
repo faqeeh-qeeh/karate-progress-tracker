@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Dashboard') - Karate Dojo Tracker</title>
+    <title>@yield('title', 'Dashboard') - Karate Polindra Tracker</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-brand-light min-h-screen flex flex-col selection:bg-brand-secondary selection:text-white">
@@ -13,14 +13,10 @@
             <div class="flex items-center justify-between h-16">
                 <!-- Brand Logo & Name -->
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-primary to-brand-secondary flex items-center justify-center shadow-md">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                        </svg>
-                    </div>
+                    <img src="{{ asset('images/LOGO KARATER POLINDRA.png') }}" alt="Logo Polindra" class="w-10 h-10 object-contain shrink-0">
                     <div>
                         <a href="{{ url('/') }}" class="text-xl font-black tracking-wider text-white hover:text-brand-secondary transition">
-                            KARATE<span class="text-brand-secondary">DOJO</span>
+                            KARATE<span class="text-brand-secondary">POLINDRA</span>
                         </a>
                         <span class="hidden sm:inline-block text-xs text-gray-400 ml-2 font-mono">v1.0</span>
                     </div>
@@ -103,33 +99,7 @@
 
     <!-- Main Content Container -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <!-- Flash Messages -->
-        @if(session('success'))
-            <div class="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-center justify-between shadow-sm">
-                <div class="flex items-center gap-3">
-                    <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    <span class="font-medium">{{ session('success') }}</span>
-                </div>
-            </div>
-        @endif
-
-        @if(session('warning'))
-            <div class="mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-sm flex items-center justify-between shadow-sm">
-                <div class="flex items-center gap-3">
-                    <svg class="w-5 h-5 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                    <span class="font-medium">{{ session('warning') }}</span>
-                </div>
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm flex items-center justify-between shadow-sm">
-                <div class="flex items-center gap-3">
-                    <svg class="w-5 h-5 text-red-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <span class="font-medium">{{ session('error') }}</span>
-                </div>
-            </div>
-        @endif
+        @include('partials.notifications')
 
         @yield('content')
     </main>
@@ -137,7 +107,7 @@
     <!-- Footer -->
     <footer class="bg-brand-black text-gray-400 py-6 border-t border-gray-800 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-xs gap-3">
-            <p>&copy; {{ date('Y') }} Karate Dojo Progress Tracker System. Hak Cipta Dilindungi.</p>
+            <p>&copy; {{ date('Y') }} Karate Polindra Progress Tracker System. Hak Cipta Dilindungi.</p>
             <div class="flex items-center space-x-4">
                 <span class="text-brand-secondary font-semibold">Role: {{ auth()->user()->role->nama ?? 'Role' }}</span>
                 <span>•</span>
