@@ -23,7 +23,8 @@ class KumiteController extends Controller
             })
             ->latest('match_date')
             ->latest('match_time')
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
         return view('kohai.kumite.index', compact('reports'));
     }

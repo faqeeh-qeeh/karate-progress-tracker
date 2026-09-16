@@ -19,7 +19,8 @@ class KumiteController extends Controller
         $reports = KumiteReport::with(['senpai', 'akaKohai', 'aoKohai', 'winner'])
             ->latest('match_date')
             ->latest('match_time')
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
         return view('senpai.kumite.index', compact('reports'));
     }

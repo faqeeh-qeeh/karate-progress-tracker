@@ -3,8 +3,10 @@
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Kohai\AttendanceController as KohaiAttendanceController;
 use App\Http\Controllers\Kohai\DashboardController as KohaiDashboardController;
 use App\Http\Controllers\Kohai\KumiteController as KohaiKumiteController;
+use App\Http\Controllers\Senpai\AttendanceController as SenpaiAttendanceController;
 use App\Http\Controllers\Senpai\DashboardController as SenpaiDashboardController;
 use App\Http\Controllers\Senpai\KohaiOverviewController;
 use App\Http\Controllers\Senpai\KumiteController as SenpaiKumiteController;
@@ -50,6 +52,14 @@ Route::middleware(['auth', 'role:Senpai'])->prefix('senpai')->name('senpai.')->g
     Route::get('/kumite/create', [SenpaiKumiteController::class, 'create'])->name('kumite.create');
     Route::post('/kumite', [SenpaiKumiteController::class, 'store'])->name('kumite.store');
     Route::get('/kumite/{kumiteReport}', [SenpaiKumiteController::class, 'show'])->name('kumite.show');
+
+    // Absensi QR Senpai Routes
+    Route::get('/attendance', [SenpaiAttendanceController::class, 'index'])->name('attendance.index');
+    Route::post('/attendance', [SenpaiAttendanceController::class, 'store'])->name('attendance.store');
+    Route::get('/attendance/{attendanceSession}', [SenpaiAttendanceController::class, 'show'])->name('attendance.show');
+    Route::post('/attendance/{attendanceSession}/close', [SenpaiAttendanceController::class, 'close'])->name('attendance.close');
+    Route::post('/attendance/{attendanceSession}/reactivate', [SenpaiAttendanceController::class, 'reactivate'])->name('attendance.reactivate');
+    Route::get('/attendance/{attendanceSession}/attendees', [SenpaiAttendanceController::class, 'attendees'])->name('attendance.attendees');
 });
 
 // Role: Kohai Routes
@@ -59,4 +69,9 @@ Route::middleware(['auth', 'role:Kohai'])->prefix('kohai')->name('kohai.')->grou
     // Raport Kumite Kohai Routes
     Route::get('/kumite', [KohaiKumiteController::class, 'index'])->name('kumite.index');
     Route::get('/kumite/{kumiteReport}', [KohaiKumiteController::class, 'show'])->name('kumite.show');
+
+    // Absensi QR Kohai Routes
+    Route::get('/attendance', [KohaiAttendanceController::class, 'index'])->name('attendance.index');
+    Route::post('/attendance/scan', [KohaiAttendanceController::class, 'scan'])->name('attendance.scan');
+    Route::get('/attendance/direct-scan/{token}', [KohaiAttendanceController::class, 'directScan'])->name('attendance.direct_scan');
 });

@@ -92,4 +92,14 @@ class User extends Authenticatable
         return KumiteReport::where('aka_kohai_id', $this->id)
             ->orWhere('ao_kohai_id', $this->id);
     }
+
+    public function attendanceSessionsAsSenpai(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(AttendanceSession::class, 'senpai_id');
+    }
+
+    public function attendancesAsKohai(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Attendance::class, 'kohai_id');
+    }
 }

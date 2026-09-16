@@ -1,0 +1,273 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Attendance;
+use App\Models\AttendanceSession;
+use App\Models\KumiteReport;
+use App\Models\Role;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
+class AttendanceAndKumiteSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $senpaiRole = Role::where('nama', 'Senpai')->first();
+        $kohaiRole = Role::where('nama', 'Kohai')->first();
+
+        // 1. Ambil atau Buat Senpai Utama
+        $senpai = User::firstOrCreate(
+            ['email' => 'senpai@karate.com'],
+            [
+                'name' => 'Senpai Kenji Takahashi',
+                'password' => Hash::make('password'),
+                'role_id' => $senpaiRole->id,
+            ]
+        );
+
+        // 2. Ambil atau Buat Daftar Kohai (5 Kohai)
+        $kohais = [];
+
+        $kohai1 = User::firstOrCreate(
+            ['email' => 'kohai@karate.com'],
+            [
+                'name' => 'Kohai Budi Pratama',
+                'password' => Hash::make('password'),
+                'role_id' => $kohaiRole->id,
+            ]
+        );
+        $kohais[] = $kohai1;
+
+        $kohai2 = User::firstOrCreate(
+            ['email' => 'siti@karate.com'],
+            [
+                'name' => 'Kohai Siti Rahma',
+                'password' => Hash::make('password'),
+                'role_id' => $kohaiRole->id,
+            ]
+        );
+        $kohais[] = $kohai2;
+
+        $kohai3 = User::firstOrCreate(
+            ['email' => 'andi@karate.com'],
+            [
+                'name' => 'Kohai Andi Wijaya',
+                'password' => Hash::make('password'),
+                'role_id' => $kohaiRole->id,
+            ]
+        );
+        $kohais[] = $kohai3;
+
+        $kohai4 = User::firstOrCreate(
+            ['email' => 'dewi@karate.com'],
+            [
+                'name' => 'Kohai Dewi Lestari',
+                'password' => Hash::make('password'),
+                'role_id' => $kohaiRole->id,
+            ]
+        );
+        $kohais[] = $kohai4;
+
+        $kohai5 = User::firstOrCreate(
+            ['email' => 'rizky@karate.com'],
+            [
+                'name' => 'Kohai Rizky Pratama',
+                'password' => Hash::make('password'),
+                'role_id' => $kohaiRole->id,
+            ]
+        );
+        $kohais[] = $kohai5;
+
+        // Clean existing attendance and kumite reports to avoid conflict on full re-seed
+        // (opsional/aman)
+        
+        // 3. SEED 25 SESI ABSENSI & PRESENSI KOHAI
+        // Hapus sesi absensi lama jika perlu agar seeder ini bersih
+        AttendanceSession::where('senpai_id', $senpai->id)->delete();
+        KumiteReport::where('senpai_id', $senpai->id)->delete();
+
+        $sessionTitles = [
+            'Latihan Teknik Dasar Kihon & Kata',
+            'Sparing Kumite Persiapan Kejuaraan',
+            'Latihan Fisik Stamina & Agilitas',
+            'Pembahasan Aturan Tanding WKF Terbaru',
+            'Latihan Strategi Serangan Jarak Jauh',
+            'Evaluasi Tanding & Kontrol Senjata Tubuh',
+            'Simulasi Tanding Kumite Reguler',
+            'Latihan Pertahanan Defensif & Counter Attack',
+            'Sesi Kombinasi Kizami Zuki & Gyaku Zuki',
+            'Latihan Mawashi Geri & Ura Mawashi Geri',
+            'Latihan Penguasaan Maai (Jarak Tanding)',
+            'Pemberkasan Raport Evaluasi Bulanan Dojo',
+            'Latihan Pengkondisian Mental Bertanding',
+        ];
+
+        // Buat 24 Sesi Lampau (is_active = false)
+        for ($i = 24; $i >= 1; $i--) {
+            $date = Carbon::now()->subDays($i * 2);
+            $titleIndex = $i % count($sessionTitles);
+            $title = $sessionTitles[$titleIndex] . ' - ' . $date->format('d M Y');
+
+            $session = AttendanceSession::create([
+                'senpai_id' => $senpai->id,
+                'title' => $title,
+                'date' => $date->format('Y-m-d'),
+                'qr_token' => strtoupper(Str::random(6)),
+                'is_active' => false,
+                'created_at' => $date,
+                'updated_at' => $date,
+            ]);
+
+            // Selalu masukkan Kohai Budi Pratama dan sebagian Kohai lain
+            foreach ($kohais as $kIndex => $k) {
+                // Kohai Budi (kIndex 0) hadir 90% waktu, Kohai lain acak
+                if ($kIndex === 0 || rand(0, 1) === 1) {
+                    Attendance::create([
+                        'attendance_session_id' => $session->id,
+                        'kohai_id' => $k->id,
+                        'scanned_at' => $date->copy()->addMinutes(rand(5, 45)),
+                        'status' => 'Hadir',
+                    ]);
+                }
+            }
+        }
+
+        // Buat 1 Sesi Aktif Hari Ini (is_active = true)
+        $todaySession = AttendanceSession::create([
+            'senpai_id' => $senpai->id,
+            'title' => 'Latihan Rutin Dojo Hari Ini - ' . Carbon::now()->format('d M Y'),
+            'date' => Carbon::now()->format('Y-m-d'),
+            'qr_token' => strtoupper(Str::random(6)),
+            'is_active' => true,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        // Catat beberapa Kohai hadir pada sesi aktif hari ini
+        Attendance::create([
+            'attendance_session_id' => $todaySession->id,
+            'kohai_id' => $kohai1->id,
+            'scanned_at' => Carbon::now()->subMinutes(10),
+            'status' => 'Hadir',
+        ]);
+        Attendance::create([
+            'attendance_session_id' => $todaySession->id,
+            'kohai_id' => $kohai2->id,
+            'scanned_at' => Carbon::now()->subMinutes(5),
+            'status' => 'Hadir',
+        ]);
+
+        // 4. SEED 25 DATA RAPORT KUMITE WKF
+        $evalNotesAKA = [
+            'Serangan Gyaku Zuki sangat presisi. Perlu ditingkatkan ketahanan fisik saat menit terakhir.',
+            'Senshu dimanfaatkan dengan baik. Pertahanan saat serangan balik lawan cukup solid.',
+            'Akurasi pukulan Kizami Zuki sangat tajam. Hindari pelanggaran kontak berlebih (C1).',
+            'Tendangan Mawashi Geri mendarat sempurna (Ippon). Pertahankan kewaspadaan Maai.',
+            'Gerakan kaki sangat aktif. Perlu perbaikan pada timing eksekusi konter serangan.',
+            'Kombinasi pukulan cepat dan efisien. Pertahankan fokus hingga akhir ronde.',
+        ];
+
+        $evalNotesAO = [
+            'Pertahanan cukup rapat, namun reaksi serangan balik masih agak terlambat.',
+            'Pergerakan lincah. Perlu menambah variasi tendangan area kepala untuk meraih Ippon.',
+            'Bermain sangat tenang. Harus lebih agresif mengambil inisiatif serangan diawal.',
+            'Kontrol jarak sangat baik. Perhatikan disiplin agar tidak terkena peringatan C2.',
+            'Semangat tanding luar biasa. Perbaiki akurasi pukulan agar poin terhitung sah oleh juri.',
+            'Kemampuan membaca ritme lawan bagus. Ditingkatkan lagi kecepatan eksekusi teknik.',
+        ];
+
+        for ($i = 25; $i >= 1; $i--) {
+            $matchDate = Carbon::now()->subDays($i * 2);
+            $matchTime = sprintf('%02d:%02d', rand(14, 20), rand(0, 59));
+
+            // Pilih AKA & AO kohai yang berbeda
+            $akaIndex = ($i % count($kohais));
+            $aoIndex = ($i + 1) % count($kohais);
+            if ($akaIndex === $aoIndex) {
+                $aoIndex = ($aoIndex + 1) % count($kohais);
+            }
+
+            $akaKohai = $kohais[$akaIndex];
+            $aoKohai = $kohais[$aoIndex];
+
+            // Poin & Pelanggaran AKA
+            $akaIppon = rand(0, 2);
+            $akaWazaari = rand(0, 2);
+            $akaYuko = rand(0, 4);
+            $akaTotal = ($akaIppon * 3) + ($akaWazaari * 2) + ($akaYuko * 1);
+            $akaC1 = rand(0, 2);
+            $akaC2 = rand(0, 2);
+            $akaCE = ($akaC1 >= 2);
+
+            // Poin & Pelanggaran AO
+            $aoIppon = rand(0, 2);
+            $aoWazaari = rand(0, 2);
+            $aoYuko = rand(0, 4);
+            $aoTotal = ($aoIppon * 3) + ($aoWazaari * 2) + ($aoYuko * 1);
+            $aoC1 = rand(0, 2);
+            $aoC2 = rand(0, 2);
+            $aoCE = ($aoC1 >= 2);
+
+            // Senshu corner
+            $senshu = rand(0, 1) === 1 ? 'aka' : 'ao';
+
+            // Tentukan Pemenang
+            $winnerId = null;
+            if ($akaTotal > $aoTotal) {
+                $winnerId = $akaKohai->id;
+            } elseif ($aoTotal > $akaTotal) {
+                $winnerId = $aoKohai->id;
+            } else {
+                // Jika skor sama, pemenang berdasarkan Senshu
+                if ($senshu === 'aka') {
+                    $winnerId = $akaKohai->id;
+                } else {
+                    $winnerId = $aoKohai->id;
+                }
+            }
+
+            KumiteReport::create([
+                'senpai_id' => $senpai->id,
+                'aka_kohai_id' => $akaKohai->id,
+                'ao_kohai_id' => $aoKohai->id,
+                'match_date' => $matchDate->format('Y-m-d'),
+                'match_time' => $matchTime,
+                'senshu_corner' => $senshu,
+
+                'aka_ippon' => $akaIppon,
+                'aka_wazaari' => $akaWazaari,
+                'aka_yuko' => $akaYuko,
+                'aka_c1' => $akaC1,
+                'aka_c2' => $akaC2,
+                'aka_ce' => $akaCE,
+                'aka_hc' => false,
+                'aka_h' => false,
+                'aka_score_attack' => rand(70, 98),
+                'aka_score_accuracy' => rand(65, 95),
+                'aka_total_score' => $akaTotal,
+                'aka_evaluation_notes' => $evalNotesAKA[$i % count($evalNotesAKA)],
+
+                'ao_ippon' => $aoIppon,
+                'ao_wazaari' => $aoWazaari,
+                'ao_yuko' => $aoYuko,
+                'ao_c1' => $aoC1,
+                'ao_c2' => $aoC2,
+                'ao_ce' => $aoCE,
+                'ao_hc' => false,
+                'ao_h' => false,
+                'ao_score_attack' => rand(70, 98),
+                'ao_score_accuracy' => rand(65, 95),
+                'ao_total_score' => $aoTotal,
+                'ao_evaluation_notes' => $evalNotesAO[$i % count($evalNotesAO)],
+
+                'winner_id' => $winnerId,
+                'created_at' => $matchDate,
+                'updated_at' => $matchDate,
+            ]);
+        }
+    }
+}
