@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\BeltController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\RankController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Kohai\AttendanceController as KohaiAttendanceController;
@@ -37,6 +39,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->n
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', UserController::class);
+    Route::resource('belts', BeltController::class);
+    Route::resource('ranks', RankController::class)->only(['store', 'update', 'destroy']);
 });
 
 // Role: Senpai Routes
