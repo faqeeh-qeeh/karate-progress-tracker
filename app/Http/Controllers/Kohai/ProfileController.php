@@ -65,7 +65,8 @@ class ProfileController extends Controller
             'height' => ['nullable', 'numeric', 'min:50', 'max:250'],
             'emergency_contact_name' => ['nullable', 'string', 'max:255'],
             'emergency_contact_phone' => ['nullable', 'string', 'max:20'],
-            'password' => ['nullable', 'string', 'min:6', 'confirmed'],
+            'current_password' => ['nullable', 'required_with:password', 'current_password'],
+            'password' => ['nullable', 'required_with:current_password', 'string', 'min:6', 'confirmed'],
         ];
 
         // Validasi kondisional berdasarkan tipe Kohai yang ditetapkan Admin
@@ -103,8 +104,11 @@ class ProfileController extends Controller
             'institution.required' => 'Asal Sekolah / Instansi luar wajib diisi.',
             'weight.numeric' => 'Berat badan harus berupa angka.',
             'height.numeric' => 'Tinggi badan harus berupa angka.',
+            'current_password.required_with' => 'Kata sandi saat ini (lama) wajib diisi untuk mengubah kata sandi.',
+            'current_password.current_password' => 'Kata sandi saat ini (lama) yang Anda masukkan tidak sesuai.',
+            'password.required_with' => 'Kata sandi baru wajib diisi jika Anda memasukkan kata sandi saat ini.',
             'password.min' => 'Kata sandi baru minimal 6 karakter.',
-            'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
+            'password.confirmed' => 'Konfirmasi kata sandi baru tidak cocok.',
         ];
 
         $validated = $request->validate($rules, $messages);

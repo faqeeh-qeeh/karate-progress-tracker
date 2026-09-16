@@ -155,30 +155,47 @@
                         </div>
                         <div>
                             <h2 class="text-sm font-bold text-slate-800">Keamanan & Kata Sandi</h2>
-                            <p class="text-[11px] text-slate-500">Kosongkan jika tidak ingin mengubah kata sandi akun</p>
+                            <p class="text-[11px] text-slate-500">Kosongkan jika tidak ingin mengubah kata sandi. Wajib menyertakan kata sandi lama jika ingin memperbarui.</p>
                         </div>
                     </div>
 
-                    <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-6 space-y-4">
                         <div>
-                            <label for="password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                                Kata Sandi Baru
+                            <label for="current_password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                Kata Sandi Saat Ini (Lama)
                             </label>
-                            <input type="password" name="password" id="password"
-                                placeholder="Minimal 6 karakter"
-                                class="w-full px-4 py-2.5 rounded-xl border @error('password') border-red-500 bg-red-50/30 @else border-slate-200 bg-slate-50/50 @enderror text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary focus:bg-white transition">
-                            @error('password')
+                            <input type="password" name="current_password" id="current_password"
+                                placeholder="Masukkan kata sandi lama Anda saat ini"
+                                autocomplete="current-password"
+                                class="w-full px-4 py-2.5 rounded-xl border @error('current_password') border-red-500 bg-red-50/30 @else border-slate-200 bg-slate-50/50 @enderror text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary focus:bg-white transition">
+                            @error('current_password')
                                 <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <div>
-                            <label for="password_confirmation" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                                Konfirmasi Kata Sandi Baru
-                            </label>
-                            <input type="password" name="password_confirmation" id="password_confirmation"
-                                placeholder="Ulangi kata sandi baru"
-                                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary focus:bg-white transition">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                    Kata Sandi Baru
+                                </label>
+                                <input type="password" name="password" id="password"
+                                    placeholder="Minimal 6 karakter"
+                                    autocomplete="new-password"
+                                    class="w-full px-4 py-2.5 rounded-xl border @error('password') border-red-500 bg-red-50/30 @else border-slate-200 bg-slate-50/50 @enderror text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary focus:bg-white transition">
+                                @error('password')
+                                    <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
+                                <label for="password_confirmation" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
+                                    Konfirmasi Kata Sandi Baru
+                                </label>
+                                <input type="password" name="password_confirmation" id="password_confirmation"
+                                    placeholder="Ulangi kata sandi baru"
+                                    autocomplete="new-password"
+                                    class="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50/50 text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary focus:bg-white transition">
+                            </div>
                         </div>
                     </div>
                 </div>

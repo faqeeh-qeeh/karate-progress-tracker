@@ -44,7 +44,8 @@ class ProfileController extends Controller
             'gender' => ['required', 'in:male,female'],
             'address' => ['required', 'string'],
             'rank_id' => ['nullable', 'exists:ranks,id'],
-            'password' => ['nullable', 'string', 'min:6', 'confirmed'],
+            'current_password' => ['nullable', 'required_with:password', 'current_password'],
+            'password' => ['nullable', 'required_with:current_password', 'string', 'min:6', 'confirmed'],
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
             'email.required' => 'Alamat email wajib diisi.',
@@ -56,8 +57,11 @@ class ProfileController extends Controller
             'gender.required' => 'Jenis kelamin wajib dipilih.',
             'address.required' => 'Alamat lengkap wajib diisi.',
             'rank_id.exists' => 'Tingkat sabuk tidak valid.',
+            'current_password.required_with' => 'Kata sandi saat ini (lama) wajib diisi untuk mengubah kata sandi.',
+            'current_password.current_password' => 'Kata sandi saat ini (lama) yang Anda masukkan tidak sesuai.',
+            'password.required_with' => 'Kata sandi baru wajib diisi jika Anda memasukkan kata sandi saat ini.',
             'password.min' => 'Kata sandi baru minimal 6 karakter.',
-            'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
+            'password.confirmed' => 'Konfirmasi kata sandi baru tidak cocok.',
         ]);
 
         // Update User data
