@@ -24,6 +24,11 @@ class AttendanceAndKumiteSeeder extends Seeder
             ['email' => 'senpai@karate.com'],
             [
                 'name' => 'Senpai Kenji Takahashi',
+                'birth_place' => 'Cirebon',
+                'birth_date' => '1995-08-17',
+                'gender' => 'male',
+                'address' => 'Jl. Pemuda No. 45, Cirebon',
+                'phone' => '081298765432',
                 'password' => Hash::make('password'),
                 'role_id' => $senpaiRole->id,
             ]
@@ -36,6 +41,11 @@ class AttendanceAndKumiteSeeder extends Seeder
             ['email' => 'kohai@karate.com'],
             [
                 'name' => 'Kohai Budi Pratama',
+                'birth_place' => 'Indramayu',
+                'birth_date' => '2004-03-12',
+                'gender' => 'male',
+                'address' => 'Jl. Lohbener Timur No. 8, Indramayu',
+                'phone' => '085712345671',
                 'password' => Hash::make('password'),
                 'role_id' => $kohaiRole->id,
             ]
@@ -46,6 +56,11 @@ class AttendanceAndKumiteSeeder extends Seeder
             ['email' => 'siti@karate.com'],
             [
                 'name' => 'Kohai Siti Rahma',
+                'birth_place' => 'Indramayu',
+                'birth_date' => '2004-07-25',
+                'gender' => 'female',
+                'address' => 'Jl. Jatibarang No. 19, Indramayu',
+                'phone' => '085712345672',
                 'password' => Hash::make('password'),
                 'role_id' => $kohaiRole->id,
             ]
@@ -56,6 +71,11 @@ class AttendanceAndKumiteSeeder extends Seeder
             ['email' => 'andi@karate.com'],
             [
                 'name' => 'Kohai Andi Wijaya',
+                'birth_place' => 'Kuningan',
+                'birth_date' => '2003-11-05',
+                'gender' => 'male',
+                'address' => 'Jl. Siliwangi No. 88, Kuningan',
+                'phone' => '085712345673',
                 'password' => Hash::make('password'),
                 'role_id' => $kohaiRole->id,
             ]
@@ -66,6 +86,11 @@ class AttendanceAndKumiteSeeder extends Seeder
             ['email' => 'dewi@karate.com'],
             [
                 'name' => 'Kohai Dewi Lestari',
+                'birth_place' => 'Majalengka',
+                'birth_date' => '2005-01-18',
+                'gender' => 'female',
+                'address' => 'Jl. KH Abdul Halim No. 23, Majalengka',
+                'phone' => '085712345674',
                 'password' => Hash::make('password'),
                 'role_id' => $kohaiRole->id,
             ]
@@ -76,6 +101,11 @@ class AttendanceAndKumiteSeeder extends Seeder
             ['email' => 'rizky@karate.com'],
             [
                 'name' => 'Kohai Rizky Pratama',
+                'birth_place' => 'Indramayu',
+                'birth_date' => '2004-09-30',
+                'gender' => 'male',
+                'address' => 'Jl. Sudirman No. 50, Indramayu',
+                'phone' => '085712345675',
                 'password' => Hash::make('password'),
                 'role_id' => $kohaiRole->id,
             ]

@@ -22,6 +22,11 @@ return new class extends Migration
             $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('birth_place');
+            $table->date('birth_date');
+            $table->enum('gender', ['male', 'female']);
+            $table->text('address');
+            $table->string('phone');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

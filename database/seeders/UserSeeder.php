@@ -22,6 +22,11 @@ class UserSeeder extends Seeder
             ['email' => 'admin@karate.com'],
             [
                 'name' => 'Administrator Karate',
+                'birth_place' => 'Indramayu',
+                'birth_date' => '1990-01-01',
+                'gender' => 'male',
+                'address' => 'Jl. Mayor Dasuki No. 12, Indramayu',
+                'phone' => '081234567890',
                 'password' => Hash::make('password'),
                 'role_id' => $adminRole->id,
             ]
@@ -31,6 +36,11 @@ class UserSeeder extends Seeder
             ['email' => 'senpai@karate.com'],
             [
                 'name' => 'Senpai Kenji Takahashi',
+                'birth_place' => 'Cirebon',
+                'birth_date' => '1995-08-17',
+                'gender' => 'male',
+                'address' => 'Jl. Pemuda No. 45, Cirebon',
+                'phone' => '081298765432',
                 'password' => Hash::make('password'),
                 'role_id' => $senpaiRole->id,
             ]
@@ -40,6 +50,11 @@ class UserSeeder extends Seeder
             ['email' => 'kohai@karate.com'],
             [
                 'name' => 'Kohai Budi Pratama',
+                'birth_place' => 'Indramayu',
+                'birth_date' => '2004-03-12',
+                'gender' => 'male',
+                'address' => 'Jl. Lohbener Timur No. 8, Indramayu',
+                'phone' => '085712345671',
                 'password' => Hash::make('password'),
                 'role_id' => $kohaiRole->id,
             ]
