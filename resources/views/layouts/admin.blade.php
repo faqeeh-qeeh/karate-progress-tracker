@@ -43,14 +43,26 @@
                 <svg class="w-5 h-5 shrink-0 {{ request()->routeIs('admin.belts.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
                 <span>Sabuk & Tingkatan</span>
             </a>
+
+            <a href="{{ route('admin.departments.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 {{ request()->routeIs('admin.departments.*') || request()->routeIs('admin.study-programs.*') || request()->routeIs('admin.academic-classes.*') ? 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white shadow-md shadow-brand-primary/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
+                <svg class="w-5 h-5 shrink-0 {{ request()->routeIs('admin.departments.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                <span>Jurusan, Prodi & Kelas</span>
+            </a>
+
+            <div class="text-[10px] font-bold uppercase text-slate-500 tracking-wider px-3 mt-6 mb-2">Akun Saya</div>
+
+            <a href="{{ route('admin.profile.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 {{ request()->routeIs('admin.profile.*') ? 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white shadow-md shadow-brand-primary/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
+                <svg class="w-5 h-5 shrink-0 {{ request()->routeIs('admin.profile.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                <span>Profil Administrator</span>
+            </a>
         </nav>
 
         <!-- Sidebar User Profile Footer -->
         <div class="p-3.5 border-t border-slate-800/80 bg-slate-950/60 shrink-0">
             <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2.5 min-w-0">
-                    <div class="w-9 h-9 rounded-xl bg-red-600/90 text-white flex items-center justify-center font-bold text-xs uppercase shrink-0 shadow-xs">
-                        {{ substr(auth()->user()->name, 0, 2) }}
+                    <div class="w-9 h-9 rounded-xl bg-red-600 text-white flex items-center justify-center font-bold text-xs uppercase shrink-0 shadow-xs">
+                        {{ auth()->user()->initials }}
                     </div>
                     <div class="min-w-0">
                         <p class="text-xs font-bold text-white truncate max-w-[110px]">{{ auth()->user()->name }}</p>
@@ -93,11 +105,19 @@
                     <svg class="w-5 h-5 shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
                     <span>Sabuk & Tingkatan</span>
                 </a>
+                <a href="{{ route('admin.departments.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm {{ request()->routeIs('admin.departments.*') ? 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white shadow-md' : 'text-slate-300 hover:bg-slate-800' }}">
+                    <svg class="w-5 h-5 shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                    <span>Jurusan, Prodi & Kelas</span>
+                </a>
+                <a href="{{ route('admin.profile.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm {{ request()->routeIs('admin.profile.*') ? 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white shadow-md' : 'text-slate-300 hover:bg-slate-800' }}">
+                    <svg class="w-5 h-5 shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    <span>Profil Administrator</span>
+                </a>
             </nav>
             <div class="p-4 border-t border-slate-800 bg-slate-950/80 shrink-0">
                 <div class="flex items-center gap-3 mb-3">
-                    <div class="w-9 h-9 rounded-xl bg-red-600 text-white flex items-center justify-center font-bold text-xs uppercase">
-                        {{ substr(auth()->user()->name, 0, 2) }}
+                    <div class="w-9 h-9 rounded-xl bg-red-600 text-white flex items-center justify-center font-bold text-xs uppercase shrink-0">
+                        {{ auth()->user()->initials }}
                     </div>
                     <div class="min-w-0">
                         <p class="text-xs font-bold text-white truncate">{{ auth()->user()->name }}</p>
@@ -129,11 +149,13 @@
                 </div>
             </div>
             
-            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-                <span class="px-3 py-1 bg-red-50 text-red-700 border border-red-200/80 rounded-full text-[11px] font-extrabold uppercase whitespace-nowrap">
-                    Role: Admin
-                </span>
-                <span class="hidden md:inline-block text-xs font-medium text-slate-500 max-w-[160px] truncate">{{ auth()->user()->email }}</span>
+            <div class="flex items-center gap-3 shrink-0">
+                <!-- Clickable Avatar Initial Box Linking to Profile -->
+                <a href="{{ route('admin.profile.index') }}" 
+                   title="Profil Administrator ({{ auth()->user()->name }})" 
+                   class="w-10 h-10 rounded-xl bg-red-600 hover:bg-red-700 text-white flex items-center justify-center font-black text-sm uppercase shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 ring-2 {{ request()->routeIs('admin.profile.*') ? 'ring-red-600 ring-offset-2' : 'ring-red-600/20 hover:ring-red-600' }}">
+                    {{ auth()->user()->initials }}
+                </a>
             </div>
         </header>
 

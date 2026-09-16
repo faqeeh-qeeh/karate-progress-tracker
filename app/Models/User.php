@@ -103,4 +103,41 @@ class User extends Authenticatable
     {
         return $this->hasMany(Attendance::class, 'kohai_id');
     }
+
+    public function senpaiProfile(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(SenpaiProfile::class);
+    }
+
+    public function kohaiProfile(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(KohaiProfile::class);
+    }
+
+    /**
+     * Dapatkan inisial nama pengguna (misal: "Admin" -> "A", "Adi Jaya" -> "AJ", "Kohai Budi Pratama" -> "BP").
+     */
+    public function getInitialsAttribute(): string
+    {
+        $cleanName = trim($this->name ?? '');
+        if (empty($cleanName)) {
+            return 'U';
+        }
+
+        // Pisahkan nama per kata
+        $words = array_values(array_filter(preg_split('/\s+/', $cleanName)));
+
+        // Jika lebih dari 1 kata dan diawali kata role murid/senpai umum, ambil nama aslinya
+        if (count($words) > 1 && in_array(strtolower($words[0]), ['kohai', 'senpai'])) {
+            array_shift($words);
+        }
+
+        if (count($words) >= 2) {
+            return strtoupper(mb_substr($words[0], 0, 1) . mb_substr($words[1], 0, 1));
+        } elseif (count($words) === 1) {
+            return strtoupper(mb_substr($words[0], 0, 1));
+        }
+
+        return 'U';
+    }
 }

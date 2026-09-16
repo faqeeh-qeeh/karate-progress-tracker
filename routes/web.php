@@ -1,17 +1,23 @@
 <?php
 
+use App\Http\Controllers\Admin\AcademicClassController;
 use App\Http\Controllers\Admin\BeltController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\RankController;
+use App\Http\Controllers\Admin\StudyProgramController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Kohai\AttendanceController as KohaiAttendanceController;
 use App\Http\Controllers\Kohai\DashboardController as KohaiDashboardController;
 use App\Http\Controllers\Kohai\KumiteController as KohaiKumiteController;
+use App\Http\Controllers\Kohai\ProfileController as KohaiProfileController;
 use App\Http\Controllers\Senpai\AttendanceController as SenpaiAttendanceController;
 use App\Http\Controllers\Senpai\DashboardController as SenpaiDashboardController;
 use App\Http\Controllers\Senpai\KohaiOverviewController;
 use App\Http\Controllers\Senpai\KumiteController as SenpaiKumiteController;
+use App\Http\Controllers\Senpai\ProfileController as SenpaiProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -38,15 +44,24 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->n
 // Role: Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile', [AdminProfileController::class, 'update'])->name('profile.update');
     Route::resource('users', UserController::class);
     Route::resource('belts', BeltController::class);
     Route::resource('ranks', RankController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('departments', DepartmentController::class);
+    Route::resource('study-programs', StudyProgramController::class)->only(['store', 'update', 'destroy']);
+    Route::resource('academic-classes', AcademicClassController::class)->only(['store', 'update', 'destroy']);
 });
 
 // Role: Senpai Routes
 Route::middleware(['auth', 'role:Senpai'])->prefix('senpai')->name('senpai.')->group(function () {
     Route::get('/dashboard', [SenpaiDashboardController::class, 'index'])->name('dashboard');
     
+    // Biodata & Profil Senpai
+    Route::get('/profile', [SenpaiProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile', [SenpaiProfileController::class, 'update'])->name('profile.update');
+
     // Daftar & Detail Performa Kohai
     Route::get('/kohai', [KohaiOverviewController::class, 'index'])->name('kohai.index');
     Route::get('/kohai/{kohai}', [KohaiOverviewController::class, 'show'])->name('kohai.show');
@@ -69,6 +84,10 @@ Route::middleware(['auth', 'role:Senpai'])->prefix('senpai')->name('senpai.')->g
 // Role: Kohai Routes
 Route::middleware(['auth', 'role:Kohai'])->prefix('kohai')->name('kohai.')->group(function () {
     Route::get('/dashboard', [KohaiDashboardController::class, 'index'])->name('dashboard');
+
+    // Biodata & Profil Kohai
+    Route::get('/profile', [KohaiProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile', [KohaiProfileController::class, 'update'])->name('profile.update');
 
     // Raport Kumite Kohai Routes
     Route::get('/kumite', [KohaiKumiteController::class, 'index'])->name('kumite.index');

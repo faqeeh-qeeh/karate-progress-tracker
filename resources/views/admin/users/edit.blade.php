@@ -82,10 +82,10 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                         </svg>
                     </div>
-                    <select name="role_id" id="role_id" required
+                    <select name="role_id" id="role_id" required onchange="handleRoleChange(this)"
                         class="w-full pl-10 pr-10 py-3 rounded-xl border @error('role_id') border-red-500 bg-red-50/30 text-red-900 @else border-slate-200 bg-slate-50/50 text-slate-900 @enderror text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary focus:bg-white transition appearance-none cursor-pointer">
                         @foreach($roles as $r)
-                            <option value="{{ $r->id }}" {{ old('role_id', $user->role_id) == $r->id ? 'selected' : '' }}>
+                            <option value="{{ $r->id }}" data-role-name="{{ strtolower($r->nama) }}" {{ old('role_id', $user->role_id) == $r->id ? 'selected' : '' }}>
                                 Role: {{ $r->nama }}
                             </option>
                         @endforeach
@@ -99,6 +99,41 @@
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         {{ $message }}
                     </p>
+                @enderror
+            </div>
+
+            <!-- Opsi Kategori Asal Kohai (Dinamis Muncul Ketika Role Kohai Dipilih) -->
+            @php
+                $currentKohaiType = old('kohai_type', $user->kohaiProfile->type ?? 'polindra');
+            @endphp
+            <div id="kohai-type-container" class="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-3 hidden transition-all">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-brand-primary"></span>
+                    <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider">
+                        Kategori Asal Keanggotaan Kohai <span class="text-red-500">*</span>
+                    </label>
+                </div>
+                <p class="text-[11px] text-slate-500">
+                    Tentukan apakah Kohai ini merupakan mahasiswa/sivitas Polindra atau berasal dari luar kampus (sekolah lain/instansi). Opsi ini akan menentukan formulir biodata yang diisi oleh Kohai.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                    <label class="relative flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 bg-white hover:border-brand-primary cursor-pointer transition has-[:checked]:border-brand-primary has-[:checked]:bg-blue-50/40 has-[:checked]:ring-2 has-[:checked]:ring-brand-primary/20">
+                        <input type="radio" name="kohai_type" value="polindra" {{ $currentKohaiType === 'polindra' ? 'checked' : '' }} class="mt-0.5 text-brand-primary focus:ring-brand-primary">
+                        <div class="text-left">
+                            <span class="block text-xs font-bold text-slate-900">Mahasiswa / Sivitas Polindra</span>
+                            <span class="block text-[11px] text-slate-500 mt-0.5">Wajib isi Prodi, Kelas, NIM, Tahun Angkatan & Asal SMA/SMK.</span>
+                        </div>
+                    </label>
+                    <label class="relative flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 bg-white hover:border-amber-500 cursor-pointer transition has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50/40 has-[:checked]:ring-2 has-[:checked]:ring-amber-500/20">
+                        <input type="radio" name="kohai_type" value="non_polindra" {{ $currentKohaiType === 'non_polindra' ? 'checked' : '' }} class="mt-0.5 text-amber-600 focus:ring-amber-500">
+                        <div class="text-left">
+                            <span class="block text-xs font-bold text-slate-900">Luar Polindra / Instansi Lain</span>
+                            <span class="block text-[11px] text-slate-500 mt-0.5">Wajib mengisi Asal Sekolah / Instansi luar.</span>
+                        </div>
+                    </label>
+                </div>
+                @error('kohai_type')
+                    <p class="text-xs text-red-600 mt-1 font-medium">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -287,6 +322,27 @@
 </div>
 
 <script>
+    function handleRoleChange(selectElement) {
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const roleName = selectedOption ? selectedOption.getAttribute('data-role-name') : '';
+        const kohaiContainer = document.getElementById('kohai-type-container');
+        
+        if (kohaiContainer) {
+            if (roleName === 'kohai') {
+                kohaiContainer.classList.remove('hidden');
+            } else {
+                kohaiContainer.classList.add('hidden');
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const roleSelect = document.getElementById('role_id');
+        if (roleSelect) {
+            handleRoleChange(roleSelect);
+        }
+    });
+
     function togglePasswordVisibility(inputId, iconId) {
         const passwordInput = document.getElementById(inputId);
         const iconSvg = document.getElementById(iconId);

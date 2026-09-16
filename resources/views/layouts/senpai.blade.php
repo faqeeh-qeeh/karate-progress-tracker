@@ -48,6 +48,13 @@
                 <svg class="w-5 h-5 shrink-0 {{ request()->routeIs('senpai.kohai.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 <span>Daftar Kohai (Murid)</span>
             </a>
+
+            <div class="text-[10px] font-bold uppercase text-slate-500 tracking-wider px-3 mt-6 mb-2">Akun Saya</div>
+
+            <a href="{{ route('senpai.profile.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 {{ request()->routeIs('senpai.profile.*') ? 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white shadow-md shadow-brand-primary/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
+                <svg class="w-5 h-5 shrink-0 {{ request()->routeIs('senpai.profile.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                <span>Biodata Senpai</span>
+            </a>
         </nav>
 
         <!-- Sidebar User Profile Footer -->
@@ -55,7 +62,7 @@
             <div class="flex items-center justify-between gap-2">
                 <div class="flex items-center gap-2.5 min-w-0">
                     <div class="w-9 h-9 rounded-xl bg-brand-primary text-white flex items-center justify-center font-bold text-xs uppercase shrink-0 shadow-xs">
-                        {{ substr(auth()->user()->name, 0, 2) }}
+                        {{ auth()->user()->initials }}
                     </div>
                     <div class="min-w-0">
                         <p class="text-xs font-bold text-white truncate max-w-[110px]">{{ auth()->user()->name }}</p>
@@ -102,11 +109,15 @@
                     <svg class="w-5 h-5 shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                     <span>Daftar Kohai (Murid)</span>
                 </a>
+                <a href="{{ route('senpai.profile.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm {{ request()->routeIs('senpai.profile.*') ? 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white shadow-md' : 'text-slate-300 hover:bg-slate-800' }}">
+                    <svg class="w-5 h-5 shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    <span>Biodata Senpai</span>
+                </a>
             </nav>
             <div class="p-4 border-t border-slate-800 bg-slate-950/80 shrink-0">
                 <div class="flex items-center gap-3 mb-3">
                     <div class="w-9 h-9 rounded-xl bg-brand-primary text-white flex items-center justify-center font-bold text-xs uppercase">
-                        {{ substr(auth()->user()->name, 0, 2) }}
+                        {{ auth()->user()->initials }}
                     </div>
                     <div class="min-w-0">
                         <p class="text-xs font-bold text-white truncate">{{ auth()->user()->name }}</p>
@@ -138,11 +149,13 @@
                 </div>
             </div>
             
-            <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-                <span class="px-3 py-1 bg-blue-50 text-brand-primary border border-blue-200/80 rounded-full text-[11px] font-extrabold uppercase whitespace-nowrap">
-                    Role: Senpai
-                </span>
-                <span class="hidden md:inline-block text-xs font-medium text-slate-500 max-w-[160px] truncate">{{ auth()->user()->email }}</span>
+            <div class="flex items-center gap-3 shrink-0">
+                <!-- Clickable Avatar Initial Box Linking to Biodata -->
+                <a href="{{ route('senpai.profile.index') }}" 
+                   title="Biodata Senpai ({{ auth()->user()->name }})" 
+                   class="w-10 h-10 rounded-xl bg-brand-primary hover:bg-blue-700 text-white flex items-center justify-center font-black text-sm uppercase shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 ring-2 {{ request()->routeIs('senpai.profile.*') ? 'ring-brand-primary ring-offset-2' : 'ring-brand-primary/20 hover:ring-brand-primary' }}">
+                    {{ auth()->user()->initials }}
+                </a>
             </div>
         </header>
 

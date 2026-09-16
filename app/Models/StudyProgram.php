@@ -8,19 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['belt_id', 'category', 'name', 'order', 'description'])]
-class Rank extends Model
+#[Fillable(['department_id', 'name', 'description', 'is_active'])]
+class StudyProgram extends Model
 {
     use HasFactory;
 
-    public function belt(): BelongsTo
+    protected function casts(): array
     {
-        return $this->belongsTo(Belt::class);
+        return [
+            'is_active' => 'boolean',
+        ];
     }
 
-    public function senpaiProfiles(): HasMany
+    public function department(): BelongsTo
     {
-        return $this->hasMany(SenpaiProfile::class);
+        return $this->belongsTo(Department::class);
+    }
+
+    public function academicClasses(): HasMany
+    {
+        return $this->hasMany(AcademicClass::class);
     }
 
     public function kohaiProfiles(): HasMany

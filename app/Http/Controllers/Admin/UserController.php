@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\KohaiProfile;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -18,7 +19,7 @@ class UserController extends Controller
      */
     public function index(Request $request): View
     {
-        $query = User::with('role')->latest();
+        $query = User::with(['role', 'kohaiProfile'])->latest();
 
         // Filter Pencarian (Nama / Email)
         if ($request->filled('search')) {
@@ -51,6 +52,22 @@ class UserController extends Controller
     }
 
     /**
+     * Tampilkan detail lengkap biodata akun pengguna.
+     */
+    public function show(User $user): View
+    {
+        $user->load([
+            'role',
+            'senpaiProfile.rank.belt',
+            'kohaiProfile.studyProgram.department',
+            'kohaiProfile.academicClass',
+            'kohaiProfile.rank.belt',
+        ]);
+
+        return view('admin.users.show', compact('user'));
+    }
+
+    /**
      * Simpan akun pengguna baru ke basis data.
      */
     public function store(Request $request): RedirectResponse
@@ -59,6 +76,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'role_id' => ['required', 'exists:roles,id'],
+            'kohai_type' => ['nullable', 'in:polindra,non_polindra'],
             'birth_place' => ['required', 'string', 'max:255'],
             'birth_date' => ['required', 'date'],
             'gender' => ['required', 'in:male,female'],
@@ -82,7 +100,7 @@ class UserController extends Controller
             'password.confirmed' => 'Konfirmasi password tidak cocok.',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'role_id' => $validated['role_id'],
@@ -94,6 +112,14 @@ class UserController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
+        $kohaiRole = Role::whereRaw('LOWER(nama) = ?', ['kohai'])->first();
+        if ($user->role_id == $kohaiRole?->id) {
+            KohaiProfile::create([
+                'user_id' => $user->id,
+                'type' => $request->input('kohai_type', 'polindra'),
+            ]);
+        }
+
         return redirect()->route('admin.users.index')
             ->with('success', 'Akun pengguna "' . $validated['name'] . '" berhasil ditambahkan.');
     }
@@ -103,6 +129,7 @@ class UserController extends Controller
      */
     public function edit(User $user): View
     {
+        $user->load('kohaiProfile');
         $roles = Role::all();
 
         return view('admin.users.edit', compact('user', 'roles'));
@@ -117,6 +144,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'role_id' => ['required', 'exists:roles,id'],
+            'kohai_type' => ['nullable', 'in:polindra,non_polindra'],
             'birth_place' => ['required', 'string', 'max:255'],
             'birth_date' => ['required', 'date'],
             'gender' => ['required', 'in:male,female'],
@@ -155,6 +183,14 @@ class UserController extends Controller
         }
 
         $user->update($userData);
+
+        $kohaiRole = Role::whereRaw('LOWER(nama) = ?', ['kohai'])->first();
+        if ($user->role_id == $kohaiRole?->id) {
+            KohaiProfile::updateOrCreate(
+                ['user_id' => $user->id],
+                ['type' => $request->input('kohai_type', 'polindra')]
+            );
+        }
 
         return redirect()->route('admin.users.index')
             ->with('success', 'Data akun pengguna "' . $user->name . '" berhasil diperbarui.');

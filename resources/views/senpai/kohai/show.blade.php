@@ -4,31 +4,142 @@
 
 @section('content')
 <div class="space-y-6">
-    <!-- Navigation Back & Header Info -->
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-gray-100 shadow-xs">
-        <div class="flex items-center gap-4">
-            <a href="{{ route('senpai.kohai.index') }}" class="p-2.5 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl transition shrink-0" title="Kembali ke Daftar Kohai">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                </svg>
-            </a>
-            <div>
-                <div class="flex items-center gap-3">
-                    <h1 class="text-2xl font-extrabold text-brand-black">{{ $kohai->name }}</h1>
-                    <span class="px-3 py-0.5 bg-amber-100 text-amber-800 rounded-full font-bold text-xs border border-amber-200">
-                        🥋 Kohai
-                    </span>
+    <!-- Kohai Student Profile & Physical Information Card -->
+    @php
+        $kp = $kohai->kohaiProfile;
+    @endphp
+    <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-sm">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-5">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-primary to-brand-secondary text-white font-black text-lg flex items-center justify-center shadow-md shadow-brand-primary/20 shrink-0">
+                    {{ $kohai->initials }}
                 </div>
-                <p class="text-xs text-gray-500 mt-1">{{ $kohai->email }} • Rekam Jejak Kumite & Grafik Perkembangan Evaluasi</p>
+                <div>
+                    <h2 class="text-base font-extrabold text-slate-900">Informasi Biodata & Data Fisik Murid</h2>
+                    <p class="text-xs text-slate-500 font-medium">Data akademik, tingkat sabuk, data fisik, dan kontak darurat murid Kohai</p>
+                </div>
+            </div>
+            <div>
+                @if($kp?->type === 'non_polindra')
+                    <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-purple-50 text-purple-700 border border-purple-200">
+                        🏛️ Luar Polindra / Umum
+                    </span>
+                @else
+                    <span class="px-3 py-1 rounded-full text-xs font-extrabold bg-blue-50 text-brand-primary border border-blue-200">
+                        🎓 Mahasiswa Polindra
+                    </span>
+                @endif
             </div>
         </div>
 
-        <a href="{{ route('senpai.kumite.create') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-primary hover:bg-brand-primary/90 text-white font-bold text-xs rounded-xl shadow-md transition">
-            <svg class="w-4 h-4 text-brand-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-            </svg>
-            <span>Input Raport Kumite Baru</span>
-        </a>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Kolom 1: Data Pribadi & Kontak -->
+            <div class="space-y-3 bg-slate-50/70 p-4 rounded-xl border border-slate-100 text-xs">
+                <p class="font-extrabold text-slate-900 uppercase tracking-wider text-[11px] pb-1 border-b border-slate-200/60 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-brand-primary"></span>
+                    <span>Data Pribadi & Kontak</span>
+                </p>
+                <div class="flex justify-between py-0.5">
+                    <span class="text-slate-500">Nama Lengkap:</span>
+                    <span class="font-bold text-slate-900 text-right">{{ $kohai->name }}</span>
+                </div>
+                <div class="flex justify-between py-0.5">
+                    <span class="text-slate-500">TTL / Usia:</span>
+                    <span class="font-bold text-slate-900 text-right">
+                        {{ $kohai->birth_place ?? '-' }}, {{ $kohai->birth_date ? $kohai->birth_date->format('d M Y') : '-' }}
+                        @if($kohai->birth_date)
+                            <span class="text-slate-400 font-normal">({{ \Carbon\Carbon::parse($kohai->birth_date)->age }} th)</span>
+                        @endif
+                    </span>
+                </div>
+                <div class="flex justify-between py-0.5">
+                    <span class="text-slate-500">Jenis Kelamin:</span>
+                    <span class="font-bold text-slate-900 text-right">{{ $kohai->gender === 'male' ? 'Laki-laki' : ($kohai->gender === 'female' ? 'Perempuan' : '-') }}</span>
+                </div>
+                <div class="flex justify-between py-0.5">
+                    <span class="text-slate-500">WhatsApp / HP:</span>
+                    <span class="font-bold text-slate-900 text-right font-mono">{{ $kohai->phone ?? '-' }}</span>
+                </div>
+                <div class="flex justify-between py-0.5">
+                    <span class="text-slate-500">Alamat:</span>
+                    <span class="font-bold text-slate-900 text-right max-w-[170px] truncate" title="{{ $kohai->address }}">{{ $kohai->address ?? '-' }}</span>
+                </div>
+            </div>
+
+            <!-- Kolom 2: Data Akademik & Sabuk -->
+            <div class="space-y-3 bg-slate-50/70 p-4 rounded-xl border border-slate-100 text-xs">
+                <p class="font-extrabold text-slate-900 uppercase tracking-wider text-[11px] pb-1 border-b border-slate-200/60 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                    <span>Akademik & Tingkat Sabuk</span>
+                </p>
+                @if($kp?->type === 'non_polindra')
+                    <div class="flex justify-between py-0.5">
+                        <span class="text-slate-500">Asal Instansi/Sekolah:</span>
+                        <span class="font-bold text-slate-900 text-right">{{ $kp->school_origin ?? '-' }}</span>
+                    </div>
+                @else
+                    <div class="flex justify-between py-0.5">
+                        <span class="text-slate-500">NIM Polindra:</span>
+                        <span class="font-bold text-slate-900 font-mono text-right">{{ $kp?->nim ?? '-' }}</span>
+                    </div>
+                    <div class="flex justify-between py-0.5">
+                        <span class="text-slate-500">Jurusan:</span>
+                        <span class="font-bold text-slate-900 text-right">{{ $kp?->studyProgram?->department?->nama ?? '-' }}</span>
+                    </div>
+                    <div class="flex justify-between py-0.5">
+                        <span class="text-slate-500">Program Studi / Kelas:</span>
+                        <span class="font-bold text-slate-900 text-right">{{ $kp?->studyProgram?->nama ?? '-' }} ({{ $kp?->academicClass?->nama ?? '-' }})</span>
+                    </div>
+                    <div class="flex justify-between py-0.5">
+                        <span class="text-slate-500">Tahun Angkatan:</span>
+                        <span class="font-bold text-slate-900 text-right">{{ $kp?->entry_year ?? '-' }}</span>
+                    </div>
+                    <div class="flex justify-between py-0.5">
+                        <span class="text-slate-500">Asal SMA/SMK:</span>
+                        <span class="font-bold text-slate-900 text-right">{{ $kp?->school_origin ?? '-' }}</span>
+                    </div>
+                @endif
+                <div class="flex justify-between py-0.5 border-t border-slate-200/50 pt-1.5">
+                    <span class="text-slate-500">Tingkat Sabuk:</span>
+                    <span class="font-bold text-slate-900 text-right">
+                        @if($kp?->rank?->belt)
+                            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-white border border-slate-200">
+                                <span class="w-2.5 h-2.5 rounded-full border border-slate-300" style="background-color: {{ $kp->rank->belt->warna ?? '#e2e8f0' }}"></span>
+                                <span>Sabuk {{ $kp->rank->belt->nama }} - {{ $kp->rank->nama }}</span>
+                            </span>
+                        @else
+                            <span class="text-slate-400 italic">Belum ditentukan</span>
+                        @endif
+                    </span>
+                </div>
+            </div>
+
+            <!-- Kolom 3: Data Fisik & Kontak Darurat -->
+            <div class="space-y-3 bg-slate-50/70 p-4 rounded-xl border border-slate-100 text-xs">
+                <p class="font-extrabold text-slate-900 uppercase tracking-wider text-[11px] pb-1 border-b border-slate-200/60 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    <span>Data Fisik & Kontak Darurat</span>
+                </p>
+                <div class="grid grid-cols-2 gap-2 my-1">
+                    <div class="bg-white p-2.5 rounded-lg border border-slate-200 text-center">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase block">Tinggi</span>
+                        <span class="font-black text-slate-900 text-sm">{{ $kp?->height ?? '-' }} cm</span>
+                    </div>
+                    <div class="bg-white p-2.5 rounded-lg border border-slate-200 text-center">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase block">Berat</span>
+                        <span class="font-black text-slate-900 text-sm">{{ $kp?->weight ?? '-' }} kg</span>
+                    </div>
+                </div>
+                <div class="flex justify-between py-0.5 border-t border-slate-200/50 pt-1.5">
+                    <span class="text-slate-500">Wali / Kontak Darurat:</span>
+                    <span class="font-bold text-slate-900 text-right">{{ $kp?->emergency_contact_name ?? '-' }}</span>
+                </div>
+                <div class="flex justify-between py-0.5">
+                    <span class="text-slate-500">No. HP Kontak Darurat:</span>
+                    <span class="font-bold text-slate-900 text-right font-mono">{{ $kp?->emergency_contact_phone ?? '-' }}</span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Summary Performance Statistics Cards -->

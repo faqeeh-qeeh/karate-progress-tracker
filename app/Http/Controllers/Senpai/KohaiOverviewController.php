@@ -16,6 +16,11 @@ class KohaiOverviewController extends Controller
     public function index(Request $request): View
     {
         $query = User::whereHas('role', fn($q) => $q->where('nama', 'Kohai'))
+            ->with([
+                'kohaiProfile.studyProgram.department',
+                'kohaiProfile.academicClass',
+                'kohaiProfile.rank.belt',
+            ])
             ->withCount([
                 'kumiteAsAka as matches_as_aka_count',
                 'kumiteAsAo as matches_as_ao_count',
@@ -44,6 +49,12 @@ class KohaiOverviewController extends Controller
         if (!$kohai->hasRole('Kohai')) {
             abort(404, 'Pengguna bukan merupakan Kohai.');
         }
+
+        $kohai->load([
+            'kohaiProfile.studyProgram.department',
+            'kohaiProfile.academicClass',
+            'kohaiProfile.rank.belt',
+        ]);
 
         // Ambil seluruh riwayat pertandingan Kumite (diurutkan kronologis)
         $reports = KumiteReport::with(['senpai', 'akaKohai', 'aoKohai', 'winner'])

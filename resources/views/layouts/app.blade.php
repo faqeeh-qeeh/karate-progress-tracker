@@ -37,7 +37,7 @@
 
                     <div class="flex items-center space-x-3 bg-gray-900/80 px-3 py-1.5 rounded-full border border-gray-800">
                         <div class="w-8 h-8 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold text-xs uppercase">
-                            {{ substr(auth()->user()->name, 0, 2) }}
+                            {{ auth()->user()->initials }}
                         </div>
                         <div class="text-left">
                             <p class="text-xs font-semibold text-white leading-tight">{{ auth()->user()->name }}</p>
@@ -74,7 +74,7 @@
         <div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-t border-gray-800 px-4 pt-3 pb-4 space-y-3">
             <div class="flex items-center space-x-3 pb-3 border-b border-gray-800">
                 <div class="w-10 h-10 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold text-sm">
-                    {{ substr(auth()->user()->name, 0, 2) }}
+                    {{ auth()->user()->initials }}
                 </div>
                 <div>
                     <p class="text-sm font-semibold text-white">{{ auth()->user()->name }}</p>

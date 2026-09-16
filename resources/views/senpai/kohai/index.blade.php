@@ -45,7 +45,7 @@
                     <!-- Header Profile Card -->
                     <div class="flex items-center gap-3.5 mb-4">
                         <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-primary to-brand-secondary text-white font-extrabold text-base flex items-center justify-center shadow-md shadow-brand-primary/20 shrink-0">
-                            {{ strtoupper(substr($k->name, 0, 2)) }}
+                            {{ $k->initials }}
                         </div>
                         <div class="min-w-0 flex-1">
                             <h3 class="font-extrabold text-slate-900 text-base truncate group-hover:text-brand-primary transition-colors">
@@ -57,15 +57,35 @@
 
                     <!-- Details & Badge -->
                     <div class="space-y-2 pt-3 border-t border-slate-100">
+                        @php
+                            $kp = $k->kohaiProfile;
+                        @endphp
                         <div class="flex items-center justify-between text-xs">
-                            <span class="text-slate-500 font-medium">Role / Status:</span>
-                            <span class="px-2.5 py-0.5 bg-amber-50 text-amber-800 rounded-full font-bold text-[10px] uppercase border border-amber-200/80">
-                                🥋 {{ $k->role->nama ?? 'Kohai' }}
-                            </span>
+                            <span class="text-slate-500 font-medium">Tingkat Sabuk:</span>
+                            @if($kp?->rank?->belt)
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-800 text-[11px] font-bold border border-slate-200">
+                                    <span class="w-2 h-2 rounded-full border border-slate-400" style="background-color: {{ $kp->rank->belt->warna ?? '#94a3b8' }}"></span>
+                                    <span>Sabuk {{ $kp->rank->belt->nama }}</span>
+                                </span>
+                            @else
+                                <span class="text-slate-400 text-[11px] italic">Belum diatur</span>
+                            @endif
                         </div>
                         <div class="flex items-center justify-between text-xs">
-                            <span class="text-slate-500 font-medium">Total Pertandingan Kumite:</span>
-                            <span class="font-extrabold text-slate-900 px-2.5 py-0.5 bg-slate-100 rounded-lg">
+                            <span class="text-slate-500 font-medium">Afiliasi / Status:</span>
+                            @if($kp?->type === 'non_polindra')
+                                <span class="px-2 py-0.5 bg-purple-50 text-purple-700 rounded-full font-bold text-[10px] border border-purple-200/80 truncate max-w-[150px]">
+                                    {{ $kp->school_origin ?? 'Luar Polindra' }}
+                                </span>
+                            @else
+                                <span class="px-2 py-0.5 bg-blue-50 text-brand-primary rounded-full font-bold text-[10px] border border-blue-200/80 truncate max-w-[150px]">
+                                    {{ $kp?->studyProgram?->nama ?? 'Polindra' }}
+                                </span>
+                            @endif
+                        </div>
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-slate-500 font-medium">Total Kumite:</span>
+                            <span class="font-extrabold text-slate-900 px-2 py-0.5 bg-slate-100 rounded-lg text-xs">
                                 {{ $totalMatches }} Match
                             </span>
                         </div>
