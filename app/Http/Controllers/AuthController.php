@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -86,5 +87,56 @@ class AuthController extends Controller
 
         return redirect()->route('login')
             ->with('success', 'Anda telah berhasil keluar dari sistem.');
+    }
+
+    /**
+     * Redirect ke halaman OAuth Google.
+     */
+    public function redirectToGoogle(): \Symfony\Component\HttpFoundation\RedirectResponse
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    /**
+     * Tangani callback dari Google setelah autentikasi.
+     * Hanya izinkan login jika email sudah terdaftar (dibuat oleh Admin).
+     */
+    public function handleGoogleCallback(): RedirectResponse
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+        } catch (\Laravel\Socialite\Two\InvalidStateException $e) {
+            // State tidak cocok — biasanya karena session expired atau dibuka di tab berbeda.
+            // Solusi: minta user mencoba lagi (redirect ulang ke Google).
+            return redirect()->route('auth.google');
+        } catch (\Exception $e) {
+            return redirect()->route('login')
+                ->withErrors(['google' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+
+        // Cari user berdasarkan email Google
+        $user = User::where('email', $googleUser->getEmail())->first();
+
+        // Tolak login jika email belum terdaftar di sistem
+        if (! $user) {
+            return redirect()->route('login')
+                ->withErrors([
+                    'google' => 'Email "' . $googleUser->getEmail() . '" belum terdaftar dalam sistem. '
+                        . 'Pendaftaran akun dikelola oleh Admin Karate Polindra. '
+                        . 'Silakan hubungi pengurus/admin dojo untuk pembuatan akun.',
+                ]);
+        }
+
+        // Simpan google_id jika belum tersimpan
+        if (! $user->google_id) {
+            $user->update(['google_id' => $googleUser->getId()]);
+        }
+
+        // Login user dan redirect ke dashboard sesuai role
+        Auth::login($user, remember: true);
+        request()->session()->regenerate();
+
+        return redirect($user->getDashboardRoute())
+            ->with('success', 'Selamat datang kembali, ' . $user->name . '!');
     }
 }
