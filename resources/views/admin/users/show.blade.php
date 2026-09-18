@@ -38,6 +38,15 @@
         </div>
 
         <div class="flex items-center gap-2">
+            @if(! $user->hasVerifiedEmail())
+                <form action="{{ route('admin.users.resend-activation', $user->id) }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold rounded-xl transition shadow-xs">
+                        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        <span>Kirim Ulang Email Aktivasi</span>
+                    </button>
+                </form>
+            @endif
             <a href="{{ route('admin.users.edit', $user->id) }}" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-bold rounded-xl transition shadow-xs">
                 <svg class="w-4 h-4 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 <span>Edit Akun</span>
@@ -87,6 +96,18 @@
                     <div class="flex justify-between py-1 border-b border-slate-100">
                         <span class="text-slate-500 font-medium">Alamat Email:</span>
                         <span class="font-bold text-slate-900 text-right">{{ $user->email }}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b border-slate-100">
+                        <span class="text-slate-500 font-medium">Status Konfirmasi Email:</span>
+                        @if($user->hasVerifiedEmail())
+                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                ✓ Terverifikasi ({{ $user->email_verified_at->format('d/m/Y H:i') }})
+                            </span>
+                        @else
+                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-amber-50 text-amber-700 border border-amber-200">
+                                ⏳ Belum Terverifikasi
+                            </span>
+                        @endif
                     </div>
                     <div class="flex justify-between py-1 border-b border-slate-100">
                         <span class="text-slate-500 font-medium">Tempat, Tanggal Lahir:</span>

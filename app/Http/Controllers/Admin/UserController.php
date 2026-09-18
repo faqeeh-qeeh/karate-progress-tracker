@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\AccountActivationMail;
 use App\Models\KohaiProfile;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -68,7 +72,7 @@ class UserController extends Controller
     }
 
     /**
-     * Simpan akun pengguna baru ke basis data.
+     * Simpan akun pengguna baru ke basis data dan kirim email aktivasi.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -82,7 +86,7 @@ class UserController extends Controller
             'gender' => ['required', 'in:male,female'],
             'phone' => ['required', 'string', 'max:20'],
             'address' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'password' => ['nullable', 'string', 'min:6', 'confirmed'],
         ], [
             'name.required' => 'Nama lengkap pengguna wajib diisi.',
             'email.required' => 'Alamat email wajib diisi.',
@@ -95,10 +99,12 @@ class UserController extends Controller
             'gender.in' => 'Pilihan jenis kelamin tidak valid.',
             'phone.required' => 'Nomor kontak/telepon wajib diisi.',
             'address.required' => 'Alamat lengkap wajib diisi.',
-            'password.required' => 'Password wajib diisi.',
-            'password.min' => 'Password minimal 6 karakter.',
+            'password.min' => 'Password minimal 6 karakter jika diisi manual.',
             'password.confirmed' => 'Konfirmasi password tidak cocok.',
         ]);
+
+        // Jika password tidak diisi oleh admin, generate password acak sementara
+        $rawPassword = !empty($validated['password']) ? $validated['password'] : Str::random(32);
 
         $user = User::create([
             'name' => $validated['name'],
@@ -109,7 +115,8 @@ class UserController extends Controller
             'gender' => $validated['gender'],
             'phone' => $validated['phone'],
             'address' => $validated['address'],
-            'password' => Hash::make($validated['password']),
+            'password' => Hash::make($rawPassword),
+            'email_verified_at' => null, // Belum terverifikasi sebelum user membuka link
         ]);
 
         $kohaiRole = Role::whereRaw('LOWER(nama) = ?', ['kohai'])->first();
@@ -120,8 +127,36 @@ class UserController extends Controller
             ]);
         }
 
+        // Kirim email aktivasi dan pengaturan kata sandi
+        $emailStatusMsg = '';
+        try {
+            Mail::to($user->email)->send(new AccountActivationMail($user));
+            $emailStatusMsg = ' dan email arahan aktivasi akun telah dikirimkan ke ' . $user->email . '.';
+        } catch (\Exception $e) {
+            Log::error('Gagal mengirim email aktivasi ke ' . $user->email . ': ' . $e->getMessage());
+            $emailStatusMsg = ', namun pengiriman email aktivasi mengalami kendala teknis (cek konfigurasi mailer).';
+        }
+
         return redirect()->route('admin.users.index')
-            ->with('success', 'Akun pengguna "' . $validated['name'] . '" berhasil ditambahkan.');
+            ->with('success', 'Akun pengguna "' . $validated['name'] . '" berhasil ditambahkan' . $emailStatusMsg);
+    }
+
+    /**
+     * Kirim ulang email arahan & aktivasi akun ke pengguna.
+     */
+    public function resendActivation(User $user): RedirectResponse
+    {
+        if ($user->hasVerifiedEmail()) {
+            return back()->with('info', 'Email pengguna "' . $user->name . '" sudah terverifikasi sebelumnya.');
+        }
+
+        try {
+            Mail::to($user->email)->send(new AccountActivationMail($user));
+            return back()->with('success', 'Email aktivasi dan tautan pengaturan kata sandi berhasil dikirim ulang ke "' . $user->email . '".');
+        } catch (\Exception $e) {
+            Log::error('Gagal mengirim ulang email aktivasi ke ' . $user->email . ': ' . $e->getMessage());
+            return back()->with('error', 'Gagal mengirim ulang email: ' . $e->getMessage());
+        }
     }
 
     /**

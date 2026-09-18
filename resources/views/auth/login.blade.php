@@ -77,6 +77,9 @@
                 <label for="password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
                     Kata Sandi
                 </label>
+                <a href="{{ route('password.request') }}" class="text-xs text-brand-primary hover:text-brand-secondary font-semibold transition">
+                    Lupa kata sandi?
+                </a>
             </div>
             <div class="relative rounded-xl">
                 <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">

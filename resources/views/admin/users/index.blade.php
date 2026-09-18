@@ -98,9 +98,16 @@
                 <!-- User Details -->
                 <div class="space-y-2">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <div class="flex items-center gap-2.5 text-xs text-slate-600 bg-slate-50/80 p-2.5 rounded-xl border border-slate-100">
-                            <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                            <span class="truncate font-medium">{{ $u->email }}</span>
+                        <div class="flex items-center justify-between gap-2.5 text-xs text-slate-600 bg-slate-50/80 p-2.5 rounded-xl border border-slate-100">
+                            <div class="flex items-center gap-2 truncate">
+                                <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                <span class="truncate font-medium">{{ $u->email }}</span>
+                            </div>
+                            @if($u->hasVerifiedEmail())
+                                <span class="px-2 py-0.5 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full shrink-0">Aktif</span>
+                            @else
+                                <span class="px-2 py-0.5 text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded-full shrink-0">Pending</span>
+                            @endif
                         </div>
                         <div class="flex items-center justify-between gap-2 text-xs text-slate-600 bg-slate-50/80 p-2.5 rounded-xl border border-slate-100">
                             <div class="flex items-center gap-2 truncate">
@@ -116,7 +123,7 @@
                     <div class="flex items-center justify-between text-xs text-slate-500 pt-0.5 px-1">
                         <span class="flex items-center gap-1.5">
                             <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            <span>TTL / Dibuat:</span>
+                            <span>TTL:</span>
                         </span>
                         <span class="font-bold text-slate-700">{{ $u->birth_place }}, {{ $u->birth_date ? $u->birth_date->format('d M Y') : '-' }}</span>
                     </div>
@@ -127,8 +134,18 @@
                     <!-- Detail Biodata Button -->
                     <a href="{{ route('admin.users.show', $u->id) }}" class="flex-1 py-2.5 px-3 bg-blue-50 hover:bg-blue-100 text-brand-primary border border-blue-200/80 text-xs font-bold rounded-xl transition-all shadow-xs flex items-center justify-center gap-1.5">
                         <svg class="w-4 h-4 text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                        <span>Lihat Biodata</span>
+                        <span>Biodata</span>
                     </a>
+
+                    @if(! $u->hasVerifiedEmail())
+                        <!-- Resend Activation Button -->
+                        <form action="{{ route('admin.users.resend-activation', $u->id) }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="py-2.5 px-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/80 text-xs font-bold rounded-xl transition-all shadow-xs flex items-center justify-center" title="Kirim Ulang Email Aktivasi">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            </button>
+                        </form>
+                    @endif
 
                     <!-- Edit Button -->
                     <a href="{{ route('admin.users.edit', $u->id) }}" class="flex-1 py-2.5 px-3 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200/80 text-xs font-bold rounded-xl transition-all shadow-xs flex items-center justify-center gap-1.5">
@@ -168,7 +185,7 @@
                     <tr>
                         <th class="py-3.5 px-4 sm:px-6">ID</th>
                         <th class="py-3.5 px-4 sm:px-6">Nama Pengguna</th>
-                        <th class="py-3.5 px-4 sm:px-6">Alamat Email</th>
+                        <th class="py-3.5 px-4 sm:px-6">Alamat Email & Status</th>
                         <th class="py-3.5 px-4 sm:px-6">Role / Jabatan</th>
                         <th class="py-3.5 px-4 sm:px-6">Tanggal Dibuat</th>
                         <th class="py-3.5 px-4 sm:px-6 text-center">Aksi Administrator</th>
@@ -190,7 +207,18 @@
                                 </div>
                             </td>
                             <td class="py-4 px-4 sm:px-6 text-slate-600 text-xs">
-                                <p class="font-bold text-slate-800">{{ $u->email }}</p>
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold text-slate-800">{{ $u->email }}</span>
+                                    @if($u->hasVerifiedEmail())
+                                        <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                            ✓ Terverifikasi
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
+                                            ⏳ Belum Aktivasi
+                                        </span>
+                                    @endif
+                                </div>
                                 <p class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5 mt-0.5">
                                     <span>📞 {{ $u->phone }}</span>
                                     <span>•</span>
@@ -220,6 +248,16 @@
                                     <a href="{{ route('admin.users.show', $u->id) }}" class="p-2 rounded-xl bg-blue-50 text-brand-primary hover:bg-blue-100 border border-blue-200/80 transition-colors" title="Lihat Biodata Lengkap">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                     </a>
+
+                                    @if(! $u->hasVerifiedEmail())
+                                        <!-- Resend Activation Button -->
+                                        <form action="{{ route('admin.users.resend-activation', $u->id) }}" method="POST" class="inline">
+                                            @csrf
+                                            <button type="submit" class="p-2 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200/80 transition-colors" title="Kirim Ulang Email Aktivasi & Atur Kata Sandi">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                            </button>
+                                        </form>
+                                    @endif
 
                                     <!-- Edit Button -->
                                     <a href="{{ route('admin.users.edit', $u->id) }}" class="p-2 rounded-xl bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200/80 transition-colors" title="Edit Akun">

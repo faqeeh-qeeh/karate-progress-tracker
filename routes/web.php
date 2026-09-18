@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountActivationController;
 use App\Http\Controllers\Admin\AcademicClassController;
 use App\Http\Controllers\Admin\BeltController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Admin\RankController;
 use App\Http\Controllers\Admin\StudyProgramController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Kohai\AttendanceController as KohaiAttendanceController;
 use App\Http\Controllers\Kohai\DashboardController as KohaiDashboardController;
 use App\Http\Controllers\Kohai\KumiteController as KohaiKumiteController;
@@ -30,7 +32,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// Guest Routes (Auth Manual)
+// Guest Routes (Auth Manual & OAuth)
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.post');
@@ -40,7 +42,20 @@ Route::middleware('guest')->group(function () {
     // Google OAuth Routes
     Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
     Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+
+    // Lupa Kata Sandi & Verifikasi OTP (5 Menit) + Reset Sandi (2 Jam)
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('password.request');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendOtp'])->name('password.email');
+    Route::get('/verify-otp', [ForgotPasswordController::class, 'showVerifyOtpForm'])->name('password.otp.show');
+    Route::post('/verify-otp', [ForgotPasswordController::class, 'verifyOtp'])->name('password.otp.verify');
+    Route::post('/resend-otp', [ForgotPasswordController::class, 'resendOtp'])->name('password.otp.resend');
+    Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset.form');
+    Route::post('/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword'])->name('password.reset.submit');
 });
+
+// Aktivasi Akun & Pengaturan Kata Sandi Pengguna Baru (Signed URL)
+Route::get('/activate-account/{id}/{hash}', [AccountActivationController::class, 'show'])->name('account.activate');
+Route::post('/activate-account/{id}/{hash}', [AccountActivationController::class, 'activate'])->name('account.activate.post');
 
 // Authenticated Logout Route
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
@@ -50,6 +65,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile.index');
     Route::put('/profile', [AdminProfileController::class, 'update'])->name('profile.update');
+    Route::post('users/{user}/resend-activation', [UserController::class, 'resendActivation'])->name('users.resend-activation');
     Route::resource('users', UserController::class);
     Route::resource('belts', BeltController::class);
     Route::resource('ranks', RankController::class)->only(['store', 'update', 'destroy']);

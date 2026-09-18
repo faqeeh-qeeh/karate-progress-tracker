@@ -42,8 +42,20 @@ class AuthController extends Controller
         $remember = $request->boolean('remember');
 
         if (Auth::attempt($credentials, $remember)) {
-            $request->session()->regenerate();
             $user = Auth::user();
+
+            // Cek apakah email sudah terverifikasi / akun telah diaktivasi
+            if (! $user->hasVerifiedEmail()) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return back()
+                    ->withErrors(['email' => 'Akun Anda belum diaktivasi. Silakan periksa inbox/spam email Anda dan klik tautan konfirmasi untuk mengaktifkan akun serta mengatur kata sandi terlebih dahulu.'])
+                    ->onlyInput('email');
+            }
+
+            $request->session()->regenerate();
 
             return redirect($user->getDashboardRoute())
                 ->with('success', 'Selamat datang kembali, ' . $user->name . '!');
