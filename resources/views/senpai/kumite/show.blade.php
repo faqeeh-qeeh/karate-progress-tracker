@@ -11,8 +11,14 @@
                 <span>🥋 EVALUASI TANDING WKF</span>
             </div>
             <h1 class="text-2xl font-extrabold text-brand-black">Detail Raport Kumite</h1>
-            <p class="text-xs text-gray-500 mt-1">
-                Pertandingan tanggal {{ $kumiteReport->match_date->format('d M Y') }} • Jam {{ $kumiteReport->match_time }} WIB
+            <p class="text-xs text-gray-500 mt-1 flex items-center flex-wrap gap-2 font-medium">
+                <span>Pertandingan tanggal {{ $kumiteReport->match_date->format('d M Y') }}</span>
+                <span>•</span>
+                <span>Jam {{ $kumiteReport->match_time }} WIB</span>
+                <span>•</span>
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200 font-bold">
+                    ⏱️ Durasi: {{ $kumiteReport->formatted_duration }} ({{ $kumiteReport->human_duration }})
+                </span>
             </p>
         </div>
         <a href="{{ route('senpai.kumite.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs font-bold rounded-xl transition">
@@ -46,6 +52,11 @@
                     @else
                         <p class="text-xs text-gray-300 font-bold uppercase tracking-wider">HASIL: SERI (DRAW) 🤝</p>
                     @endif
+                </div>
+                <div class="pt-1">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/10 text-gray-200 text-[11px] font-mono border border-white/10">
+                        ⏱️ Durasi Ronde: {{ $kumiteReport->formatted_duration }} ({{ $kumiteReport->human_duration }})
+                    </span>
                 </div>
             </div>
 
@@ -101,39 +112,112 @@
                         <td class="py-3 px-6 font-bold text-brand-primary bg-blue-50/20">{{ $kumiteReport->ao_yuko }} ({{ $kumiteReport->ao_yuko * 1 }} Pts)</td>
                     </tr>
                     <tr>
-                        <td class="py-3 px-6 text-gray-700 bg-red-50/20">{{ $kumiteReport->aka_c1 }} kali</td>
-                        <td class="py-3 px-6 font-bold text-gray-700">Pelanggaran C1 (Category 1)</td>
-                        <td class="py-3 px-6 text-gray-700 bg-blue-50/20">{{ $kumiteReport->ao_c1 }} kali</td>
-                    </tr>
-                    <tr>
-                        <td class="py-3 px-6 text-gray-700 bg-red-50/20">{{ $kumiteReport->aka_c2 }} kali</td>
-                        <td class="py-3 px-6 font-bold text-gray-700">Pelanggaran C2 (Category 2)</td>
-                        <td class="py-3 px-6 text-gray-700 bg-blue-50/20">{{ $kumiteReport->ao_c2 }} kali</td>
-                    </tr>
-                    <tr>
-                        <td class="py-3 px-6 bg-red-50/20"><span class="text-xs font-bold">{{ $kumiteReport->aka_ce ? 'Ya' : '-' }}</span></td>
-                        <td class="py-3 px-6 font-bold text-gray-700">CE (Chukoku / Peringatan)</td>
-                        <td class="py-3 px-6 bg-blue-50/20"><span class="text-xs font-bold">{{ $kumiteReport->ao_ce ? 'Ya' : '-' }}</span></td>
-                    </tr>
-                    <tr>
-                        <td class="py-3 px-6 bg-red-50/20"><span class="text-xs font-bold">{{ $kumiteReport->aka_hc ? 'Ya' : '-' }}</span></td>
-                        <td class="py-3 px-6 font-bold text-gray-700">HC (Hansoku Chui)</td>
-                        <td class="py-3 px-6 bg-blue-50/20"><span class="text-xs font-bold">{{ $kumiteReport->ao_hc ? 'Ya' : '-' }}</span></td>
-                    </tr>
-                    <tr>
-                        <td class="py-3 px-6 bg-red-50/20"><span class="text-xs font-extrabold text-red-700">{{ $kumiteReport->aka_h ? 'Diskualifikasi' : '-' }}</span></td>
-                        <td class="py-3 px-6 font-bold text-gray-700">H (Hansoku / Pelanggaran Berat)</td>
-                        <td class="py-3 px-6 bg-blue-50/20"><span class="text-xs font-extrabold text-red-700">{{ $kumiteReport->ao_h ? 'Diskualifikasi' : '-' }}</span></td>
+                        <td class="py-3 px-6 text-gray-700 bg-red-50/20 font-bold">
+                            @if($kumiteReport->aka_fouls == 0)
+                                <span class="text-xs text-emerald-600 font-bold">0 (Bersih / Nihil)</span>
+                            @else
+                                <span class="text-xs text-red-700 font-bold">{{ $kumiteReport->aka_fouls }} Poin Pelanggaran</span>
+                            @endif
+                        </td>
+                        <td class="py-3 px-6 font-bold text-gray-700">Poin Pelanggaran WKF</td>
+                        <td class="py-3 px-6 text-gray-700 bg-blue-50/20 font-bold">
+                            @if($kumiteReport->ao_fouls == 0)
+                                <span class="text-xs text-emerald-600 font-bold">0 (Bersih / Nihil)</span>
+                            @else
+                                <span class="text-xs text-brand-primary font-bold">{{ $kumiteReport->ao_fouls }} Poin Pelanggaran</span>
+                            @endif
+                        </td>
                     </tr>
                     <tr class="bg-gray-50 font-bold">
-                        <td class="py-3.5 px-6 text-red-700 bg-red-100/50">Serangan: {{ $kumiteReport->aka_score_attack }}/10 | Akurasi: {{ $kumiteReport->aka_score_accuracy }}/10</td>
+                        <td class="py-3.5 px-6 text-red-700 bg-red-100/50">
+                            Serangan: {{ $kumiteReport->aka_score_attack }} kali | Akurasi: {{ $kumiteReport->aka_score_accuracy }}%
+                        </td>
                         <td class="py-3.5 px-6 text-brand-black">EVALUASI TEKNIS SENPAI</td>
-                        <td class="py-3.5 px-6 text-brand-primary bg-blue-100/50">Serangan: {{ $kumiteReport->ao_score_attack }}/10 | Akurasi: {{ $kumiteReport->ao_score_accuracy }}/10</td>
+                        <td class="py-3.5 px-6 text-brand-primary bg-blue-100/50">
+                            Serangan: {{ $kumiteReport->ao_score_attack }} kali | Akurasi: {{ $kumiteReport->ao_score_accuracy }}%
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
+    <!-- Senshu History & Cancelling Log Timeline -->
+    @if($kumiteReport->senshuLogs && $kumiteReport->senshuLogs->count() > 0)
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-xs p-6 space-y-4">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="p-2 rounded-xl bg-amber-50 text-amber-700 font-black text-sm">📜</span>
+                    <div>
+                        <h3 class="text-base font-extrabold text-brand-black">Riwayat & Log Keputusan SENSHU (Senshu Cancelling)</h3>
+                        <p class="text-xs text-gray-500">Kronologi pemberian dan pembatalan Senshu selama pertandingan berlangsung</p>
+                    </div>
+                </div>
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-700">
+                    {{ $kumiteReport->senshuLogs->count() }} Keputusan Dicatat
+                </span>
+            </div>
+
+            <div class="relative pl-6 space-y-3 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-gray-200">
+                @foreach($kumiteReport->senshuLogs->sortBy('sequence') as $log)
+                    <div class="relative flex items-start gap-4">
+                        <div class="absolute -left-6 top-1.5 w-5 h-5 rounded-full border-2 border-white shadow-xs flex items-center justify-center text-[10px] font-black {{ $log->status === 'cancelled' ? 'bg-red-500 text-white' : ($log->status === 'active' ? 'bg-emerald-500 text-white' : 'bg-gray-400 text-white') }}">
+                            @if($log->status === 'cancelled')
+                                ✕
+                            @elseif($log->status === 'active')
+                                ✓
+                            @else
+                                -
+                            @endif
+                        </div>
+
+                        <div class="flex-1 bg-gray-50 rounded-xl p-3 border {{ $log->status === 'active' ? 'border-emerald-200 bg-emerald-50/30' : ($log->status === 'cancelled' ? 'border-red-200 bg-red-50/20' : 'border-gray-200') }}">
+                            <div class="flex items-center justify-between flex-wrap gap-2 mb-1">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs font-extrabold text-gray-700">Tahap #{{ $log->sequence }}</span>
+                                    @if($log->corner === 'aka')
+                                        <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-red-100 text-red-800 border border-red-200">
+                                            🔴 AKA ({{ $kumiteReport->akaKohai->name }})
+                                        </span>
+                                    @elseif($log->corner === 'ao')
+                                        <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-100 text-blue-800 border border-blue-200">
+                                            🔵 AO ({{ $kumiteReport->aoKohai->name }})
+                                        </span>
+                                    @else
+                                        <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-gray-200 text-gray-700">
+                                            ⚪ Tidak Ada Senshu
+                                        </span>
+                                    @endif
+                                </div>
+
+                                <div>
+                                    @if($log->status === 'active')
+                                        <span class="inline-flex items-center gap-1 text-[11px] font-extrabold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Keputusan Akhir Berlaku
+                                        </span>
+                                    @elseif($log->status === 'cancelled')
+                                        <span class="inline-flex items-center gap-1 text-[11px] font-extrabold text-red-700 bg-red-100 px-2 py-0.5 rounded-full">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Dibatalkan (Senshu Cancelled)
+                                        </span>
+                                    @else
+                                        <span class="text-[11px] font-bold text-gray-500 bg-gray-200 px-2 py-0.5 rounded-full">
+                                            Nihil
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            @if($log->notes)
+                                <p class="text-xs text-gray-600 mt-1 italic bg-white/80 p-2 rounded border border-gray-100">
+                                    Catatan: {{ $log->notes }}
+                                </p>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
 
     <!-- Separate Evaluation Notes Cards for AKA & AO -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">

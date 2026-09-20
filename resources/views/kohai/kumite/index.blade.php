@@ -7,9 +7,9 @@
     <!-- Header Banner -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-sm">
         <div>
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-secondary/15 text-brand-black text-xs font-bold mb-1 border border-brand-secondary/30">
+            {{-- <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-secondary/15 text-brand-black text-xs font-bold mb-1 border border-brand-secondary/30">
                 <span>🥋 RAPORT KUMITE WKF</span>
-            </div>
+            </div> --}}
             <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Riwayat Pertandingan Kumite Saya</h1>
             <p class="text-xs text-slate-500 mt-1 font-medium">Pantau perolehan poin WKF, riwayat tanding, serta evaluasi instruktur Senpai</p>
         </div>
@@ -36,7 +36,11 @@
                         </span>
                         <div>
                             <p class="text-xs font-bold text-slate-900">{{ $r->match_date->format('d M Y') }}</p>
-                            <p class="text-[10px] text-slate-400 font-mono">{{ $r->match_time }} WIB</p>
+                            <p class="text-[10px] text-slate-400 font-mono flex items-center gap-1.5">
+                                <span>{{ $r->match_time }} WIB</span>
+                                <span>•</span>
+                                <span class="text-amber-700 font-bold">⏱️ {{ $r->formatted_duration }}</span>
+                            </p>
                         </div>
                     </div>
                     <div>
@@ -143,7 +147,11 @@
                         <tr class="hover:bg-slate-50/80 transition-colors">
                             <td class="py-4 px-6 text-xs text-slate-600 font-medium">
                                 <p class="font-bold text-slate-900">{{ $r->match_date->format('d M Y') }}</p>
-                                <p class="text-slate-400 font-mono">{{ $r->match_time }} WIB</p>
+                                <p class="text-slate-400 font-mono flex items-center gap-1.5 mt-0.5">
+                                    <span>{{ $r->match_time }} WIB</span>
+                                    <span>•</span>
+                                    <span class="text-amber-700 font-bold bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200/60">⏱️ {{ $r->formatted_duration }}</span>
+                                </p>
                             </td>
 
                             <!-- My Corner -->

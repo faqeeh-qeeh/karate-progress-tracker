@@ -229,25 +229,34 @@ class AttendanceAndKumiteSeeder extends Seeder
             $akaWazaari = rand(0, 2);
             $akaYuko = rand(0, 4);
             $akaTotal = ($akaIppon * 3) + ($akaWazaari * 2) + ($akaYuko * 1);
-            $akaC1 = rand(0, 2);
-            $akaC2 = rand(0, 2);
-            $akaCE = ($akaC1 >= 2);
+            $akaFouls = rand(0, 3);
+            $akaAttack = rand(10, 30);
+            $akaHits = $akaIppon + $akaWazaari + $akaYuko;
+            $akaAccuracy = $akaAttack > 0 ? round(($akaHits / $akaAttack) * 100, 1) : 0;
 
             // Poin & Pelanggaran AO
             $aoIppon = rand(0, 2);
             $aoWazaari = rand(0, 2);
             $aoYuko = rand(0, 4);
             $aoTotal = ($aoIppon * 3) + ($aoWazaari * 2) + ($aoYuko * 1);
-            $aoC1 = rand(0, 2);
-            $aoC2 = rand(0, 2);
-            $aoCE = ($aoC1 >= 2);
+            $aoFouls = rand(0, 3);
+            $aoAttack = rand(10, 30);
+            $aoHits = $aoIppon + $aoWazaari + $aoYuko;
+            $aoAccuracy = $aoAttack > 0 ? round(($aoHits / $aoAttack) * 100, 1) : 0;
 
             // Senshu corner
             $senshu = rand(0, 1) === 1 ? 'aka' : 'ao';
 
-            // Tentukan Pemenang
+            // Tentukan Pemenang (memperhitungkan Hansoku jika fouls >= 4)
+            $akaDisqualified = ($akaFouls >= 4);
+            $aoDisqualified = ($aoFouls >= 4);
             $winnerId = null;
-            if ($akaTotal > $aoTotal) {
+
+            if ($akaDisqualified && !$aoDisqualified) {
+                $winnerId = $aoKohai->id;
+            } elseif ($aoDisqualified && !$akaDisqualified) {
+                $winnerId = $akaKohai->id;
+            } elseif ($akaTotal > $aoTotal) {
                 $winnerId = $akaKohai->id;
             } elseif ($aoTotal > $akaTotal) {
                 $winnerId = $aoKohai->id;
@@ -260,37 +269,33 @@ class AttendanceAndKumiteSeeder extends Seeder
                 }
             }
 
-            KumiteReport::create([
+            $durationPool = [90, 120, 180, 180, 180, 300];
+            $durationSeconds = $durationPool[$i % count($durationPool)];
+
+            $report = KumiteReport::create([
                 'senpai_id' => $senpai->id,
                 'aka_kohai_id' => $akaKohai->id,
                 'ao_kohai_id' => $aoKohai->id,
                 'match_date' => $matchDate->format('Y-m-d'),
                 'match_time' => $matchTime,
+                'duration_seconds' => $durationSeconds,
                 'senshu_corner' => $senshu,
 
                 'aka_ippon' => $akaIppon,
                 'aka_wazaari' => $akaWazaari,
                 'aka_yuko' => $akaYuko,
-                'aka_c1' => $akaC1,
-                'aka_c2' => $akaC2,
-                'aka_ce' => $akaCE,
-                'aka_hc' => false,
-                'aka_h' => false,
-                'aka_score_attack' => rand(70, 98),
-                'aka_score_accuracy' => rand(65, 95),
+                'aka_fouls' => $akaFouls,
+                'aka_score_attack' => $akaAttack,
+                'aka_score_accuracy' => $akaAccuracy,
                 'aka_total_score' => $akaTotal,
                 'aka_evaluation_notes' => $evalNotesAKA[$i % count($evalNotesAKA)],
 
                 'ao_ippon' => $aoIppon,
                 'ao_wazaari' => $aoWazaari,
                 'ao_yuko' => $aoYuko,
-                'ao_c1' => $aoC1,
-                'ao_c2' => $aoC2,
-                'ao_ce' => $aoCE,
-                'ao_hc' => false,
-                'ao_h' => false,
-                'ao_score_attack' => rand(70, 98),
-                'ao_score_accuracy' => rand(65, 95),
+                'ao_fouls' => $aoFouls,
+                'ao_score_attack' => $aoAttack,
+                'ao_score_accuracy' => $aoAccuracy,
                 'ao_total_score' => $aoTotal,
                 'ao_evaluation_notes' => $evalNotesAO[$i % count($evalNotesAO)],
 
@@ -298,6 +303,34 @@ class AttendanceAndKumiteSeeder extends Seeder
                 'created_at' => $matchDate,
                 'updated_at' => $matchDate,
             ]);
+
+            // Seed Senshu logs (showcasing Senshu Cancelling on some matches)
+            if ($i % 3 === 0) {
+                // Match with Senshu Cancelling
+                $initialCorner = ($senshu === 'aka') ? 'ao' : 'aka';
+                \App\Models\KumiteSenshuLog::create([
+                    'kumite_report_id' => $report->id,
+                    'sequence' => 1,
+                    'corner' => $initialCorner,
+                    'status' => 'cancelled',
+                    'notes' => 'Senshu pertama dibatalkan wasit karena pelanggaran Kategori 2 di detik akhir.',
+                ]);
+                \App\Models\KumiteSenshuLog::create([
+                    'kumite_report_id' => $report->id,
+                    'sequence' => 2,
+                    'corner' => $senshu,
+                    'status' => 'active',
+                    'notes' => 'Pemberian Senshu baru setelah peninjauan wasit tatami.',
+                ]);
+            } elseif ($senshu) {
+                \App\Models\KumiteSenshuLog::create([
+                    'kumite_report_id' => $report->id,
+                    'sequence' => 1,
+                    'corner' => $senshu,
+                    'status' => 'active',
+                    'notes' => 'Poin pertama tanpa pembatalan.',
+                ]);
+            }
         }
     }
 }

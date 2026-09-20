@@ -28,7 +28,11 @@
                         </span>
                         <div>
                             <p class="text-xs font-bold text-slate-900">{{ $r->match_date->format('d M Y') }}</p>
-                            <p class="text-[10px] text-slate-400 font-mono">{{ $r->match_time }} WIB</p>
+                            <p class="text-[10px] text-slate-400 font-mono flex items-center gap-1.5">
+                                <span>{{ $r->match_time }} WIB</span>
+                                <span>•</span>
+                                <span class="text-amber-700 font-bold">⏱️ {{ $r->formatted_duration }}</span>
+                            </p>
                         </div>
                     </div>
                     <div>
@@ -110,7 +114,11 @@
                         <tr class="hover:bg-slate-50/80 transition-colors">
                             <td class="py-4 px-6 text-xs text-slate-600 font-medium">
                                 <p class="font-bold text-slate-900">{{ $r->match_date->format('d M Y') }}</p>
-                                <p class="text-slate-400 font-mono">{{ $r->match_time }} WIB</p>
+                                <p class="text-slate-400 font-mono flex items-center gap-1.5 mt-0.5">
+                                    <span>{{ $r->match_time }} WIB</span>
+                                    <span>•</span>
+                                    <span class="text-amber-700 font-bold bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200/60">⏱️ {{ $r->formatted_duration }}</span>
+                                </p>
                             </td>
 
                             <!-- AKA Kohai -->

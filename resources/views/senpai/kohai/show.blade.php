@@ -178,7 +178,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                 </div>
             </div>
-            <p class="text-3xl font-black text-brand-primary">{{ $avgAttack }} <span class="text-sm font-semibold text-gray-400">Pts</span></p>
+            <p class="text-3xl font-black text-brand-primary">{{ $avgAttack }} <span class="text-sm font-semibold text-gray-400">Kali</span></p>
         </div>
 
         <!-- Rata-rata Accuracy (3 Bulan Terakhir) -->
@@ -189,7 +189,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                 </div>
             </div>
-            <p class="text-3xl font-black text-brand-secondary">{{ $avgAccuracy }} <span class="text-sm font-semibold text-gray-400">Pts</span></p>
+            <p class="text-3xl font-black text-brand-secondary">{{ $avgAccuracy }} <span class="text-sm font-semibold text-gray-400">%</span></p>
         </div>
     </div>
 
@@ -198,16 +198,16 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-gray-100 pb-4">
             <div>
                 <h2 class="text-lg font-extrabold text-brand-black">Grafik Analisis Performa (3 Bulan Terakhir)</h2>
-                <p class="text-xs text-gray-500">Tren perkembangan poin Serangan (Attack) dan Akurasi (Accuracy) Kohai dalam 3 bulan terakhir</p>
+                <p class="text-xs text-gray-500">Tren perkembangan jumlah Serangan (Attack) dan Akurasi (Accuracy %) Kohai dalam 3 bulan terakhir</p>
             </div>
             <div class="flex items-center gap-4 text-xs font-bold">
                 <div class="flex items-center gap-2">
                     <span class="w-3 h-3 rounded-full bg-[#146C94] inline-block"></span>
-                    <span class="text-gray-700">Skor Serangan (Attack)</span>
+                    <span class="text-gray-700">Jumlah Serangan (Attack)</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="w-3 h-3 rounded-full bg-[#19A7CE] inline-block"></span>
-                    <span class="text-gray-700">Skor Akurasi (Accuracy)</span>
+                    <span class="text-gray-700">Persentase Akurasi (%)</span>
                 </div>
             </div>
         </div>
@@ -313,9 +313,9 @@
 
                             <!-- Attack / Accuracy -->
                             <td class="py-4 px-6 text-center text-xs">
-                                <span class="font-extrabold text-brand-primary">{{ $myAttack }}</span>
+                                <span class="font-extrabold text-brand-primary">{{ $myAttack }} Kali</span>
                                 <span class="text-gray-400 mx-0.5">/</span>
-                                <span class="font-extrabold text-brand-secondary">{{ $myAccuracy }}</span>
+                                <span class="font-extrabold text-brand-secondary">{{ $myAccuracy }}%</span>
                             </td>
 
                             <!-- Evaluation Notes -->
@@ -367,7 +367,7 @@
                     labels: labels,
                     datasets: [
                         {
-                            label: 'Skor Serangan (Attack)',
+                            label: 'Jumlah Serangan (Attack)',
                             data: attackData,
                             borderColor: '#146C94',
                             backgroundColor: 'rgba(20, 108, 148, 0.1)',
@@ -379,7 +379,7 @@
                             pointHoverRadius: 7
                         },
                         {
-                            label: 'Skor Akurasi (Accuracy)',
+                            label: 'Persentase Akurasi (%)',
                             data: accuracyData,
                             borderColor: '#19A7CE',
                             backgroundColor: 'rgba(255, 255, 255, 0)',
@@ -412,7 +412,10 @@
                             cornerRadius: 10,
                             callbacks: {
                                 label: function(context) {
-                                    return ' ' + context.dataset.label + ': ' + context.parsed.y + ' Pts';
+                                    if (context.dataset.label.includes('%') || context.dataset.label.includes('Akurasi')) {
+                                        return ' ' + context.dataset.label + ': ' + context.parsed.y + '%';
+                                    }
+                                    return ' ' + context.dataset.label + ': ' + context.parsed.y + ' Serangan';
                                 }
                             }
                         }

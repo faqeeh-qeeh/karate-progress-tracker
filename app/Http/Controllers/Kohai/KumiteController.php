@@ -41,7 +41,7 @@ class KumiteController extends Controller
             abort(403, 'Akses Ditolak. Anda hanya dapat melihat Raport Kumite untuk pertandingan yang Anda ikuti.');
         }
 
-        $kumiteReport->load(['senpai', 'akaKohai', 'aoKohai', 'winner']);
+        $kumiteReport->load(['senpai', 'akaKohai', 'aoKohai', 'winner', 'senshuLogs']);
 
         return view('kohai.kumite.show', compact('kumiteReport'));
     }

@@ -19,9 +19,10 @@ return new class extends Migration
             $table->foreignId('aka_kohai_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('ao_kohai_id')->constrained('users')->onDelete('cascade');
             
-            // Waktu Pertandingan Spesifik
+            // Waktu Pertandingan Spesifik & Durasi
             $table->date('match_date');
             $table->time('match_time');
+            $table->integer('duration_seconds')->default(180); // Durasi tanding (detik), default 3 menit
             
             // Senshu Single Selection ('aka', 'ao', or null)
             $table->string('senshu_corner')->nullable();
@@ -30,13 +31,9 @@ return new class extends Migration
             $table->integer('aka_ippon')->default(0);
             $table->integer('aka_wazaari')->default(0);
             $table->integer('aka_yuko')->default(0);
-            $table->integer('aka_c1')->default(0);
-            $table->integer('aka_c2')->default(0);
-            $table->boolean('aka_ce')->default(false);
-            $table->boolean('aka_hc')->default(false);
-            $table->boolean('aka_h')->default(false);
+            $table->integer('aka_fouls')->default(0); // Poin Pelanggaran (0 - 5)
             $table->integer('aka_score_attack')->default(0);
-            $table->integer('aka_score_accuracy')->default(0);
+            $table->decimal('aka_score_accuracy', 5, 2)->default(0);
             $table->integer('aka_total_score')->default(0);
             $table->text('aka_evaluation_notes')->nullable();
 
@@ -44,13 +41,9 @@ return new class extends Migration
             $table->integer('ao_ippon')->default(0);
             $table->integer('ao_wazaari')->default(0);
             $table->integer('ao_yuko')->default(0);
-            $table->integer('ao_c1')->default(0);
-            $table->integer('ao_c2')->default(0);
-            $table->boolean('ao_ce')->default(false);
-            $table->boolean('ao_hc')->default(false);
-            $table->boolean('ao_h')->default(false);
+            $table->integer('ao_fouls')->default(0); // Poin Pelanggaran (0 - 5)
             $table->integer('ao_score_attack')->default(0);
-            $table->integer('ao_score_accuracy')->default(0);
+            $table->decimal('ao_score_accuracy', 5, 2)->default(0);
             $table->integer('ao_total_score')->default(0);
             $table->text('ao_evaluation_notes')->nullable();
 

@@ -16,15 +16,12 @@ class KumiteReport extends Model
         'ao_kohai_id',
         'match_date',
         'match_time',
+        'duration_seconds',
         'senshu_corner',
         'aka_ippon',
         'aka_wazaari',
         'aka_yuko',
-        'aka_c1',
-        'aka_c2',
-        'aka_ce',
-        'aka_hc',
-        'aka_h',
+        'aka_fouls',
         'aka_score_attack',
         'aka_score_accuracy',
         'aka_total_score',
@@ -32,11 +29,7 @@ class KumiteReport extends Model
         'ao_ippon',
         'ao_wazaari',
         'ao_yuko',
-        'ao_c1',
-        'ao_c2',
-        'ao_ce',
-        'ao_hc',
-        'ao_h',
+        'ao_fouls',
         'ao_score_attack',
         'ao_score_accuracy',
         'ao_total_score',
@@ -46,13 +39,31 @@ class KumiteReport extends Model
 
     protected $casts = [
         'match_date' => 'date',
-        'aka_ce' => 'boolean',
-        'aka_hc' => 'boolean',
-        'aka_h' => 'boolean',
-        'ao_ce' => 'boolean',
-        'ao_hc' => 'boolean',
-        'ao_h' => 'boolean',
+        'duration_seconds' => 'integer',
+        'aka_score_accuracy' => 'float',
+        'ao_score_accuracy' => 'float',
+        'aka_fouls' => 'integer',
+        'ao_fouls' => 'integer',
     ];
+
+    public function getFormattedDurationAttribute(): string
+    {
+        $duration = $this->duration_seconds ?: 180;
+        $minutes = floor($duration / 60);
+        $seconds = $duration % 60;
+        return sprintf('%02d:%02d', $minutes, $seconds);
+    }
+
+    public function getHumanDurationAttribute(): string
+    {
+        $duration = $this->duration_seconds ?: 180;
+        $minutes = floor($duration / 60);
+        $seconds = $duration % 60;
+        if ($seconds > 0) {
+            return "{$minutes}m {$seconds}s";
+        }
+        return "{$minutes} Menit";
+    }
 
     public function senpai(): BelongsTo
     {
@@ -74,6 +85,11 @@ class KumiteReport extends Model
         return $this->belongsTo(User::class, 'winner_id');
     }
 
+    public function senshuLogs()
+    {
+        return $this->hasMany(KumiteSenshuLog::class, 'kumite_report_id')->orderBy('sequence', 'asc');
+    }
+
     public function hasAkaSenshu(): bool
     {
         return $this->senshu_corner === 'aka';
@@ -82,6 +98,11 @@ class KumiteReport extends Model
     public function hasAoSenshu(): bool
     {
         return $this->senshu_corner === 'ao';
+    }
+
+    public function hasSenshu(): bool
+    {
+        return in_array($this->senshu_corner, ['aka', 'ao']);
     }
 
     public static function calculatePoints(int $ippon, int $wazaari, int $yuko): int
