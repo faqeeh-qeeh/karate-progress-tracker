@@ -3,20 +3,20 @@
 
     {{-- Success Toast --}}
     @if (session('success'))
-        <div class="toast-item pointer-events-auto bg-white rounded-lg shadow-xl border border-gray-200/90 overflow-hidden transition-all duration-300 transform translate-x-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-item pointer-events-auto bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-200/90 dark:border-slate-800 overflow-hidden transition-all duration-300 transform translate-x-0" role="alert" aria-live="assertive" aria-atomic="true">
             <!-- Toast Header -->
-            <div class="bg-gray-50 px-3.5 py-2 border-b border-gray-200 flex items-center justify-between">
+            <div class="bg-gray-50 dark:bg-slate-800/80 px-3.5 py-2 border-b border-gray-200 dark:border-slate-700/80 flex items-center justify-between">
                 <div class="flex items-center gap-2 min-w-0">
                     <span class="w-3 h-3 rounded bg-emerald-500 shrink-0"></span>
-                    <strong class="text-xs font-bold text-gray-900 truncate">Karate Polindra</strong>
+                    <strong class="text-xs font-bold text-gray-900 dark:text-white truncate">Karate Polindra</strong>
                 </div>
                 <div class="flex items-center gap-2 shrink-0">
-                    <small class="text-[10px] text-gray-400 font-medium">baru saja</small>
-                    <button type="button" onclick="closeBootstrapToast(this.closest('.toast-item'))" class="text-gray-400 hover:text-gray-700 p-0.5 rounded transition text-base leading-none font-bold" aria-label="Close">&times;</button>
+                    <small class="text-[10px] text-gray-400 dark:text-slate-400 font-medium">baru saja</small>
+                    <button type="button" onclick="closeBootstrapToast(this.closest('.toast-item'))" class="text-gray-400 hover:text-gray-700 dark:text-slate-400 dark:hover:text-white p-0.5 rounded transition text-base leading-none font-bold" aria-label="Close">&times;</button>
                 </div>
             </div>
             <!-- Toast Body -->
-            <div class="p-3.5 text-xs sm:text-sm text-gray-700 font-medium leading-relaxed">
+            <div class="p-3.5 text-xs sm:text-sm text-gray-700 dark:text-slate-200 font-medium leading-relaxed">
                 {{ session('success') }}
             </div>
         </div>
@@ -24,20 +24,20 @@
 
     {{-- Error Toast --}}
     @if (session('error'))
-        <div class="toast-item pointer-events-auto bg-white rounded-lg shadow-xl border border-gray-200/90 overflow-hidden transition-all duration-300 transform translate-x-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-item pointer-events-auto bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-200/90 dark:border-slate-800 overflow-hidden transition-all duration-300 transform translate-x-0" role="alert" aria-live="assertive" aria-atomic="true">
             <!-- Toast Header -->
-            <div class="bg-gray-50 px-3.5 py-2 border-b border-gray-200 flex items-center justify-between">
+            <div class="bg-gray-50 dark:bg-slate-800/80 px-3.5 py-2 border-b border-gray-200 dark:border-slate-700/80 flex items-center justify-between">
                 <div class="flex items-center gap-2 min-w-0">
                     <span class="w-3 h-3 rounded bg-red-500 shrink-0"></span>
-                    <strong class="text-xs font-bold text-gray-900 truncate">Karate Polindra</strong>
+                    <strong class="text-xs font-bold text-gray-900 dark:text-white truncate">Karate Polindra</strong>
                 </div>
                 <div class="flex items-center gap-2 shrink-0">
-                    <small class="text-[10px] text-gray-400 font-medium">baru saja</small>
-                    <button type="button" onclick="closeBootstrapToast(this.closest('.toast-item'))" class="text-gray-400 hover:text-gray-700 p-0.5 rounded transition text-base leading-none font-bold" aria-label="Close">&times;</button>
+                    <small class="text-[10px] text-gray-400 dark:text-slate-400 font-medium">baru saja</small>
+                    <button type="button" onclick="closeBootstrapToast(this.closest('.toast-item'))" class="text-gray-400 hover:text-gray-700 dark:text-slate-400 dark:hover:text-white p-0.5 rounded transition text-base leading-none font-bold" aria-label="Close">&times;</button>
                 </div>
             </div>
             <!-- Toast Body -->
-            <div class="p-3.5 text-xs sm:text-sm text-gray-700 font-medium leading-relaxed">
+            <div class="p-3.5 text-xs sm:text-sm text-gray-700 dark:text-slate-200 font-medium leading-relaxed">
                 {{ session('error') }}
             </div>
         </div>
@@ -45,20 +45,20 @@
 
     {{-- Validation Errors Toast --}}
     @if ($errors->any())
-        <div class="toast-item pointer-events-auto bg-white rounded-lg shadow-xl border border-gray-200/90 overflow-hidden transition-all duration-300 transform translate-x-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-item pointer-events-auto bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-200/90 dark:border-slate-800 overflow-hidden transition-all duration-300 transform translate-x-0" role="alert" aria-live="assertive" aria-atomic="true">
             <!-- Toast Header -->
-            <div class="bg-gray-50 px-3.5 py-2 border-b border-gray-200 flex items-center justify-between">
+            <div class="bg-gray-50 dark:bg-slate-800/80 px-3.5 py-2 border-b border-gray-200 dark:border-slate-700/80 flex items-center justify-between">
                 <div class="flex items-center gap-2 min-w-0">
                     <span class="w-3 h-3 rounded bg-red-500 shrink-0"></span>
-                    <strong class="text-xs font-bold text-gray-900 truncate">Periksa Inputan Form</strong>
+                    <strong class="text-xs font-bold text-gray-900 dark:text-white truncate">Periksa Inputan Form</strong>
                 </div>
                 <div class="flex items-center gap-2 shrink-0">
-                    <small class="text-[10px] text-gray-400 font-medium">baru saja</small>
-                    <button type="button" onclick="closeBootstrapToast(this.closest('.toast-item'))" class="text-gray-400 hover:text-gray-700 p-0.5 rounded transition text-base leading-none font-bold" aria-label="Close">&times;</button>
+                    <small class="text-[10px] text-gray-400 dark:text-slate-400 font-medium">baru saja</small>
+                    <button type="button" onclick="closeBootstrapToast(this.closest('.toast-item'))" class="text-gray-400 hover:text-gray-700 dark:text-slate-400 dark:hover:text-white p-0.5 rounded transition text-base leading-none font-bold" aria-label="Close">&times;</button>
                 </div>
             </div>
             <!-- Toast Body -->
-            <div class="p-3.5 text-xs text-gray-700 font-medium">
+            <div class="p-3.5 text-xs text-gray-700 dark:text-slate-200 font-medium">
                 <ul class="list-disc list-inside space-y-1">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -70,20 +70,20 @@
 
     {{-- Warning Toast --}}
     @if (session('warning'))
-        <div class="toast-item pointer-events-auto bg-white rounded-lg shadow-xl border border-gray-200/90 overflow-hidden transition-all duration-300 transform translate-x-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-item pointer-events-auto bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-200/90 dark:border-slate-800 overflow-hidden transition-all duration-300 transform translate-x-0" role="alert" aria-live="assertive" aria-atomic="true">
             <!-- Toast Header -->
-            <div class="bg-gray-50 px-3.5 py-2 border-b border-gray-200 flex items-center justify-between">
+            <div class="bg-gray-50 dark:bg-slate-800/80 px-3.5 py-2 border-b border-gray-200 dark:border-slate-700/80 flex items-center justify-between">
                 <div class="flex items-center gap-2 min-w-0">
                     <span class="w-3 h-3 rounded bg-amber-500 shrink-0"></span>
-                    <strong class="text-xs font-bold text-gray-900 truncate">Karate Polindra</strong>
+                    <strong class="text-xs font-bold text-gray-900 dark:text-white truncate">Karate Polindra</strong>
                 </div>
                 <div class="flex items-center gap-2 shrink-0">
-                    <small class="text-[10px] text-gray-400 font-medium">baru saja</small>
-                    <button type="button" onclick="closeBootstrapToast(this.closest('.toast-item'))" class="text-gray-400 hover:text-gray-700 p-0.5 rounded transition text-base leading-none font-bold" aria-label="Close">&times;</button>
+                    <small class="text-[10px] text-gray-400 dark:text-slate-400 font-medium">baru saja</small>
+                    <button type="button" onclick="closeBootstrapToast(this.closest('.toast-item'))" class="text-gray-400 hover:text-gray-700 dark:text-slate-400 dark:hover:text-white p-0.5 rounded transition text-base leading-none font-bold" aria-label="Close">&times;</button>
                 </div>
             </div>
             <!-- Toast Body -->
-            <div class="p-3.5 text-xs sm:text-sm text-gray-700 font-medium leading-relaxed">
+            <div class="p-3.5 text-xs sm:text-sm text-gray-700 dark:text-slate-200 font-medium leading-relaxed">
                 {{ session('warning') }}
             </div>
         </div>
@@ -91,25 +91,24 @@
 
     {{-- Info Toast --}}
     @if (session('info') || session('status'))
-        <div class="toast-item pointer-events-auto bg-white rounded-lg shadow-xl border border-gray-200/90 overflow-hidden transition-all duration-300 transform translate-x-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-item pointer-events-auto bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-gray-200/90 dark:border-slate-800 overflow-hidden transition-all duration-300 transform translate-x-0" role="alert" aria-live="assertive" aria-atomic="true">
             <!-- Toast Header -->
-            <div class="bg-gray-50 px-3.5 py-2 border-b border-gray-200 flex items-center justify-between">
+            <div class="bg-gray-50 dark:bg-slate-800/80 px-3.5 py-2 border-b border-gray-200 dark:border-slate-700/80 flex items-center justify-between">
                 <div class="flex items-center gap-2 min-w-0">
                     <span class="w-3 h-3 rounded bg-blue-500 shrink-0"></span>
-                    <strong class="text-xs font-bold text-gray-900 truncate">Karate Polindra</strong>
+                    <strong class="text-xs font-bold text-gray-900 dark:text-white truncate">Karate Polindra</strong>
                 </div>
                 <div class="flex items-center gap-2 shrink-0">
-                    <small class="text-[10px] text-gray-400 font-medium">baru saja</small>
-                    <button type="button" onclick="closeBootstrapToast(this.closest('.toast-item'))" class="text-gray-400 hover:text-gray-700 p-0.5 rounded transition text-base leading-none font-bold" aria-label="Close">&times;</button>
+                    <small class="text-[10px] text-gray-400 dark:text-slate-400 font-medium">baru saja</small>
+                    <button type="button" onclick="closeBootstrapToast(this.closest('.toast-item'))" class="text-gray-400 hover:text-gray-700 dark:text-slate-400 dark:hover:text-white p-0.5 rounded transition text-base leading-none font-bold" aria-label="Close">&times;</button>
                 </div>
             </div>
             <!-- Toast Body -->
-            <div class="p-3.5 text-xs sm:text-sm text-gray-700 font-medium leading-relaxed">
+            <div class="p-3.5 text-xs sm:text-sm text-gray-700 dark:text-slate-200 font-medium leading-relaxed">
                 {{ session('info') ?? session('status') }}
             </div>
         </div>
     @endif
-
 </div>
 
 <script>

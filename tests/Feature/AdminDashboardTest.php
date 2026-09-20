@@ -64,4 +64,21 @@ class AdminDashboardTest extends TestCase
         $response->assertSee('Murid (Kohai)');
         $response->assertSee('Latihan Perdana');
     }
+
+    public function test_admin_can_access_settings_page()
+    {
+        $adminRole = Role::create(['nama' => 'admin']);
+        $admin = User::factory()->create([
+            'name' => 'Admin Utama',
+            'role_id' => $adminRole->id,
+        ]);
+
+        $response = $this->actingAs($admin)->get(route('admin.settings.index'));
+
+        $response->assertStatus(200);
+        $response->assertSee('Pengaturan Sistem &amp; Tampilan', false);
+        $response->assertSee('Mode Terang (Light)');
+        $response->assertSee('Mode Gelap (Dark)');
+    }
 }
+

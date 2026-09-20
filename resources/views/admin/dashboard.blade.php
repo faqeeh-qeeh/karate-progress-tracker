@@ -46,70 +46,70 @@
     <!-- 4 Main KPI Cards: User Management -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         <!-- Total Users -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md hover:border-slate-400 transition-all duration-200 group">
+        <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md hover:border-slate-400 dark:hover:border-slate-700 transition-all duration-200 group">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Total Pengguna</p>
-                    <p class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">{{ $totalUsers }}</p>
+                    <p class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-1">{{ $totalUsers }}</p>
                 </div>
-                <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-800 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                <div class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
                     👥
                 </div>
             </div>
-            <div class="flex items-center justify-between text-xs text-slate-500 font-medium mt-3 pt-3 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
                 <span>Seluruh Akun Terdaftar</span>
-                <a href="{{ route('admin.users.index') }}" class="text-slate-900 font-bold hover:underline">Kelola &rarr;</a>
+                <a href="{{ route('admin.users.index') }}" class="text-slate-900 dark:text-brand-secondary font-bold hover:underline">Kelola &rarr;</a>
             </div>
         </div>
 
         <!-- Total Senpai -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md hover:border-brand-primary/40 transition-all duration-200 group">
+        <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md hover:border-brand-primary/40 transition-all duration-200 group">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Pelatih (Senpai)</p>
-                    <p class="text-2xl sm:text-3xl font-black text-brand-primary mt-1">{{ $totalSenpai }}</p>
+                    <p class="text-2xl sm:text-3xl font-black text-brand-primary dark:text-sky-400 mt-1">{{ $totalSenpai }}</p>
                 </div>
-                <div class="w-12 h-12 rounded-2xl bg-brand-primary/10 text-brand-primary flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                <div class="w-12 h-12 rounded-2xl bg-brand-primary/10 dark:bg-brand-primary/20 text-brand-primary dark:text-sky-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
                     🥋
                 </div>
             </div>
-            <div class="flex items-center justify-between text-xs text-slate-500 font-medium mt-3 pt-3 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
                 <span>Instruktur Karate Dojo</span>
-                <span class="text-brand-primary font-extrabold">Aktif</span>
+                <span class="text-brand-primary dark:text-sky-400 font-extrabold">Aktif</span>
             </div>
         </div>
 
         <!-- Total Kohai -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md hover:border-brand-secondary/40 transition-all duration-200 group">
+        <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md hover:border-brand-secondary/40 transition-all duration-200 group">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Murid (Kohai)</p>
                     <p class="text-2xl sm:text-3xl font-black text-brand-secondary mt-1">{{ $totalKohai }}</p>
                 </div>
-                <div class="w-12 h-12 rounded-2xl bg-brand-secondary/10 text-brand-secondary flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                <div class="w-12 h-12 rounded-2xl bg-brand-secondary/10 dark:bg-brand-secondary/20 text-brand-secondary flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
                     ⚪
                 </div>
             </div>
-            <div class="flex items-center justify-between text-xs text-slate-500 font-medium mt-3 pt-3 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
                 <span>Anggota Latihan Dojo</span>
                 <span class="text-brand-secondary font-extrabold">Aktif</span>
             </div>
         </div>
 
         <!-- Total Admin -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md hover:border-red-400 transition-all duration-200 group">
+        <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md hover:border-red-400 transition-all duration-200 group">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Administrator</p>
-                    <p class="text-2xl sm:text-3xl font-black text-red-600 mt-1">{{ $totalAdmin }}</p>
+                    <p class="text-2xl sm:text-3xl font-black text-red-600 dark:text-red-400 mt-1">{{ $totalAdmin }}</p>
                 </div>
-                <div class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                <div class="w-12 h-12 rounded-2xl bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
                     🔒
                 </div>
             </div>
-            <div class="flex items-center justify-between text-xs text-slate-500 font-medium mt-3 pt-3 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
                 <span>Super Admin Access</span>
-                <span class="text-red-700 font-extrabold">Full Control</span>
+                <span class="text-red-700 dark:text-red-400 font-extrabold">Full Control</span>
             </div>
         </div>
     </div>
@@ -117,7 +117,7 @@
     <!-- 4 Secondary Metric Cards: Master Data & Activities -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         <!-- Raport Kumite -->
-        <div class="bg-slate-900 p-5 rounded-2xl text-white shadow-sm hover:shadow-md transition-all space-y-2">
+        <div class="bg-slate-900 dark:bg-slate-900/90 border border-transparent dark:border-slate-800 p-5 rounded-2xl text-white shadow-sm hover:shadow-md transition-all space-y-2">
             <div class="flex items-center justify-between text-slate-400 text-xs font-extrabold uppercase tracking-wider">
                 <span>Laga Kumite WKF</span>
                 <span>🏆</span>
@@ -127,7 +127,7 @@
         </div>
 
         <!-- Sesi & Presensi Absensi -->
-        <div class="bg-slate-900 p-5 rounded-2xl text-white shadow-sm hover:shadow-md transition-all space-y-2">
+        <div class="bg-slate-900 dark:bg-slate-900/90 border border-transparent dark:border-slate-800 p-5 rounded-2xl text-white shadow-sm hover:shadow-md transition-all space-y-2">
             <div class="flex items-center justify-between text-slate-400 text-xs font-extrabold uppercase tracking-wider">
                 <span>Absensi & Presensi</span>
                 <span>📅</span>
@@ -137,7 +137,7 @@
         </div>
 
         <!-- Sabuk & Tingkatan -->
-        <div class="bg-slate-900 p-5 rounded-2xl text-white shadow-sm hover:shadow-md transition-all space-y-2">
+        <div class="bg-slate-900 dark:bg-slate-900/90 border border-transparent dark:border-slate-800 p-5 rounded-2xl text-white shadow-sm hover:shadow-md transition-all space-y-2">
             <div class="flex items-center justify-between text-slate-400 text-xs font-extrabold uppercase tracking-wider">
                 <span>Sabuk & Rank</span>
                 <span>🥋</span>
@@ -147,7 +147,7 @@
         </div>
 
         <!-- Struktur Polindra -->
-        <div class="bg-slate-900 p-5 rounded-2xl text-white shadow-sm hover:shadow-md transition-all space-y-2">
+        <div class="bg-slate-900 dark:bg-slate-900/90 border border-transparent dark:border-slate-800 p-5 rounded-2xl text-white shadow-sm hover:shadow-md transition-all space-y-2">
             <div class="flex items-center justify-between text-slate-400 text-xs font-extrabold uppercase tracking-wider">
                 <span>Struktur Kampus</span>
                 <span>🏛️</span>
@@ -160,57 +160,57 @@
     <!-- Charts & System Status Section -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Chart: Komposisi Role Pengguna (1 Column) -->
-        <div class="lg:col-span-1 bg-white rounded-3xl border border-slate-200/80 shadow-sm p-5 sm:p-6 space-y-4 flex flex-col justify-between">
-            <div class="border-b border-slate-100 pb-4">
-                <h3 class="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+        <div class="lg:col-span-1 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 space-y-4 flex flex-col justify-between">
+            <div class="border-b border-slate-100 dark:border-slate-800 pb-4">
+                <h3 class="text-base font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
                     <span>📊</span> Distribusi Role Pengguna
                 </h3>
-                <p class="text-xs text-slate-500 font-medium mt-0.5">Proporsi akun Admin, Pelatih (Senpai), dan Murid (Kohai)</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">Proporsi akun Admin, Pelatih (Senpai), dan Murid (Kohai)</p>
             </div>
 
             <div class="h-56 sm:h-60 w-full flex items-center justify-center my-auto">
                 <canvas id="roleDistributionChart"></canvas>
             </div>
 
-            <div class="pt-3 border-t border-slate-100 grid grid-cols-3 gap-1 text-[11px] font-bold text-center">
-                <div class="p-2 bg-red-50 rounded-xl border border-red-200/60">
-                    <span class="text-red-700 block text-[10px] uppercase">Admin</span>
-                    <span class="text-slate-900 font-black text-sm">{{ $totalAdmin }}</span>
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800 grid grid-cols-3 gap-1 text-[11px] font-bold text-center">
+                <div class="p-2 bg-red-50 dark:bg-red-950/40 rounded-xl border border-red-200/60 dark:border-red-800/50">
+                    <span class="text-red-700 dark:text-red-300 block text-[10px] uppercase">Admin</span>
+                    <span class="text-slate-900 dark:text-white font-black text-sm">{{ $totalAdmin }}</span>
                 </div>
-                <div class="p-2 bg-blue-50 rounded-xl border border-blue-200/60">
-                    <span class="text-brand-primary block text-[10px] uppercase">Senpai</span>
-                    <span class="text-slate-900 font-black text-sm">{{ $totalSenpai }}</span>
+                <div class="p-2 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-200/60 dark:border-blue-800/50">
+                    <span class="text-brand-primary dark:text-sky-300 block text-[10px] uppercase">Senpai</span>
+                    <span class="text-slate-900 dark:text-white font-black text-sm">{{ $totalSenpai }}</span>
                 </div>
-                <div class="p-2 bg-cyan-50 rounded-xl border border-cyan-200/60">
-                    <span class="text-cyan-800 block text-[10px] uppercase">Kohai</span>
-                    <span class="text-slate-900 font-black text-sm">{{ $totalKohai }}</span>
+                <div class="p-2 bg-cyan-50 dark:bg-cyan-950/40 rounded-xl border border-cyan-200/60 dark:border-cyan-800/50">
+                    <span class="text-cyan-800 dark:text-cyan-300 block text-[10px] uppercase">Kohai</span>
+                    <span class="text-slate-900 dark:text-white font-black text-sm">{{ $totalKohai }}</span>
                 </div>
             </div>
         </div>
 
         <!-- Activity Overview & Live Sesi (2 Columns) -->
-        <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200/80 shadow-sm p-5 sm:p-6 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+        <div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
                 <div>
-                    <h3 class="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+                    <h3 class="text-base font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
                         <span>⚡</span> Status Aktivitas Dojo Terkini
                     </h3>
-                    <p class="text-xs text-slate-500 mt-0.5 font-medium">Monitoring sesi absensi aktif & evaluasi pertarungan WKF terbaru</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">Monitoring sesi absensi aktif & evaluasi pertarungan WKF terbaru</p>
                 </div>
-                <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-black">
+                <span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-black">
                     Live Monitor
                 </span>
             </div>
 
             <!-- Active Session Status Alert -->
             @if($activeSession)
-                <div class="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-emerald-50 to-white border border-emerald-300 flex items-center justify-between gap-4">
+                <div class="p-4 rounded-2xl bg-gradient-to-r from-emerald-500/10 via-emerald-50 to-white dark:from-emerald-950/30 dark:via-slate-800/50 dark:to-slate-800/30 border border-emerald-300 dark:border-emerald-800 flex items-center justify-between gap-4">
                     <div class="flex items-center gap-3">
                         <span class="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></span>
                         <div>
-                            <span class="text-[10px] font-black uppercase text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">Sesi Absensi Aktif</span>
-                            <h4 class="text-sm font-black text-slate-900 mt-0.5">{{ $activeSession->title }}</h4>
-                            <p class="text-xs text-slate-500">Pelatih: <strong>{{ $activeSession->senpai->name }}</strong> • Kode Token: <strong class="font-mono text-emerald-700 font-bold">{{ $activeSession->qr_token }}</strong></p>
+                            <span class="text-[10px] font-black uppercase text-emerald-800 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/60 px-2 py-0.5 rounded-full">Sesi Absensi Aktif</span>
+                            <h4 class="text-sm font-black text-slate-900 dark:text-white mt-0.5">{{ $activeSession->title }}</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Pelatih: <strong class="text-slate-800 dark:text-slate-200">{{ $activeSession->senpai->name }}</strong> • Kode Token: <strong class="font-mono text-emerald-700 dark:text-emerald-400 font-bold">{{ $activeSession->qr_token }}</strong></p>
                         </div>
                     </div>
                     <span class="px-3 py-1 bg-emerald-600 text-white rounded-xl text-xs font-extrabold shrink-0 shadow-xs">
@@ -218,41 +218,41 @@
                     </span>
                 </div>
             @else
-                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-3 text-xs text-slate-500 font-medium">
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 font-medium">
                     <span>ℹ️</span> Tidak ada sesi absensi latihan yang sedang aktif saat ini.
                 </div>
             @endif
 
             <!-- 5 Recent Kumite Matches in System -->
             <div class="space-y-2.5 pt-2">
-                <h4 class="text-xs font-black uppercase tracking-wider text-slate-400">Evaluasi Kumite WKF Terbaru di Sistem</h4>
+                <h4 class="text-xs font-black uppercase tracking-wider text-slate-400 dark:text-slate-500">Evaluasi Kumite WKF Terbaru di Sistem</h4>
                 <div class="space-y-2">
                     @forelse($recentKumiteReports as $r)
-                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/70 hover:border-slate-300 transition flex items-center justify-between text-xs gap-3">
+                        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 hover:border-slate-300 dark:hover:border-slate-600 transition flex items-center justify-between text-xs gap-3">
                             <div class="flex items-center gap-2 min-w-0">
-                                <span class="text-[10px] text-slate-400 font-mono shrink-0">{{ $r->match_date->format('d/m') }}</span>
-                                <span class="font-bold text-red-600 truncate">{{ $r->akaKohai->name ?? 'N/A' }}</span>
-                                <span class="font-black text-slate-900 px-2 py-0.5 bg-white rounded border border-slate-200 shrink-0">
+                                <span class="text-[10px] text-slate-400 dark:text-slate-500 font-mono shrink-0">{{ $r->match_date->format('d/m') }}</span>
+                                <span class="font-bold text-red-600 dark:text-red-400 truncate">{{ $r->akaKohai->name ?? 'N/A' }}</span>
+                                <span class="font-black text-slate-900 dark:text-white px-2 py-0.5 bg-white dark:bg-slate-900 rounded border border-slate-200 dark:border-slate-700 shrink-0">
                                     {{ $r->aka_total_score }} - {{ $r->ao_total_score }}
                                 </span>
-                                <span class="font-bold text-brand-primary truncate">{{ $r->aoKohai->name ?? 'N/A' }}</span>
+                                <span class="font-bold text-brand-primary dark:text-sky-400 truncate">{{ $r->aoKohai->name ?? 'N/A' }}</span>
                             </div>
 
                             <div class="flex items-center gap-2 shrink-0">
                                 @if($r->winner)
-                                    <span class="px-2 py-0.5 text-[10px] font-black rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200">
+                                    <span class="px-2 py-0.5 text-[10px] font-black rounded-md bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
                                         🏆 {{ $r->winner->name }}
                                     </span>
                                 @else
-                                    <span class="px-2 py-0.5 text-[10px] font-bold rounded-md bg-slate-100 text-slate-500">
+                                    <span class="px-2 py-0.5 text-[10px] font-bold rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">
                                         Seri
                                     </span>
                                 @endif
-                                <span class="text-[10px] text-slate-400 hidden sm:inline">by {{ $r->senpai->name ?? 'Senpai' }}</span>
+                                <span class="text-[10px] text-slate-400 dark:text-slate-500 hidden sm:inline">by {{ $r->senpai->name ?? 'Senpai' }}</span>
                             </div>
                         </div>
                     @empty
-                        <p class="text-xs text-slate-400 py-3 text-center">Belum ada evaluasi tanding kumite yang dicatat.</p>
+                        <p class="text-xs text-slate-400 dark:text-slate-500 py-3 text-center">Belum ada evaluasi tanding kumite yang dicatat.</p>
                     @endforelse
                 </div>
             </div>
@@ -262,23 +262,23 @@
     <!-- Bottom Section: Latest Users Table & Quick Management Navigation -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Latest Users Table (2 Columns) -->
-        <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200/80 shadow-sm p-5 sm:p-6 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+        <div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
                 <div>
-                    <h3 class="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+                    <h3 class="text-base font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
                         <span>👥</span> Pengguna Baru Terdaftar
                     </h3>
-                    <p class="text-xs text-slate-500 mt-0.5 font-medium">Daftar pengguna terbaru yang terdaftar di sistem Karate Polindra</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">Daftar pengguna terbaru yang terdaftar di sistem Karate Polindra</p>
                 </div>
-                <a href="{{ route('admin.users.index') }}" class="inline-flex items-center gap-1 text-xs font-extrabold text-brand-primary hover:text-brand-secondary transition">
+                <a href="{{ route('admin.users.index') }}" class="inline-flex items-center gap-1 text-xs font-extrabold text-brand-primary dark:text-brand-secondary hover:underline transition">
                     <span>Kelola Semua ({{ $totalUsers }})</span>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
             </div>
 
             <div class="overflow-x-auto min-w-0">
-                <table class="w-full text-left text-sm text-slate-600 min-w-full">
-                    <thead class="bg-slate-50 text-slate-700 text-[11px] uppercase font-bold tracking-wider border-b border-slate-200/80 whitespace-nowrap">
+                <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300 min-w-full">
+                    <thead class="bg-slate-50 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 text-[11px] uppercase font-bold tracking-wider border-b border-slate-200/80 dark:border-slate-700/80 whitespace-nowrap">
                         <tr>
                             <th class="py-3 px-3.5">Nama Pengguna</th>
                             <th class="py-3 px-3.5">Email</th>
@@ -287,26 +287,26 @@
                             <th class="py-3 px-3.5 text-center">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-100 whitespace-nowrap font-medium text-xs">
+                    <tbody class="divide-y divide-slate-100 dark:divide-slate-800 whitespace-nowrap font-medium text-xs">
                         @forelse($recentUsers as $u)
                             @php
                                 $roleName = $u->role->nama ?? 'Tanpa Role';
                                 $badgeStyle = match(strtolower($roleName)) {
-                                    'admin' => 'bg-red-50 text-red-700 border-red-200',
-                                    'senpai' => 'bg-blue-50 text-brand-primary border-blue-200',
-                                    'kohai' => 'bg-cyan-50 text-cyan-800 border-cyan-200',
-                                    default => 'bg-slate-100 text-slate-700 border-slate-200'
+                                    'admin' => 'bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800/60',
+                                    'senpai' => 'bg-blue-50 dark:bg-blue-950/40 text-brand-primary dark:text-sky-300 border-blue-200 dark:border-blue-800/60',
+                                    'kohai' => 'bg-cyan-50 dark:bg-cyan-950/40 text-cyan-800 dark:text-cyan-300 border-cyan-200 dark:border-cyan-800/60',
+                                    default => 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700'
                                 };
                             @endphp
-                            <tr class="hover:bg-slate-50/80 transition-colors">
-                                <td class="py-3 px-3.5 font-bold text-slate-900 flex items-center gap-2.5">
-                                    <div class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center text-xs font-black uppercase shrink-0">
+                            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition-colors">
+                                <td class="py-3 px-3.5 font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-xl bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center text-xs font-black uppercase shrink-0">
                                         {{ $u->initials }}
                                     </div>
                                     <span class="truncate max-w-[140px]">{{ $u->name }}</span>
                                 </td>
 
-                                <td class="py-3 px-3.5 text-slate-500 font-mono text-[11px]">{{ $u->email }}</td>
+                                <td class="py-3 px-3.5 text-slate-500 dark:text-slate-400 font-mono text-[11px]">{{ $u->email }}</td>
 
                                 <td class="py-3 px-3.5">
                                     <span class="px-2.5 py-0.5 text-[10px] font-black rounded-full border {{ $badgeStyle }}">
@@ -314,19 +314,19 @@
                                     </span>
                                 </td>
 
-                                <td class="py-3 px-3.5 text-center text-slate-400 text-[11px]">
+                                <td class="py-3 px-3.5 text-center text-slate-400 dark:text-slate-500 text-[11px]">
                                     {{ $u->created_at ? $u->created_at->format('d M Y') : '-' }}
                                 </td>
 
                                 <td class="py-3 px-3.5 text-center">
-                                    <a href="{{ route('admin.users.edit', $u->id) }}" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-lg transition text-[11px]">
+                                    <a href="{{ route('admin.users.edit', $u->id) }}" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-lg transition text-[11px]">
                                         Edit
                                     </a>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="py-6 text-center text-slate-400 text-xs">Belum ada pengguna terdaftar.</td>
+                                <td colspan="5" class="py-6 text-center text-slate-400 dark:text-slate-500 text-xs">Belum ada pengguna terdaftar.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -335,65 +335,65 @@
         </div>
 
         <!-- Quick Navigation Cards (1 Column) -->
-        <div class="lg:col-span-1 bg-white rounded-3xl border border-slate-200/80 shadow-sm p-5 sm:p-6 space-y-4 flex flex-col justify-between">
+        <div class="lg:col-span-1 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 space-y-4 flex flex-col justify-between">
             <div class="space-y-4">
-                <div class="border-b border-slate-100 pb-4">
-                    <h3 class="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+                <div class="border-b border-slate-100 dark:border-slate-800 pb-4">
+                    <h3 class="text-base font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
                         <span>⚙️</span> Navigasi Kontrol Cepat
                     </h3>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Akses modul pengelolaan master data</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">Akses modul pengelolaan master data</p>
                 </div>
 
                 <div class="space-y-2.5">
-                    <a href="{{ route('admin.users.index') }}" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-blue-50 border border-slate-200/80 hover:border-brand-primary/40 transition flex items-center justify-between group">
+                    <a href="{{ route('admin.users.index') }}" class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 hover:bg-blue-50 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 hover:border-brand-primary/40 dark:hover:border-brand-primary/60 transition flex items-center justify-between group">
                         <div class="flex items-center gap-3">
-                            <span class="p-2 rounded-xl bg-white text-brand-primary border border-slate-200 shadow-2xs">👥</span>
+                            <span class="p-2 rounded-xl bg-white dark:bg-slate-900 text-brand-primary border border-slate-200 dark:border-slate-700 shadow-2xs">👥</span>
                             <div>
-                                <h4 class="text-xs font-bold text-slate-900 group-hover:text-brand-primary transition">Kelola User & Role</h4>
-                                <p class="text-[10px] text-slate-500">{{ $totalUsers }} Total Pengguna</p>
+                                <h4 class="text-xs font-bold text-slate-900 dark:text-white group-hover:text-brand-primary dark:group-hover:text-brand-secondary transition">Kelola User & Role</h4>
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400">{{ $totalUsers }} Total Pengguna</p>
                             </div>
                         </div>
-                        <span class="text-slate-400 group-hover:text-brand-primary transition">&rarr;</span>
+                        <span class="text-slate-400 group-hover:text-brand-primary dark:group-hover:text-brand-secondary transition">&rarr;</span>
                     </a>
 
-                    <a href="{{ route('admin.belts.index') }}" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-blue-50 border border-slate-200/80 hover:border-brand-primary/40 transition flex items-center justify-between group">
+                    <a href="{{ route('admin.belts.index') }}" class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 hover:bg-blue-50 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 hover:border-brand-primary/40 dark:hover:border-brand-primary/60 transition flex items-center justify-between group">
                         <div class="flex items-center gap-3">
-                            <span class="p-2 rounded-xl bg-white text-brand-primary border border-slate-200 shadow-2xs">🥋</span>
+                            <span class="p-2 rounded-xl bg-white dark:bg-slate-900 text-brand-primary border border-slate-200 dark:border-slate-700 shadow-2xs">🥋</span>
                             <div>
-                                <h4 class="text-xs font-bold text-slate-900 group-hover:text-brand-primary transition">Sabuk & Tingkatan</h4>
-                                <p class="text-[10px] text-slate-500">{{ $totalBelts }} Sabuk • {{ $totalRanks }} Kyu/Dan</p>
+                                <h4 class="text-xs font-bold text-slate-900 dark:text-white group-hover:text-brand-primary dark:group-hover:text-brand-secondary transition">Sabuk & Tingkatan</h4>
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400">{{ $totalBelts }} Sabuk • {{ $totalRanks }} Kyu/Dan</p>
                             </div>
                         </div>
-                        <span class="text-slate-400 group-hover:text-brand-primary transition">&rarr;</span>
+                        <span class="text-slate-400 group-hover:text-brand-primary dark:group-hover:text-brand-secondary transition">&rarr;</span>
                     </a>
 
-                    <a href="{{ route('admin.departments.index') }}" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-blue-50 border border-slate-200/80 hover:border-brand-primary/40 transition flex items-center justify-between group">
+                    <a href="{{ route('admin.departments.index') }}" class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 hover:bg-blue-50 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 hover:border-brand-primary/40 dark:hover:border-brand-primary/60 transition flex items-center justify-between group">
                         <div class="flex items-center gap-3">
-                            <span class="p-2 rounded-xl bg-white text-brand-primary border border-slate-200 shadow-2xs">🏛️</span>
+                            <span class="p-2 rounded-xl bg-white dark:bg-slate-900 text-brand-primary border border-slate-200 dark:border-slate-700 shadow-2xs">🏛️</span>
                             <div>
-                                <h4 class="text-xs font-bold text-slate-900 group-hover:text-brand-primary transition">Jurusan, Prodi & Kelas</h4>
-                                <p class="text-[10px] text-slate-500">{{ $totalDepartments }} Jurusan Polindra</p>
+                                <h4 class="text-xs font-bold text-slate-900 dark:text-white group-hover:text-brand-primary dark:group-hover:text-brand-secondary transition">Jurusan, Prodi & Kelas</h4>
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400">{{ $totalDepartments }} Jurusan Polindra</p>
                             </div>
                         </div>
-                        <span class="text-slate-400 group-hover:text-brand-primary transition">&rarr;</span>
+                        <span class="text-slate-400 group-hover:text-brand-primary dark:group-hover:text-brand-secondary transition">&rarr;</span>
                     </a>
 
-                    <a href="{{ route('admin.profile.index') }}" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-blue-50 border border-slate-200/80 hover:border-brand-primary/40 transition flex items-center justify-between group">
+                    <a href="{{ route('admin.profile.index') }}" class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 hover:bg-blue-50 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 hover:border-brand-primary/40 dark:hover:border-brand-primary/60 transition flex items-center justify-between group">
                         <div class="flex items-center gap-3">
-                            <span class="p-2 rounded-xl bg-white text-red-600 border border-slate-200 shadow-2xs">🔒</span>
+                            <span class="p-2 rounded-xl bg-white dark:bg-slate-900 text-red-600 dark:text-red-400 border border-slate-200 dark:border-slate-700 shadow-2xs">🔒</span>
                             <div>
-                                <h4 class="text-xs font-bold text-slate-900 group-hover:text-red-600 transition">Profil Administrator</h4>
-                                <p class="text-[10px] text-slate-500">Ubah Sandi & Pengaturan Akun</p>
+                                <h4 class="text-xs font-bold text-slate-900 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400 transition">Profil Administrator</h4>
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400">Ubah Sandi & Pengaturan Akun</p>
                             </div>
                         </div>
-                        <span class="text-slate-400 group-hover:text-red-600 transition">&rarr;</span>
+                        <span class="text-slate-400 group-hover:text-red-600 dark:group-hover:text-red-400 transition">&rarr;</span>
                     </a>
                 </div>
             </div>
 
-            <div class="pt-3 border-t border-slate-100 text-[11px] text-slate-400 flex items-center justify-between font-mono">
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400 dark:text-slate-500 flex items-center justify-between font-mono">
                 <span>Versi Sistem</span>
-                <span class="font-bold text-slate-600">v1.0.0 Production</span>
+                <span class="font-bold text-slate-600 dark:text-slate-400">v1.0.0 Production</span>
             </div>
         </div>
     </div>
@@ -402,48 +402,63 @@
 <!-- Chart.js CDN and Initialization -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const roleCanvas = document.getElementById('roleDistributionChart');
-        if (roleCanvas) {
-            const ctxRole = roleCanvas.getContext('2d');
-            const roleData = @json($roleChartData);
+    let roleChartInstance = null;
 
-            new Chart(ctxRole, {
-                type: 'doughnut',
-                data: {
-                    labels: roleData.labels,
-                    datasets: [{
-                        data: roleData.data,
-                        backgroundColor: roleData.colors,
-                        borderWidth: 2,
-                        borderColor: '#ffffff',
-                        hoverOffset: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            padding: 10,
-                            callbacks: {
-                                label: function(context) {
-                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                    const value = context.raw || 0;
-                                    const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                                    return ` ${context.label}: ${value} Akun (${percentage}%)`;
-                                }
+    function initRoleChart() {
+        const roleCanvas = document.getElementById('roleDistributionChart');
+        if (!roleCanvas) return;
+
+        const isDark = document.documentElement.classList.contains('dark');
+        const borderColor = isDark ? '#0f172a' : '#ffffff';
+        const roleData = @json($roleChartData);
+
+        if (roleChartInstance) {
+            roleChartInstance.destroy();
+        }
+
+        const ctxRole = roleCanvas.getContext('2d');
+        roleChartInstance = new Chart(ctxRole, {
+            type: 'doughnut',
+            data: {
+                labels: roleData.labels,
+                datasets: [{
+                    data: roleData.data,
+                    backgroundColor: roleData.colors,
+                    borderWidth: 2,
+                    borderColor: borderColor,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        padding: 10,
+                        backgroundColor: isDark ? '#1e293b' : '#0f172a',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: isDark ? '#334155' : 'transparent',
+                        borderWidth: isDark ? 1 : 0,
+                        callbacks: {
+                            label: function(context) {
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const value = context.raw || 0;
+                                const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                return ` ${context.label}: ${value} Akun (${percentage}%)`;
                             }
                         }
-                    },
-                    cutout: '68%'
-                }
-            });
-        }
-    });
+                    }
+                },
+                cutout: '68%'
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', initRoleChart);
+    window.addEventListener('karateThemeChanged', initRoleChart);
 </script>
 @endsection
-
