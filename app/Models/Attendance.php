@@ -32,6 +32,11 @@ class Attendance extends Model
         return $this->belongsTo(AttendanceSession::class, 'attendance_session_id');
     }
 
+    public function attendanceSession(): BelongsTo
+    {
+        return $this->session();
+    }
+
     /**
      * Relasi ke Kohai (User)
      */
