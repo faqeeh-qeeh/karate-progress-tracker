@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\AttendanceSession;
 use App\Models\KumiteReport;
+use App\Models\TrainingSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -99,27 +100,12 @@ class DashboardController extends Controller
                 ->exists();
         }
 
-        // 5. Jadwal Latihan Mingguan Dojo
-        $scheduleList = [
-            [
-                'hari' => 'Selasa',
-                'jam' => '16:00 - 18:00 WIB',
-                'materi' => 'Kihon & Kata (Heian & Bassai Dai)',
-                'lokasi' => 'Dojo Utama Polindra',
-            ],
-            [
-                'hari' => 'Jumat',
-                'jam' => '16:00 - 18:00 WIB',
-                'materi' => 'Kihon Ippon Kumite & Sparring WKF',
-                'lokasi' => 'Dojo Utama Polindra',
-            ],
-            [
-                'hari' => 'Minggu',
-                'jam' => '07:30 - 10:00 WIB',
-                'materi' => 'Latihan Fisik Stamina & Pengkondisian Tanding',
-                'lokasi' => 'Dojo / Lapangan Terbuka',
-            ],
-        ];
+        // 5. Jadwal Latihan Dojo (Dikelola oleh Admin)
+        $trainingSchedules = TrainingSchedule::active()
+            ->orderByRaw("CASE WHEN type = 'tambahan' THEN specific_date ELSE start_date END ASC")
+            ->orderBy('start_time')
+            ->take(6)
+            ->get();
 
         return view('kohai.dashboard', compact(
             'kohai',
@@ -138,7 +124,7 @@ class DashboardController extends Controller
             'chartMatchLabels',
             'chartAttack',
             'chartAccuracy',
-            'scheduleList'
+            'trainingSchedules'
         ));
     }
 }

@@ -400,29 +400,63 @@
         <div class="lg:col-span-1 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 space-y-4">
             <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
                 <h3 class="text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-2 tracking-tight">
-                    <span>🗓️</span> Jadwal Latihan Rutin
+                    <span>🗓️</span> Jadwal Latihan Dojo
                 </h3>
                 <span class="text-[11px] bg-blue-50 dark:bg-blue-950/60 text-brand-primary dark:text-brand-secondary px-3 py-1 rounded-full font-black border border-blue-200/60 dark:border-blue-800/60">
-                    Mingguan
+                    Aktif
                 </span>
             </div>
 
             <div class="space-y-3">
-                @foreach($scheduleList as $sched)
-                    <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200/80 dark:border-slate-800 hover:border-brand-primary/40 dark:hover:border-brand-primary/40 transition-all space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-black text-brand-primary dark:text-brand-secondary uppercase tracking-wider">{{ $sched['hari'] }}</span>
-                            <span class="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-bold bg-white dark:bg-slate-900 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700">{{ $sched['jam'] }}</span>
+                @forelse($trainingSchedules as $sched)
+                    <div class="p-4 rounded-2xl bg-slate-50/80 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 hover:border-brand-primary/40 dark:hover:border-brand-primary/40 transition-all space-y-2.5">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-1.5 min-w-0">
+                                @if($sched->type === 'rutin')
+                                    <span class="px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-blue-50 dark:bg-blue-950/80 text-brand-primary dark:text-brand-secondary border border-blue-200 dark:border-blue-800">
+                                        Rutin
+                                    </span>
+                                @else
+                                    <span class="px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-amber-50 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                                        Tambahan
+                                    </span>
+                                @endif
+                                <span class="text-xs font-black text-slate-800 dark:text-slate-200 truncate">{{ $sched->days_string }}</span>
+                            </div>
+                            <span class="text-[11px] text-slate-600 dark:text-slate-300 font-mono font-bold bg-white dark:bg-slate-900 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700 shrink-0">
+                                {{ $sched->time_range }} WIB
+                            </span>
                         </div>
+
                         <div>
-                            <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ $sched['materi'] }}</h4>
+                            <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ $sched->title }}</h4>
+                            @if($sched->notes)
+                                <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 font-medium line-clamp-2">
+                                    {{ $sched->notes }}
+                                </p>
+                            @endif
                         </div>
-                        <div class="pt-2 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500 font-medium">
-                            <span class="flex items-center gap-1">📍 {{ $sched['lokasi'] }}</span>
-                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">Wajib Hadir</span>
+
+                        <div class="pt-2 border-t border-slate-200/60 dark:border-slate-700/80 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                            <span class="flex items-center gap-1 truncate max-w-[170px]" title="{{ $sched->location_label }} - {{ $sched->location_detail }}">
+                                📍 {{ $sched->location_label }} ({{ $sched->location_detail ?? 'Dojo Utama' }})
+                            </span>
+                            @if($sched->maps_url)
+                                <a href="{{ $sched->maps_url }}" target="_blank" class="text-brand-primary dark:text-brand-secondary font-bold hover:underline shrink-0 text-[10px]">
+                                    Peta &rarr;
+                                </a>
+                            @else
+                                <span class="text-emerald-600 dark:text-emerald-400 font-bold shrink-0 text-[10px]">Wajib Hadir</span>
+                            @endif
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="py-8 text-center text-slate-400 dark:text-slate-500 text-xs font-medium space-y-1">
+                        <span class="text-2xl block mb-1">🥋</span>
+                        <p>Belum ada jadwal latihan yang aktif saat ini.</p>
+                        <p class="text-[11px] text-slate-400">Jadwal akan diatur oleh Administrator.</p>
+                    </div>
+                @endforelse
             </div>
         </div>
     </div>

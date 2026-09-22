@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\RankController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Admin\StudyProgramController;
+use App\Http\Controllers\Admin\TrainingScheduleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
@@ -76,6 +77,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('departments', DepartmentController::class);
     Route::resource('study-programs', StudyProgramController::class)->only(['store', 'update', 'destroy']);
     Route::resource('academic-classes', AcademicClassController::class)->only(['store', 'update', 'destroy']);
+
+    // Jadwal Latihan
+    Route::resource('training-schedules', TrainingScheduleController::class);
+    Route::get('training-schedules/{trainingSchedule}/send-reminder', [TrainingScheduleController::class, 'showSendReminder'])->name('training-schedules.send-reminder');
+    Route::post('training-schedules/{trainingSchedule}/send-reminder', [TrainingScheduleController::class, 'sendReminder'])->name('training-schedules.send-reminder.post');
+    Route::patch('training-schedules/{trainingSchedule}/toggle-active', [TrainingScheduleController::class, 'toggleActive'])->name('training-schedules.toggle-active');
 });
 
 // Role: Senpai Routes

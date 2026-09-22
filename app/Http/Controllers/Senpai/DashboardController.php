@@ -7,6 +7,7 @@ use App\Models\Attendance;
 use App\Models\AttendanceSession;
 use App\Models\Belt;
 use App\Models\KumiteReport;
+use App\Models\TrainingSchedule;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -93,30 +94,12 @@ class DashboardController extends Controller
             $chartAccuracy[] = round(($m->aka_score_accuracy + $m->ao_score_accuracy) / 2, 1);
         }
 
-        // 7. Jadwal Latihan Mingguan Dojo
-        $schedules = [
-            [
-                'hari' => 'Selasa',
-                'jam' => '16:00 - 18:00 WIB',
-                'materi' => 'Kihon & Kata (Heian & Bassai Dai)',
-                'lokasi' => 'Dojo Utama Polindra',
-                'fokus' => 'Teknik Dasar & Kerapian Gerakan',
-            ],
-            [
-                'hari' => 'Jumat',
-                'jam' => '16:00 - 18:00 WIB',
-                'materi' => 'Kumite & Sparring Drill (WKF Rules)',
-                'lokasi' => 'Dojo Utama Polindra',
-                'fokus' => 'Timing, Senshu, & Strategi Bertanding',
-            ],
-            [
-                'hari' => 'Minggu',
-                'jam' => '07:30 - 10:00 WIB',
-                'materi' => 'Fisik, Agilitas, & Pengkondisian Tanding',
-                'lokasi' => 'Dojo / Lapangan Terbuka',
-                'fokus' => 'Stamina & Kelincahan Langkah',
-            ],
-        ];
+        // 7. Jadwal Latihan Dojo (Dikelola oleh Admin)
+        $trainingSchedules = TrainingSchedule::active()
+            ->orderByRaw("CASE WHEN type = 'tambahan' THEN specific_date ELSE start_date END ASC")
+            ->orderBy('start_time')
+            ->take(6)
+            ->get();
 
         return view('senpai.dashboard', compact(
             'senpai',
@@ -131,7 +114,7 @@ class DashboardController extends Controller
             'chartMatchLabels',
             'chartAttack',
             'chartAccuracy',
-            'schedules'
+            'trainingSchedules'
         ));
     }
 }
