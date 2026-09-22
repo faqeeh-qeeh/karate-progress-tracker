@@ -26,14 +26,14 @@ use App\Http\Controllers\Senpai\SettingController as SenpaiSettingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Redirect Root to Login or Role Dashboard
+// Landing Page or Role Dashboard
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect(Auth::user()->getDashboardRoute());
     }
 
-    return redirect()->route('login');
-});
+    return view('landing');
+})->name('landing');
 
 // Guest Routes (Auth Manual & OAuth)
 Route::middleware('guest')->group(function () {
