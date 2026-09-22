@@ -16,6 +16,7 @@ use App\Http\Controllers\Kohai\AttendanceController as KohaiAttendanceController
 use App\Http\Controllers\Kohai\DashboardController as KohaiDashboardController;
 use App\Http\Controllers\Kohai\KumiteController as KohaiKumiteController;
 use App\Http\Controllers\Kohai\ProfileController as KohaiProfileController;
+use App\Http\Controllers\Kohai\SettingController as KohaiSettingController;
 use App\Http\Controllers\Senpai\AttendanceController as SenpaiAttendanceController;
 use App\Http\Controllers\Senpai\DashboardController as SenpaiDashboardController;
 use App\Http\Controllers\Senpai\KohaiOverviewController;
@@ -119,4 +120,7 @@ Route::middleware(['auth', 'role:Kohai'])->prefix('kohai')->name('kohai.')->grou
     Route::get('/attendance', [KohaiAttendanceController::class, 'index'])->name('attendance.index');
     Route::post('/attendance/scan', [KohaiAttendanceController::class, 'scan'])->name('attendance.scan');
     Route::get('/attendance/direct-scan/{token}', [KohaiAttendanceController::class, 'directScan'])->name('attendance.direct_scan');
+
+    // Pengaturan & Preferensi Tampilan Kohai
+    Route::get('/settings', [KohaiSettingController::class, 'index'])->name('settings.index');
 });

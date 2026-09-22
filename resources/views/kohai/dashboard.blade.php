@@ -61,21 +61,21 @@
     @if($activeSession)
         @if(!$hasAttendedActive)
             <!-- Sesi Aktif & Belum Absen: Call to Action Alert -->
-            <div class="bg-gradient-to-r from-amber-500/15 via-amber-50 to-white rounded-3xl p-5 sm:p-6 border-2 border-amber-300 text-slate-800 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="bg-gradient-to-r from-amber-500/15 via-amber-50 to-white dark:from-amber-950/30 dark:via-slate-900 dark:to-slate-900 rounded-3xl p-5 sm:p-6 border-2 border-amber-300 dark:border-amber-700/60 text-slate-800 dark:text-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div class="flex items-start sm:items-center gap-4">
                     <div class="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-2xl shrink-0 shadow-md">
                         <span class="animate-bounce">📷</span>
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 rounded-full bg-amber-200/80 text-amber-900 border border-amber-300 text-[10px] font-black uppercase tracking-wider">
+                            <span class="px-2.5 py-0.5 rounded-full bg-amber-200/80 dark:bg-amber-950/60 text-amber-900 dark:text-amber-400 border border-amber-300 dark:border-amber-700/60 text-[10px] font-black uppercase tracking-wider">
                                 Sesi Dojo Sedang Berjalan
                             </span>
-                            <span class="text-xs text-slate-500 font-mono">Kode: <strong class="text-amber-900 font-black">{{ $activeSession->qr_token }}</strong></span>
+                            <span class="text-xs text-slate-500 dark:text-slate-400 font-mono">Kode: <strong class="text-amber-900 dark:text-amber-400 font-black">{{ $activeSession->qr_token }}</strong></span>
                         </div>
-                        <h3 class="text-base sm:text-lg font-black text-slate-900 mt-1">{{ $activeSession->title }}</h3>
-                        <p class="text-xs text-slate-600 mt-0.5">
-                            Dibuka oleh <strong class="text-slate-900">{{ $activeSession->senpai->name }}</strong> • Anda <span class="text-amber-700 font-extrabold underline">belum melakukan presensi</span> untuk sesi hari ini.
+                        <h3 class="text-base sm:text-lg font-black text-slate-900 dark:text-white mt-1">{{ $activeSession->title }}</h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
+                            Dibuka oleh <strong class="text-slate-900 dark:text-white">{{ $activeSession->senpai->name }}</strong> • Anda <span class="text-amber-700 dark:text-amber-400 font-extrabold underline">belum melakukan presensi</span> untuk sesi hari ini.
                         </p>
                     </div>
                 </div>
@@ -89,25 +89,25 @@
             </div>
         @else
             <!-- Sesi Aktif & Sudah Absen: Success Confirmation -->
-            <div class="bg-gradient-to-r from-emerald-500/15 via-emerald-50 to-white rounded-3xl p-5 sm:p-6 border border-emerald-300 text-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="bg-gradient-to-r from-emerald-500/15 via-emerald-50 to-white dark:from-emerald-950/30 dark:via-slate-900 dark:to-slate-900 rounded-3xl p-5 sm:p-6 border border-emerald-300 dark:border-emerald-700/60 text-slate-800 dark:text-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div class="flex items-center gap-4">
                     <div class="w-11 h-11 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-xl shrink-0 shadow-md">
                         ✓
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] font-black uppercase">
+                            <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-700/60 text-[10px] font-black uppercase">
                                 Presensi Berhasil
                             </span>
                         </div>
-                        <h3 class="text-sm sm:text-base font-extrabold text-slate-900 mt-0.5">{{ $activeSession->title }}</h3>
-                        <p class="text-xs text-emerald-800 font-medium mt-0.5">
+                        <h3 class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white mt-0.5">{{ $activeSession->title }}</h3>
+                        <p class="text-xs text-emerald-800 dark:text-emerald-400 font-medium mt-0.5">
                             Kehadiran Anda telah terverifikasi oleh Senpai {{ $activeSession->senpai->name }}. Osu! 🙏
                         </p>
                     </div>
                 </div>
 
-                <a href="{{ route('kohai.attendance.index') }}" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 hover:underline shrink-0">
+                <a href="{{ route('kohai.attendance.index') }}" class="text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:text-emerald-900 dark:hover:text-emerald-300 hover:underline shrink-0">
                     Lihat Riwayat Presensi &rarr;
                 </a>
             </div>
@@ -117,70 +117,70 @@
     <!-- 4 Key Performance Metrics Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         <!-- Metric 1: Total Duel Kumite -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md hover:border-brand-primary/40 transition-all duration-200 group">
+        <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md hover:border-brand-primary/40 dark:hover:border-brand-primary/40 transition-all duration-200 group">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Total Duel Kumite</p>
-                    <p class="text-2xl sm:text-3xl font-black text-brand-primary mt-1">{{ $totalMatches }} Laga</p>
+                    <p class="text-2xl sm:text-3xl font-black text-brand-primary dark:text-brand-secondary mt-1">{{ $totalMatches }} Laga</p>
                 </div>
-                <div class="w-12 h-12 rounded-2xl bg-brand-primary/10 text-brand-primary flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                <div class="w-12 h-12 rounded-2xl bg-brand-primary/10 dark:bg-brand-primary/20 text-brand-primary dark:text-brand-secondary flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
                     🥋
                 </div>
             </div>
-            <div class="flex items-center justify-between text-xs text-slate-500 font-medium mt-3 pt-3 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
                 <span>Evaluasi Standar WKF</span>
-                <a href="{{ route('kohai.kumite.index') }}" class="text-brand-primary font-bold hover:underline">Detail &rarr;</a>
+                <a href="{{ route('kohai.kumite.index') }}" class="text-brand-primary dark:text-brand-secondary font-bold hover:underline">Detail &rarr;</a>
             </div>
         </div>
 
         <!-- Metric 2: Tingkat Kemenangan (Win Rate) -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all duration-200 group">
+        <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md hover:border-emerald-400 transition-all duration-200 group">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Tingkat Kemenangan</p>
-                    <p class="text-2xl sm:text-3xl font-black text-emerald-600 mt-1">{{ $winRate }}%</p>
+                    <p class="text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400 mt-1">{{ $winRate }}%</p>
                 </div>
-                <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
                     🏆
                 </div>
             </div>
-            <div class="flex items-center justify-between text-xs text-slate-500 font-medium mt-3 pt-3 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
                 <span>Rekor Duel</span>
-                <span class="font-extrabold text-slate-700 font-mono">{{ $totalWins }}M - {{ $totalLosses }}K - {{ $totalDraws }}S</span>
+                <span class="font-extrabold text-slate-700 dark:text-slate-300 font-mono">{{ $totalWins }}M - {{ $totalLosses }}K - {{ $totalDraws }}S</span>
             </div>
         </div>
 
         <!-- Metric 3: Akurasi Serangan -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md hover:border-brand-secondary/40 transition-all duration-200 group">
+        <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md hover:border-brand-secondary/40 transition-all duration-200 group">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Rata-rata Akurasi Poin</p>
                     <p class="text-2xl sm:text-3xl font-black text-brand-secondary mt-1">{{ $avgAccuracy }}%</p>
                 </div>
-                <div class="w-12 h-12 rounded-2xl bg-brand-secondary/10 text-brand-secondary flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                <div class="w-12 h-12 rounded-2xl bg-brand-secondary/10 dark:bg-brand-secondary/20 text-brand-secondary flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
                     🎯
                 </div>
             </div>
-            <div class="flex items-center justify-between text-xs text-slate-500 font-medium mt-3 pt-3 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
                 <span>Rata-rata Attack</span>
-                <span class="font-bold text-slate-700">{{ $avgAttack }} Serangan/Laga</span>
+                <span class="font-bold text-slate-700 dark:text-slate-300">{{ $avgAttack }} Serangan/Laga</span>
             </div>
         </div>
 
         <!-- Metric 4: Kehadiran Presensi -->
-        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs hover:shadow-md hover:border-sky-400 transition-all duration-200 group">
+        <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs hover:shadow-md hover:border-sky-400 transition-all duration-200 group">
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Presensi Latihan</p>
-                    <p class="text-2xl sm:text-3xl font-black text-slate-900 mt-1">{{ $totalAttendance }} Sesi</p>
+                    <p class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-1">{{ $totalAttendance }} Sesi</p>
                 </div>
-                <div class="w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
+                <div class="w-12 h-12 rounded-2xl bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 flex items-center justify-center text-xl font-bold group-hover:scale-110 transition-transform">
                     📅
                 </div>
             </div>
-            <div class="flex items-center justify-between text-xs text-slate-500 font-medium mt-3 pt-3 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 font-medium mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
                 <span>Tingkat Partisipasi</span>
-                <span class="font-extrabold text-emerald-600">{{ $attendanceRate }}% Kehadiran</span>
+                <span class="font-extrabold text-emerald-600 dark:text-emerald-400">{{ $attendanceRate }}% Kehadiran</span>
             </div>
         </div>
     </div>
@@ -188,15 +188,15 @@
     <!-- Middle Section: Chart Tren Performa & Kartu Ringkasan Diri -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Chart: Perkembangan Attack & Akurasi (2 Columns) -->
-        <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200/80 shadow-sm p-5 sm:p-6 space-y-4">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4">
+        <div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-4">
                 <div>
-                    <h3 class="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+                    <h3 class="text-base font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
                         <span>📈</span> Tren Performa Duel Kumite Saya
                     </h3>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Pantau peningkatan jumlah serangan (Attack) dan ketepatan poin (Akurasi %) pada laga-laga terbaru</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">Pantau peningkatan jumlah serangan (Attack) dan ketepatan poin (Akurasi %) pada laga-laga terbaru</p>
                 </div>
-                <span class="px-3 py-1 rounded-full bg-blue-50 text-brand-primary border border-blue-200/60 text-xs font-black self-start sm:self-auto">
+                <span class="px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 text-brand-primary dark:text-brand-secondary border border-blue-200/60 dark:border-blue-800/60 text-xs font-black self-start sm:self-auto">
                     Statistik Pribadi
                 </span>
             </div>
@@ -206,53 +206,53 @@
                     <canvas id="kohaiPerformanceChart"></canvas>
                 </div>
             @else
-                <div class="h-64 flex flex-col items-center justify-center text-center p-6 text-slate-400">
+                <div class="h-64 flex flex-col items-center justify-center text-center p-6 text-slate-400 dark:text-slate-500">
                     <p class="text-sm font-medium">Belum ada riwayat laga Kumite untuk ditampilkan pada grafik.</p>
-                    <p class="text-xs text-slate-400 mt-1">Ikuti sesi sparring dojo untuk mendapatkan evaluasi dari Senpai.</p>
+                    <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">Ikuti sesi sparring dojo untuk mendapatkan evaluasi dari Senpai.</p>
                 </div>
             @endif
         </div>
 
         <!-- Profil & Ringkasan Diri Kohai (1 Column) -->
-        <div class="lg:col-span-1 bg-white rounded-3xl border border-slate-200/80 shadow-sm p-5 sm:p-6 space-y-4 flex flex-col justify-between">
+        <div class="lg:col-span-1 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 space-y-4 flex flex-col justify-between">
             <div class="space-y-4">
-                <div class="border-b border-slate-100 pb-4 flex items-center justify-between">
-                    <h3 class="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+                <div class="border-b border-slate-100 dark:border-slate-800 pb-4 flex items-center justify-between">
+                    <h3 class="text-base font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
                         <span>🥋</span> Identitas Karateka
                     </h3>
-                    <a href="{{ route('kohai.profile.index') }}" class="text-xs font-bold text-brand-primary hover:underline">
+                    <a href="{{ route('kohai.profile.index') }}" class="text-xs font-bold text-brand-primary dark:text-brand-secondary hover:underline">
                         Edit &rarr;
                     </a>
                 </div>
 
                 <!-- Info Profil Card -->
-                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200/80 dark:border-slate-800 space-y-3">
                     <div class="flex items-center gap-3">
                         <div class="w-12 h-12 rounded-2xl bg-brand-secondary text-slate-950 flex items-center justify-center text-base font-black uppercase shadow-xs shrink-0">
                             {{ $kohai->initials }}
                         </div>
                         <div class="min-w-0">
-                            <h4 class="text-sm font-extrabold text-slate-900 truncate">{{ $kohai->name }}</h4>
-                            <p class="text-xs text-slate-500 truncate">{{ $kohai->email }}</p>
+                            <h4 class="text-sm font-extrabold text-slate-900 dark:text-white truncate">{{ $kohai->name }}</h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 truncate">{{ $kohai->email }}</p>
                         </div>
                     </div>
 
-                    <div class="pt-2 border-t border-slate-200/60 space-y-2 text-xs">
+                    <div class="pt-2 border-t border-slate-200/60 dark:border-slate-800 space-y-2 text-xs">
                         <div class="flex items-center justify-between">
-                            <span class="text-slate-500 font-medium">Tingkat Sabuk:</span>
+                            <span class="text-slate-500 dark:text-slate-400 font-medium">Tingkat Sabuk:</span>
                             @if($kohai->kohaiProfile?->rank)
-                                <span class="inline-flex items-center gap-1.5 font-bold text-slate-900">
+                                <span class="inline-flex items-center gap-1.5 font-bold text-slate-900 dark:text-white">
                                     <span class="w-2.5 h-2.5 rounded-full shrink-0 shadow-xs" style="background-color: {{ $kohai->kohaiProfile->rank->belt->color_code ?? '#ffffff' }}"></span>
                                     <span>{{ $kohai->kohaiProfile->rank->name }}</span>
                                 </span>
                             @else
-                                <span class="text-slate-400">Belum Disetel</span>
+                                <span class="text-slate-400 dark:text-slate-500">Belum Disetel</span>
                             @endif
                         </div>
 
                         <div class="flex items-center justify-between">
-                            <span class="text-slate-500 font-medium">Status Asal:</span>
-                            <span class="font-bold text-slate-800">
+                            <span class="text-slate-500 dark:text-slate-400 font-medium">Status Asal:</span>
+                            <span class="font-bold text-slate-800 dark:text-slate-200">
                                 @if($kohai->kohaiProfile?->isPolindra())
                                     Polindra ({{ $kohai->kohaiProfile->studyProgram->name ?? 'Mahasiswa' }})
                                 @else
@@ -262,22 +262,22 @@
                         </div>
 
                         <div class="flex items-center justify-between">
-                            <span class="text-slate-500 font-medium">Nomor WhatsApp:</span>
-                            <span class="font-mono font-bold text-slate-800">{{ $kohai->phone ?? '-' }}</span>
+                            <span class="text-slate-500 dark:text-slate-400 font-medium">Nomor WhatsApp:</span>
+                            <span class="font-mono font-bold text-slate-800 dark:text-slate-200">{{ $kohai->phone ?? '-' }}</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Motivation Banner -->
-                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-blue-50 to-sky-50 border border-blue-200/60 text-xs text-brand-primary leading-relaxed font-medium">
-                    <p class="font-extrabold text-slate-900 flex items-center gap-1.5 mb-1">
+                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-blue-50 to-sky-50 dark:from-sky-950/40 dark:to-slate-950/60 border border-blue-200/60 dark:border-sky-900/60 text-xs text-brand-primary dark:text-sky-300 leading-relaxed font-medium">
+                    <p class="font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5 mb-1">
                         <span>💡</span> Prinsip Dojo Karate
                     </p>
                     <em>"Hitotsu! Reigi o omonzuru koto"</em> — Senantiasa memelihara sopan santun dan kejujuran dalam setiap latihan maupun pertandingan.
                 </div>
             </div>
 
-            <a href="{{ route('kohai.profile.index') }}" class="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs text-center transition shadow-xs">
+            <a href="{{ route('kohai.profile.index') }}" class="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-brand-primary dark:hover:bg-brand-primary/90 text-white font-bold text-xs text-center transition shadow-xs">
                 Perbarui Biodata Lengkap
             </a>
         </div>
@@ -286,23 +286,23 @@
     <!-- Bottom Section: 5 Recent Kumite Reports & Weekly Schedule -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- 5 Recent Kumite Reports (2 Columns) -->
-        <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-200/80 shadow-sm p-5 sm:p-6 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+        <div class="lg:col-span-2 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
                 <div>
-                    <h3 class="text-base font-extrabold text-slate-900 tracking-tight flex items-center gap-2">
+                    <h3 class="text-base font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2">
                         <span>🏆</span> Riwayat Raport Kumite WKF Terkini
                     </h3>
-                    <p class="text-xs text-slate-500 mt-0.5 font-medium">5 hasil duel tanding Kumite terakhir yang telah dinilai oleh Senpai</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 font-medium">5 hasil duel tanding Kumite terakhir yang telah dinilai oleh Senpai</p>
                 </div>
-                <a href="{{ route('kohai.kumite.index') }}" class="inline-flex items-center gap-1 text-xs font-extrabold text-brand-primary hover:text-brand-secondary transition">
+                <a href="{{ route('kohai.kumite.index') }}" class="inline-flex items-center gap-1 text-xs font-extrabold text-brand-primary dark:text-brand-secondary hover:underline transition">
                     <span>Lihat Semua ({{ $totalMatches }})</span>
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
             </div>
 
             <div class="overflow-x-auto min-w-0">
-                <table class="w-full text-left text-sm text-slate-600 min-w-full">
-                    <thead class="bg-slate-50 text-slate-700 text-[11px] uppercase font-bold tracking-wider border-b border-slate-200/80 whitespace-nowrap">
+                <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300 min-w-full">
+                    <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 text-[11px] uppercase font-bold tracking-wider border-b border-slate-200/80 dark:border-slate-800 whitespace-nowrap">
                         <tr>
                             <th class="py-3 px-3.5">Tanggal</th>
                             <th class="py-3 px-3.5">Posisi Sudut</th>
@@ -312,7 +312,7 @@
                             <th class="py-3 px-3.5 text-center">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-slate-100 whitespace-nowrap font-medium text-xs">
+                    <tbody class="divide-y divide-slate-100 dark:divide-slate-800 whitespace-nowrap font-medium text-xs">
                         @forelse($recentKumiteReports as $r)
                             @php
                                 $isAka = ($r->aka_kohai_id === $kohai->id);
@@ -323,20 +323,20 @@
                                 $isDraw = ($r->winner_id === null);
                                 $hasSenshu = $isAka ? ($r->senshu_corner === 'aka') : ($r->senshu_corner === 'ao');
                             @endphp
-                            <tr class="hover:bg-slate-50/80 transition-colors">
+                            <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
                                 <td class="py-3.5 px-3.5">
-                                    <span class="font-bold text-slate-900 block">{{ $r->match_date->format('d M Y') }}</span>
-                                    <span class="text-[10px] text-slate-400 font-mono">{{ $r->match_time }} WIB</span>
+                                    <span class="font-bold text-slate-900 dark:text-white block">{{ $r->match_date->format('d M Y') }}</span>
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-500 font-mono">{{ $r->match_time }} WIB</span>
                                 </td>
 
                                 <td class="py-3.5 px-3.5">
                                     @if($isAka)
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-50 text-red-700 font-bold border border-red-200/80">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-50 dark:bg-red-950/50 text-red-700 dark:text-red-300 font-bold border border-red-200/80 dark:border-red-800/60">
                                             <span class="w-2 h-2 rounded-full bg-red-600 shrink-0"></span>
                                             AKA (Merah)
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-50 text-brand-primary font-bold border border-blue-200/80">
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-50 dark:bg-blue-950/50 text-brand-primary dark:text-sky-300 font-bold border border-blue-200/80 dark:border-blue-800/60">
                                             <span class="w-2 h-2 rounded-full bg-brand-primary shrink-0"></span>
                                             AO (Biru)
                                         </span>
@@ -345,34 +345,34 @@
 
                                 <td class="py-3.5 px-3.5">
                                     <div class="flex items-center gap-2">
-                                        <span class="font-bold text-slate-900">{{ $opponent->name ?? 'N/A' }}</span>
+                                        <span class="font-bold text-slate-900 dark:text-white">{{ $opponent->name ?? 'N/A' }}</span>
                                     </div>
                                 </td>
 
                                 <td class="py-3.5 px-3.5 text-center font-black">
-                                    <span class="px-2 py-0.5 rounded-md {{ $isWinner ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-100 text-slate-800' }}">
+                                    <span class="px-2 py-0.5 rounded-md {{ $isWinner ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800' : 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200' }}">
                                         {{ $myScore }}
                                     </span>
-                                    <span class="text-slate-300 mx-1">:</span>
-                                    <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">
+                                    <span class="text-slate-300 dark:text-slate-600 mx-1">:</span>
+                                    <span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
                                         {{ $opponentScore }}
                                     </span>
                                     @if($hasSenshu)
-                                        <span class="ml-1 px-1.5 py-0.2 text-[8px] font-black bg-amber-100 text-amber-800 rounded border border-amber-200">SENSHU</span>
+                                        <span class="ml-1 px-1.5 py-0.2 text-[8px] font-black bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 rounded border border-amber-200 dark:border-amber-800">SENSHU</span>
                                     @endif
                                 </td>
 
                                 <td class="py-3.5 px-3.5 text-center">
                                     @if($isWinner)
-                                        <span class="px-2.5 py-1 text-[11px] font-black rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/80">
+                                        <span class="px-2.5 py-1 text-[11px] font-black rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800/60">
                                             MENANG 🏆
                                         </span>
                                     @elseif($isDraw)
-                                        <span class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-amber-50 text-amber-800 border border-amber-200/80">
+                                        <span class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200/80 dark:border-amber-800/60">
                                             SERI
                                         </span>
                                     @else
-                                        <span class="px-2.5 py-1 text-[11px] font-extrabold rounded-full bg-red-50 text-red-700 border border-red-200/80">
+                                        <span class="px-2.5 py-1 text-[11px] font-extrabold rounded-full bg-red-50 dark:bg-red-950/50 text-red-700 dark:text-red-300 border border-red-200/80 dark:border-red-800/60">
                                             KALAH
                                         </span>
                                     @endif
@@ -386,7 +386,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="py-8 text-center text-slate-400 text-xs font-medium">
+                                <td colspan="6" class="py-8 text-center text-slate-400 dark:text-slate-500 text-xs font-medium">
                                     Belum ada data evaluasi Kumite. Ikuti sesi latihan tanding dojo untuk mendapatkan evaluasi dari Senpai.
                                 </td>
                             </tr>
@@ -397,29 +397,29 @@
         </div>
 
         <!-- Jadwal Latihan Wajib Dojo (1 Column) -->
-        <div class="lg:col-span-1 bg-white rounded-3xl border border-slate-200/80 shadow-sm p-5 sm:p-6 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2 tracking-tight">
+        <div class="lg:col-span-1 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+                <h3 class="text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-2 tracking-tight">
                     <span>🗓️</span> Jadwal Latihan Rutin
                 </h3>
-                <span class="text-[11px] bg-blue-50 text-brand-primary px-3 py-1 rounded-full font-black border border-blue-200/60">
+                <span class="text-[11px] bg-blue-50 dark:bg-blue-950/60 text-brand-primary dark:text-brand-secondary px-3 py-1 rounded-full font-black border border-blue-200/60 dark:border-blue-800/60">
                     Mingguan
                 </span>
             </div>
 
             <div class="space-y-3">
                 @foreach($scheduleList as $sched)
-                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-brand-primary/40 transition-all space-y-2">
+                    <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200/80 dark:border-slate-800 hover:border-brand-primary/40 dark:hover:border-brand-primary/40 transition-all space-y-2">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs font-black text-brand-primary uppercase tracking-wider">{{ $sched['hari'] }}</span>
-                            <span class="text-[11px] text-slate-500 font-mono font-bold bg-white px-2 py-0.5 rounded-md border border-slate-200">{{ $sched['jam'] }}</span>
+                            <span class="text-xs font-black text-brand-primary dark:text-brand-secondary uppercase tracking-wider">{{ $sched['hari'] }}</span>
+                            <span class="text-[11px] text-slate-500 dark:text-slate-400 font-mono font-bold bg-white dark:bg-slate-900 px-2 py-0.5 rounded-md border border-slate-200 dark:border-slate-700">{{ $sched['jam'] }}</span>
                         </div>
                         <div>
-                            <h4 class="text-xs sm:text-sm font-bold text-slate-900 leading-snug">{{ $sched['materi'] }}</h4>
+                            <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ $sched['materi'] }}</h4>
                         </div>
-                        <div class="pt-2 border-t border-slate-200/60 flex items-center justify-between text-[11px] text-slate-400 font-medium">
+                        <div class="pt-2 border-t border-slate-200/60 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500 font-medium">
                             <span class="flex items-center gap-1">📍 {{ $sched['lokasi'] }}</span>
-                            <span class="text-emerald-600 font-bold">Wajib Hadir</span>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">Wajib Hadir</span>
                         </div>
                     </div>
                 @endforeach
@@ -439,77 +439,100 @@
             const attackData = @json($chartAttack);
             const accuracyData = @json($chartAccuracy);
 
-            new Chart(ctxPerf, {
-                type: 'line',
-                data: {
-                    labels: matchLabels,
-                    datasets: [
-                        {
-                            label: 'Nilai Serangan (Attack)',
-                            data: attackData,
-                            borderColor: '#146C94',
-                            backgroundColor: 'rgba(20, 108, 148, 0.12)',
-                            borderWidth: 2.5,
-                            fill: true,
-                            tension: 0.35,
-                            pointRadius: 4,
-                            pointHoverRadius: 6,
-                            pointBackgroundColor: '#146C94',
-                        },
-                        {
-                            label: 'Akurasi Poin (%)',
-                            data: accuracyData,
-                            borderColor: '#19A7CE',
-                            backgroundColor: 'rgba(25, 167, 206, 0.12)',
-                            borderWidth: 2.5,
-                            fill: false,
-                            tension: 0.35,
-                            pointRadius: 4,
-                            pointHoverRadius: 6,
-                            pointBackgroundColor: '#19A7CE',
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: {
-                        mode: 'index',
-                        intersect: false,
+            let chartInstance = null;
+
+            function renderKohaiChart() {
+                const isDark = document.documentElement.classList.contains('dark');
+                const gridColor = isDark ? 'rgba(51, 65, 85, 0.4)' : 'rgba(226, 232, 240, 0.6)';
+                const tickColor = isDark ? '#94a3b8' : '#64748b';
+                const legendColor = isDark ? '#e2e8f0' : '#334155';
+
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+
+                chartInstance = new Chart(ctxPerf, {
+                    type: 'line',
+                    data: {
+                        labels: matchLabels,
+                        datasets: [
+                            {
+                                label: 'Nilai Serangan (Attack)',
+                                data: attackData,
+                                borderColor: '#146C94',
+                                backgroundColor: isDark ? 'rgba(20, 108, 148, 0.25)' : 'rgba(20, 108, 148, 0.12)',
+                                borderWidth: 2.5,
+                                fill: true,
+                                tension: 0.35,
+                                pointRadius: 4,
+                                pointHoverRadius: 6,
+                                pointBackgroundColor: '#146C94',
+                            },
+                            {
+                                label: 'Akurasi Poin (%)',
+                                data: accuracyData,
+                                borderColor: '#19A7CE',
+                                backgroundColor: isDark ? 'rgba(25, 167, 206, 0.25)' : 'rgba(25, 167, 206, 0.12)',
+                                borderWidth: 2.5,
+                                fill: false,
+                                tension: 0.35,
+                                pointRadius: 4,
+                                pointHoverRadius: 6,
+                                pointBackgroundColor: '#19A7CE',
+                            }
+                        ]
                     },
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                font: {
-                                    family: 'Plus Jakarta Sans',
-                                    size: 11,
-                                    weight: 'bold'
-                                },
-                                usePointStyle: true,
-                                boxWidth: 8
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        family: 'Plus Jakarta Sans',
+                                        size: 11,
+                                        weight: 'bold'
+                                    },
+                                    color: legendColor,
+                                    usePointStyle: true,
+                                    boxWidth: 8
+                                }
+                            },
+                            tooltip: {
+                                padding: 10,
+                                titleFont: { family: 'Plus Jakarta Sans', size: 12, weight: 'bold' },
+                                bodyFont: { family: 'Plus Jakarta Sans', size: 11 },
+                                cornerRadius: 10
                             }
                         },
-                        tooltip: {
-                            padding: 10,
-                            titleFont: { family: 'Plus Jakarta Sans', size: 12, weight: 'bold' },
-                            bodyFont: { family: 'Plus Jakarta Sans', size: 11 },
-                            cornerRadius: 10
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: { color: 'rgba(226, 232, 240, 0.6)' },
-                            ticks: { font: { family: 'Plus Jakarta Sans', size: 10 } }
-                        },
-                        x: {
-                            grid: { display: false },
-                            ticks: { font: { family: 'Plus Jakarta Sans', size: 10 } }
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: gridColor },
+                                ticks: { 
+                                    color: tickColor,
+                                    font: { family: 'Plus Jakarta Sans', size: 10 } 
+                                }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { 
+                                    color: tickColor,
+                                    font: { family: 'Plus Jakarta Sans', size: 10 } 
+                                }
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
+
+            renderKohaiChart();
+            window.addEventListener('karateThemeChanged', renderKohaiChart);
         }
     });
 </script>
