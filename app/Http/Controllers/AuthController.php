@@ -67,16 +67,15 @@ class AuthController extends Controller
     }
 
     /**
-     * Tampilkan form registrasi (Dialihkan ke login karena registrasi dikelola Admin).
+     * Tampilkan halaman tata cara registrasi anggota baru.
      */
-    public function showRegister(): RedirectResponse
+    public function showRegister(): View|RedirectResponse
     {
         if (Auth::check()) {
             return redirect(Auth::user()->getDashboardRoute());
         }
 
-        return redirect()->route('login')
-            ->with('info', 'Pendaftaran akun baru dikelola langsung oleh Admin Karate Polindra. Silakan hubungi pengurus/admin dojo untuk pembuatan akun.');
+        return view('auth.register');
     }
 
     /**

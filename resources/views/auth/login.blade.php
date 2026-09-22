@@ -133,8 +133,14 @@
             <div>
                 <h4 class="text-xs font-bold text-slate-800">Belum memiliki akun?</h4>
                 <p class="text-[11px] text-slate-500 leading-relaxed mt-0.5">
-                    Pendaftaran akun baru dikelola langsung oleh <strong>Admin Karate Polindra</strong>. Silakan hubungi pengurus dojo untuk pembuatan akun.
+                    Pendaftaran akun baru dikelola langsung oleh <strong>Admin Karate Polindra</strong>. Silakan ikuti tata cara pendaftaran akun baru.
                 </p>
+                <a href="{{ route('register') }}" class="inline-flex items-center gap-1 text-xs font-bold text-brand-primary hover:text-brand-secondary transition-colors mt-2">
+                    Lihat Tata Cara Registrasi
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </a>
             </div>
         </div>
     </div>

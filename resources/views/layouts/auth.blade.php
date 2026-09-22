@@ -11,7 +11,7 @@
     <div class="h-1.5 bg-gradient-to-r from-brand-black via-brand-primary to-brand-secondary"></div>
 
     <main class="flex-grow flex items-center justify-center p-4 sm:p-6 py-8">
-        <div class="w-full max-w-md space-y-6">
+        <div class="w-full @yield('card-width', 'max-w-md') space-y-6">
             <!-- Header Logo -->
             <div class="text-center space-y-2">
                 <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-brand-black text-white shadow-lg ring-4 ring-brand-primary/20 p-2.5 transform hover:scale-105 transition-all duration-300">
