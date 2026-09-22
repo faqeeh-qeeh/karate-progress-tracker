@@ -22,6 +22,7 @@ use App\Http\Controllers\Senpai\DashboardController as SenpaiDashboardController
 use App\Http\Controllers\Senpai\KohaiOverviewController;
 use App\Http\Controllers\Senpai\KumiteController as SenpaiKumiteController;
 use App\Http\Controllers\Senpai\ProfileController as SenpaiProfileController;
+use App\Http\Controllers\Senpai\SettingController as SenpaiSettingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -102,6 +103,9 @@ Route::middleware(['auth', 'role:Senpai'])->prefix('senpai')->name('senpai.')->g
     Route::post('/attendance/{attendanceSession}/close', [SenpaiAttendanceController::class, 'close'])->name('attendance.close');
     Route::post('/attendance/{attendanceSession}/reactivate', [SenpaiAttendanceController::class, 'reactivate'])->name('attendance.reactivate');
     Route::get('/attendance/{attendanceSession}/attendees', [SenpaiAttendanceController::class, 'attendees'])->name('attendance.attendees');
+
+    // Pengaturan & Preferensi Tampilan Senpai
+    Route::get('/settings', [SenpaiSettingController::class, 'index'])->name('settings.index');
 });
 
 // Role: Kohai Routes

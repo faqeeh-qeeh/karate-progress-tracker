@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Senpai Dashboard') - Karate Tracker</title>
+    <!-- Anti-FOUC Theme Script -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('karate_theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-slate-50 min-h-screen flex text-slate-800 antialiased selection:bg-brand-primary selection:text-white overflow-x-hidden">
+<body class="bg-slate-50 dark:bg-slate-950 min-h-screen flex text-slate-800 dark:text-slate-100 antialiased selection:bg-brand-primary selection:text-white overflow-x-hidden transition-colors duration-200">
 
     <!-- Desktop Sidebar Senpai -->
     <aside class="hidden lg:flex flex-col w-64 bg-slate-900 text-white min-h-screen fixed inset-y-0 left-0 z-40 border-r border-slate-800/80 shadow-xl">
@@ -49,11 +61,16 @@
                 <span>Daftar Kohai (Murid)</span>
             </a>
 
-            <div class="text-[10px] font-bold uppercase text-slate-500 tracking-wider px-3 mt-6 mb-2">Akun Saya</div>
+            <div class="text-[10px] font-bold uppercase text-slate-500 tracking-wider px-3 mt-6 mb-2">Preferensi & Akun</div>
 
             <a href="{{ route('senpai.profile.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 {{ request()->routeIs('senpai.profile.*') ? 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white shadow-md shadow-brand-primary/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
                 <svg class="w-5 h-5 shrink-0 {{ request()->routeIs('senpai.profile.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                 <span>Biodata Senpai</span>
+            </a>
+
+            <a href="{{ route('senpai.settings.index') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 {{ request()->routeIs('senpai.settings.*') ? 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white shadow-md shadow-brand-primary/20' : 'text-slate-400 hover:text-white hover:bg-slate-800/60' }}">
+                <svg class="w-5 h-5 shrink-0 {{ request()->routeIs('senpai.settings.*') ? 'text-white' : 'text-slate-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <span>Pengaturan & Tema</span>
             </a>
         </nav>
 
@@ -113,6 +130,10 @@
                     <svg class="w-5 h-5 shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                     <span>Biodata Senpai</span>
                 </a>
+                <a href="{{ route('senpai.settings.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm {{ request()->routeIs('senpai.settings.*') ? 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white shadow-md' : 'text-slate-300 hover:bg-slate-800' }}">
+                    <svg class="w-5 h-5 shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span>Pengaturan & Tema</span>
+                </a>
             </nav>
             <div class="p-4 border-t border-slate-800 bg-slate-950/80 shrink-0">
                 <div class="flex items-center gap-3 mb-3">
@@ -138,18 +159,25 @@
     <!-- Main Content Wrapper -->
     <div class="flex-1 min-w-0 lg:pl-64 flex flex-col min-h-screen w-full">
         <!-- Top Navbar -->
-        <header class="bg-white/90 backdrop-blur-md border-b border-slate-200/80 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8 sticky top-0 z-30">
+        <header class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8 sticky top-0 z-30 transition-colors duration-200">
             <div class="flex items-center gap-3 min-w-0">
-                <button id="open-mobile-sidebar" class="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 focus:outline-none shrink-0" aria-label="Buka Menu">
+                <button id="open-mobile-sidebar" class="lg:hidden p-2 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none shrink-0" aria-label="Buka Menu">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
                 <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-brand-primary animate-pulse"></span>
-                    <h2 class="text-sm sm:text-base font-extrabold text-slate-900 truncate tracking-tight">Panel Senpai / Pelatih Dojo</h2>
+                    <h2 class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white truncate tracking-tight">Panel Senpai / Pelatih Dojo</h2>
                 </div>
             </div>
             
-            <div class="flex items-center gap-3 shrink-0">
+            <div class="flex items-center gap-2.5 shrink-0">
+                <!-- Settings Quick Access Link -->
+                <a href="{{ route('senpai.settings.index') }}" 
+                   title="Pengaturan & Mode Gelap" 
+                   class="p-2 rounded-xl text-slate-500 hover:text-brand-primary dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                </a>
+
                 <!-- Clickable Avatar Initial Box Linking to Biodata -->
                 <a href="{{ route('senpai.profile.index') }}" 
                    title="Biodata Senpai ({{ auth()->user()->name }})" 
@@ -167,9 +195,9 @@
         </main>
 
         <!-- Footer -->
-        <footer class="bg-white border-t border-slate-200/80 py-3.5 px-4 sm:px-6 text-[11px] sm:text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <footer class="bg-white dark:bg-slate-900 border-t border-slate-200/80 dark:border-slate-800 py-3.5 px-4 sm:px-6 text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 flex flex-col sm:flex-row justify-between items-center gap-2 transition-colors duration-200">
             <p>&copy; {{ date('Y') }} Karate Polindra Tracker • Workspace Instructor Senpai</p>
-            <span class="font-mono text-slate-400">v1.0.0</span>
+            <span class="font-mono text-slate-400 dark:text-slate-500">v1.0.0</span>
         </footer>
     </div>
 
