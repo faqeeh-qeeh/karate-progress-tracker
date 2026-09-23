@@ -265,17 +265,24 @@
     <div class="schedule-grid">
       {{-- Intro --}}
       <div class="schedule-intro reveal">
-        <div class="section-label">Latihan Rutin</div>
-        <h2>Jadwal <span>Berlatih</span><br>Mingguan</h2>
+        <div class="section-label">{{ $settings['schedule_badge_label'] ?? 'Latihan Rutin' }}</div>
+        <h2>{{ $settings['schedule_title_1'] ?? 'Jadwal' }} <span>{{ $settings['schedule_title_highlight'] ?? 'Berlatih' }}</span><br>{{ $settings['schedule_title_2'] ?? 'Mingguan' }}</h2>
         <p>
-          Latihan terbuka untuk mahasiswa aktif Polindra.
-          Pemula sangat dipersilakan — kami mulai dari nol bersama.
+          {!! nl2br(e($settings['schedule_description'] ?? 'Latihan terbuka untuk mahasiswa aktif Polindra. Pemula sangat dipersilakan — kami mulai dari nol bersama.')) !!}
         </p>
         <div class="schedule-location">
           <div class="schedule-location-icon">📍</div>
           <div class="schedule-location-text">
-            <strong>GOR / Hall Olahraga Polindra</strong>
-            Jl. Lohbener Lama No. 08, Indramayu, Jawa Barat
+            <strong>{{ $settings['schedule_location_name'] ?? 'GOR / Hall Olahraga Polindra' }}</strong>
+            <span>{{ $settings['schedule_location_address'] ?? 'Jl. Lohbener Lama No. 08, Indramayu, Jawa Barat' }}</span>
+            @if(!empty($settings['schedule_maps_url']))
+              <div style="margin-top: 8px;">
+                <a href="{{ $settings['schedule_maps_url'] }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;color:var(--red);text-decoration:none;">
+                  <span>Buka di Google Maps</span>
+                  <svg style="width:12px;height:12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </div>
+            @endif
           </div>
         </div>
       </div>
@@ -283,56 +290,38 @@
       {{-- Table --}}
       <div class="schedule-table reveal">
         <div class="schedule-row header">
-          <span>Hari</span>
-          <span>Sesi</span>
+          <span>Hari / Tanggal</span>
+          <span>Sesi Latihan</span>
           <span>Waktu</span>
-          <span>Level</span>
+          <span>Tipe & Lokasi</span>
         </div>
-        <div class="schedule-row">
-          <div class="sched-day">Senin</div>
-          <div class="sched-type">
-            Kihon & Kata
-            <small>Teknik Dasar + Rangkaian</small>
+        @forelse($trainingSchedules as $schedule)
+          <div class="schedule-row">
+            <div class="sched-day">{{ $schedule->days_string }}</div>
+            <div class="sched-type">
+              {{ $schedule->title }}
+              @if($schedule->notes)
+                <small>{{ $schedule->notes }}</small>
+              @endif
+            </div>
+            <div class="sched-time">{{ $schedule->time_range }} WIB</div>
+            <div>
+              <span class="sched-badge {{ $schedule->type === 'rutin' ? 'badge-all' : 'badge-advanced' }}">
+                {{ $schedule->type_label }}
+              </span>
+              @if($schedule->location_detail)
+                <div style="font-size:11px;color:var(--muted);margin-top:4px;">
+                  📍 {{ $schedule->location_detail }}
+                </div>
+              @endif
+            </div>
           </div>
-          <div class="sched-time">15.30 – 18.00</div>
-          <div><span class="sched-badge badge-all">Semua</span></div>
-        </div>
-        <div class="schedule-row">
-          <div class="sched-day">Rabu</div>
-          <div class="sched-type">
-            Kumite
-            <small>Pertarungan & Sparring</small>
+        @empty
+          <div style="padding: 40px 20px; text-align: center; color: var(--muted);">
+            <div style="font-size: 32px; margin-bottom: 8px;">🥋</div>
+            <p style="font-weight: 600;">Belum ada jadwal latihan aktif yang dipublikasikan.</p>
           </div>
-          <div class="sched-time">15.30 – 18.00</div>
-          <div><span class="sched-badge badge-advanced">Lanjut</span></div>
-        </div>
-        <div class="schedule-row">
-          <div class="sched-day">Kamis</div>
-          <div class="sched-type">
-            Kata Khusus
-            <small>Persiapan Kompetisi</small>
-          </div>
-          <div class="sched-time">15.30 – 17.30</div>
-          <div><span class="sched-badge badge-advanced">Lanjut</span></div>
-        </div>
-        <div class="schedule-row">
-          <div class="sched-day">Jumat</div>
-          <div class="sched-type">
-            Kelas Pemula
-            <small>Orientasi & Dasar-Dasar</small>
-          </div>
-          <div class="sched-time">14.00 – 16.30</div>
-          <div><span class="sched-badge badge-beginner">Pemula</span></div>
-        </div>
-        <div class="schedule-row">
-          <div class="sched-day">Sabtu</div>
-          <div class="sched-type">
-            Latihan Penuh
-            <small>Kihon + Kata + Kumite</small>
-          </div>
-          <div class="sched-time">07.00 – 10.00</div>
-          <div><span class="sched-badge badge-all">Semua</span></div>
-        </div>
+        @endforelse
       </div>
     </div>
   </div>

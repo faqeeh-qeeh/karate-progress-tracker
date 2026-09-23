@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Achievement;
 use App\Models\LandingSetting;
+use App\Models\TrainingSchedule;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,6 +30,8 @@ class LandingPageSettingController extends Controller
             'events_auto_count' => Achievement::where('is_published', true)->distinct('event_name')->count('event_name'),
             'total_achievements' => Achievement::count(),
             'published_achievements' => Achievement::where('is_published', true)->count(),
+            'total_schedules' => TrainingSchedule::count(),
+            'active_schedules' => TrainingSchedule::where('is_active', true)->count(),
         ];
 
         return view('admin.landing.index', compact('settings', 'realStats'));
@@ -106,6 +109,16 @@ class LandingPageSettingController extends Controller
             'about_pillar_4_icon' => 'required|string|max:20',
             'about_pillar_4_title' => 'required|string|max:50',
             'about_pillar_4_desc' => 'required|string|max:255',
+
+            // Seksi Jadwal Latihan (Schedule)
+            'schedule_badge_label' => 'required|string|max:50',
+            'schedule_title_1' => 'required|string|max:100',
+            'schedule_title_highlight' => 'required|string|max:100',
+            'schedule_title_2' => 'required|string|max:100',
+            'schedule_description' => 'required|string|max:1000',
+            'schedule_location_name' => 'required|string|max:150',
+            'schedule_location_address' => 'required|string|max:255',
+            'schedule_maps_url' => 'nullable|url|max:500',
         ]);
 
         // Simpan toggle seksi
@@ -192,7 +205,17 @@ class LandingPageSettingController extends Controller
             LandingSetting::set("about_pillar_{$i}_desc", $validated["about_pillar_{$i}_desc"], 'about', 'string');
         }
 
+        // Simpan setting Jadwal Latihan (Schedule)
+        LandingSetting::set('schedule_badge_label', $validated['schedule_badge_label'], 'schedule', 'string');
+        LandingSetting::set('schedule_title_1', $validated['schedule_title_1'], 'schedule', 'string');
+        LandingSetting::set('schedule_title_highlight', $validated['schedule_title_highlight'], 'schedule', 'string');
+        LandingSetting::set('schedule_title_2', $validated['schedule_title_2'], 'schedule', 'string');
+        LandingSetting::set('schedule_description', $validated['schedule_description'], 'schedule', 'string');
+        LandingSetting::set('schedule_location_name', $validated['schedule_location_name'], 'schedule', 'string');
+        LandingSetting::set('schedule_location_address', $validated['schedule_location_address'], 'schedule', 'string');
+        LandingSetting::set('schedule_maps_url', $validated['schedule_maps_url'] ?? '', 'schedule', 'string');
+
         return redirect()->route('admin.landing-page.index')
-            ->with('success', 'Pengaturan Landing Page (Statistik & Tentang Kami) berhasil diperbarui!');
+            ->with('success', 'Pengaturan Landing Page berhasil diperbarui!');
     }
 }

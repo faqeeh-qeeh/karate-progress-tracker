@@ -78,6 +78,16 @@ class LandingSettingSeeder extends Seeder
             ['key' => 'about_pillar_4_icon', 'value' => '🏆', 'group' => 'about', 'type' => 'string'],
             ['key' => 'about_pillar_4_title', 'value' => 'Kompetisi', 'group' => 'about', 'type' => 'string'],
             ['key' => 'about_pillar_4_desc', 'value' => 'Mengikuti kejuaraan sebagai uji kemampuan nyata', 'group' => 'about', 'type' => 'string'],
+
+            // ── Section Jadwal Latihan (Schedule) ──────────────
+            ['key' => 'schedule_badge_label', 'value' => 'Latihan Rutin', 'group' => 'schedule', 'type' => 'string'],
+            ['key' => 'schedule_title_1', 'value' => 'Jadwal', 'group' => 'schedule', 'type' => 'string'],
+            ['key' => 'schedule_title_highlight', 'value' => 'Berlatih', 'group' => 'schedule', 'type' => 'string'],
+            ['key' => 'schedule_title_2', 'value' => 'Mingguan', 'group' => 'schedule', 'type' => 'string'],
+            ['key' => 'schedule_description', 'value' => 'Latihan terbuka untuk mahasiswa aktif Polindra. Pemula sangat dipersilakan — kami mulai dari nol bersama.', 'group' => 'schedule', 'type' => 'string'],
+            ['key' => 'schedule_location_name', 'value' => 'GOR / Hall Olahraga Polindra', 'group' => 'schedule', 'type' => 'string'],
+            ['key' => 'schedule_location_address', 'value' => 'Jl. Lohbener Lama No. 08, Indramayu, Jawa Barat', 'group' => 'schedule', 'type' => 'string'],
+            ['key' => 'schedule_maps_url', 'value' => 'https://maps.app.goo.gl/Rd7vgrC7bLRvxGsL7', 'group' => 'schedule', 'type' => 'string'],
         ];
 
         foreach ($settings as $setting) {

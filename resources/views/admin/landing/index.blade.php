@@ -562,7 +562,92 @@
         </div>
 
         <!-- ═════════════════════════════════════════════════════
-             BAGIAN 3: TOGGLE AKTIF / NONAKTIF SEKSI LANDING PAGE
+             BAGIAN 3: PENGATURAN SEKSI JADWAL LATIHAN (SCHEDULE)
+             ═════════════════════════════════════════════════════ -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 transition-colors">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-4 mb-6">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">📅</span>
+                        <h2 class="text-base sm:text-lg font-black text-slate-900 dark:text-white">Pengaturan Seksi Jadwal Latihan (Schedule)</h2>
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Kelola teks judul pengantar, deskripsi, informasi tempat latihan, dan tautan Google Maps.</p>
+                </div>
+                <a href="{{ route('admin.training-schedules.index') }}" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800/60 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-xs font-bold transition shadow-2xs self-start sm:self-auto">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span>Kelola Data Jadwal ({{ $realStats['active_schedules'] ?? 0 }} Aktif / {{ $realStats['total_schedules'] ?? 0 }} Total) &rarr;</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Kolom Kiri: Teks Pengantar Jadwal -->
+                <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 space-y-4">
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        <span>📝</span>
+                        <span>Teks Judul & Pengantar</span>
+                    </h3>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Badge Label</label>
+                            <input type="text" name="schedule_badge_label" value="{{ old('schedule_badge_label', $settings['schedule_badge_label'] ?? 'Latihan Rutin') }}" required class="w-full px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Judul Baris 1</label>
+                            <input type="text" name="schedule_title_1" value="{{ old('schedule_title_1', $settings['schedule_title_1'] ?? 'Jadwal') }}" required class="w-full px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Kata Highlight (Merah)</label>
+                            <input type="text" name="schedule_title_highlight" value="{{ old('schedule_title_highlight', $settings['schedule_title_highlight'] ?? 'Berlatih') }}" required class="w-full px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-brand-primary focus:ring-2 focus:ring-brand-primary">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Judul Baris 2</label>
+                        <input type="text" name="schedule_title_2" value="{{ old('schedule_title_2', $settings['schedule_title_2'] ?? 'Mingguan') }}" required class="w-full px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Paragraf Deskripsi Pengantar</label>
+                        <textarea name="schedule_description" rows="3" required class="w-full px-3.5 py-2.5 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary resize-none leading-relaxed">{{ old('schedule_description', $settings['schedule_description'] ?? 'Latihan terbuka untuk mahasiswa aktif Polindra. Pemula sangat dipersilakan — kami mulai dari nol bersama.') }}</textarea>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Tempat & Google Maps -->
+                <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 space-y-4">
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        <span>📍</span>
+                        <span>Lokasi Latihan & Google Maps</span>
+                    </h3>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Nama Tempat / Gedung</label>
+                        <input type="text" name="schedule_location_name" value="{{ old('schedule_location_name', $settings['schedule_location_name'] ?? 'GOR / Hall Olahraga Polindra') }}" required placeholder="Contoh: GOR / Hall Olahraga Polindra" class="w-full px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Alamat Lengkap</label>
+                        <textarea name="schedule_location_address" rows="2" required placeholder="Contoh: Jl. Lohbener Lama No. 08, Indramayu, Jawa Barat" class="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary resize-none">{{ old('schedule_location_address', $settings['schedule_location_address'] ?? 'Jl. Lohbener Lama No. 08, Indramayu, Jawa Barat') }}</textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Tautan / Link Google Maps (URL)</label>
+                        <input type="url" name="schedule_maps_url" value="{{ old('schedule_maps_url', $settings['schedule_maps_url'] ?? '') }}" placeholder="https://maps.app.goo.gl/..." class="w-full px-3.5 py-2 text-xs sm:text-sm font-medium rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                        <span class="text-[10px] text-slate-400 mt-1 block">Tautan ini akan membuka lokasi dojo/latihan di Google Maps saat diklik pengunjung.</span>
+                    </div>
+
+                    <div class="p-3.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-800/60 flex items-start gap-2.5">
+                        <svg class="w-4 h-4 text-blue-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <div class="text-[11px] text-blue-800 dark:text-blue-300 leading-relaxed">
+                            Tabel jadwal latihan pada Landing Page otomatis mengambil seluruh jadwal bertipe <strong>Aktif</strong> yang dikelola pada menu <strong>Jadwal Latihan</strong>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═════════════════════════════════════════════════════
+             BAGIAN 4: TOGGLE AKTIF / NONAKTIF SEKSI LANDING PAGE
              ═════════════════════════════════════════════════════ -->
         <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 transition-colors">
             <div class="border-b border-slate-100 dark:border-slate-800 pb-4 mb-6">
