@@ -732,7 +732,10 @@
                                     <input type="text" name="gallery_item_1_label" value="{{ old('gallery_item_1_label', $settings['gallery_item_1_label'] ?? 'Sesi Latihan') }}" required placeholder="Contoh: Sesi Latihan" class="w-full px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
                                 </div>
                                 <div>
-                                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Upload File Foto Baru</label>
+                                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1 flex items-center justify-between">
+                                        <span>Upload File Foto Baru</span>
+                                        <span class="text-[10px] text-brand-primary font-bold">Maks. 5 MB</span>
+                                    </label>
                                     <input type="file" id="gallery_item_1_image" name="gallery_item_1_image" accept="image/jpeg,image/png,image/jpg,image/webp" class="block w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-red-50 file:text-brand-primary hover:file:bg-red-100 dark:file:bg-red-950/60 dark:file:text-red-300 cursor-pointer">
                                 </div>
                                 @if($hasCustomG1)
@@ -776,7 +779,10 @@
                             </div>
 
                             <div>
-                                <label class="block text-[10px] font-bold text-slate-600 dark:text-slate-400 mb-1">Ganti Foto</label>
+                                <label class="block text-[10px] font-bold text-slate-600 dark:text-slate-400 mb-1 flex items-center justify-between">
+                                    <span>Ganti Foto</span>
+                                    <span class="text-[9px] text-brand-primary font-bold">Maks. 5 MB</span>
+                                </label>
                                 <input type="file" id="gallery_item_{{ $i }}_image" name="gallery_item_{{ $i }}_image" accept="image/jpeg,image/png,image/jpg,image/webp" class="block w-full text-[11px] text-slate-500 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-red-50 file:text-brand-primary hover:file:bg-red-100 dark:file:bg-red-950/60 dark:file:text-red-300 cursor-pointer">
                             </div>
 
@@ -793,7 +799,95 @@
         </div>
 
         <!-- ═════════════════════════════════════════════════════
-             BAGIAN 5: TOGGLE AKTIF / NONAKTIF SEKSI LANDING PAGE
+             BAGIAN 5: PENGATURAN SEKSI FOOTER & MEDIA SOSIAL
+             ═════════════════════════════════════════════════════ -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 transition-colors">
+            <div class="border-b border-slate-100 dark:border-slate-800 pb-4 mb-6">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">⚡</span>
+                    <h2 class="text-base sm:text-lg font-black text-slate-900 dark:text-white">Pengaturan Seksi Footer & Media Sosial</h2>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Kelola teks narasi brand, kontak resmi, tautan akun media sosial, dan teks hak cipta pada bagian bawah Landing Page.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Kolom Kiri: Teks Brand & Kontak -->
+                <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 space-y-4">
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        <span>🏢</span>
+                        <span>Informasi Organisasi & Kontak</span>
+                    </h3>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Deskripsi Singkat Organisasi</label>
+                        <textarea name="footer_description" rows="3" required class="w-full px-3.5 py-2.5 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary resize-none leading-relaxed">{{ old('footer_description', $settings['footer_description'] ?? 'Unit Kegiatan Mahasiswa Karate Polindra — membentuk generasi atlet berkarakter melalui disiplin, teknik, dan semangat juang tanpa henti.') }}</textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Email Resmi</label>
+                            <input type="email" name="footer_email" value="{{ old('footer_email', $settings['footer_email'] ?? 'karate@polindra.ac.id') }}" required placeholder="karate@polindra.ac.id" class="w-full px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Alamat / Kampus</label>
+                            <input type="text" name="footer_address" value="{{ old('footer_address', $settings['footer_address'] ?? 'Politeknik Negeri Indramayu, Jl. Lohbener Lama No. 08, Indramayu') }}" required placeholder="Politeknik Negeri Indramayu..." class="w-full px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Teks Hak Cipta / Copyright</label>
+                        <input type="text" name="footer_copyright" value="{{ old('footer_copyright', $settings['footer_copyright'] ?? '© 2026 UKM Karate Politeknik Negeri Indramayu. Hak cipta dilindungi.') }}" required placeholder="© 2026 UKM Karate Politeknik Negeri Indramayu..." class="w-full px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Tautan Media Sosial -->
+                <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 space-y-4">
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        <span>🌐</span>
+                        <span>Tautan Akun Media Sosial</span>
+                    </h3>
+
+                    <!-- Instagram -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1 flex items-center gap-1.5">
+                            <span class="text-pink-600 font-bold">📷 Instagram URL</span>
+                            <span class="text-[10px] text-slate-400">(Opsional, kosongkan jika tidak ingin ditampilkan)</span>
+                        </label>
+                        <input type="url" name="footer_instagram_url" value="{{ old('footer_instagram_url', $settings['footer_instagram_url'] ?? '') }}" placeholder="https://instagram.com/karate_polindra" class="w-full px-3.5 py-2 text-xs sm:text-sm font-medium rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                    </div>
+
+                    <!-- YouTube -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1 flex items-center gap-1.5">
+                            <span class="text-red-600 font-bold">▶️ YouTube URL</span>
+                            <span class="text-[10px] text-slate-400">(Opsional, kosongkan jika tidak ingin ditampilkan)</span>
+                        </label>
+                        <input type="url" name="footer_youtube_url" value="{{ old('footer_youtube_url', $settings['footer_youtube_url'] ?? '') }}" placeholder="https://youtube.com/@karatepolindra" class="w-full px-3.5 py-2 text-xs sm:text-sm font-medium rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                    </div>
+
+                    <!-- TikTok -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1 flex items-center gap-1.5">
+                            <span class="text-slate-900 dark:text-white font-bold">🎵 TikTok URL</span>
+                            <span class="text-[10px] text-slate-400">(Opsional, kosongkan jika tidak ingin ditampilkan)</span>
+                        </label>
+                        <input type="url" name="footer_tiktok_url" value="{{ old('footer_tiktok_url', $settings['footer_tiktok_url'] ?? '') }}" placeholder="https://tiktok.com/@karatepolindra" class="w-full px-3.5 py-2 text-xs sm:text-sm font-medium rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1 flex items-center gap-1.5">
+                            <span class="text-emerald-600 font-bold">💬 WhatsApp / Chat URL</span>
+                            <span class="text-[10px] text-slate-400">(Opsional, format: https://wa.me/628xxxx)</span>
+                        </label>
+                        <input type="url" name="footer_whatsapp_url" value="{{ old('footer_whatsapp_url', $settings['footer_whatsapp_url'] ?? '') }}" placeholder="https://wa.me/628123456789" class="w-full px-3.5 py-2 text-xs sm:text-sm font-medium rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═════════════════════════════════════════════════════
+             BAGIAN 6: TOGGLE AKTIF / NONAKTIF SEKSI LANDING PAGE
              ═════════════════════════════════════════════════════ -->
         <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 transition-colors">
             <div class="border-b border-slate-100 dark:border-slate-800 pb-4 mb-6">
@@ -1155,13 +1249,18 @@ document.addEventListener('DOMContentLoaded', function() {
         input.addEventListener('keyup', syncFormAndPreview);
     });
 
-    // Image Preview for About Section
+    // Image Preview & 5MB Validation for About Section
     const aboutImageInput = document.getElementById('about_image');
     const aboutImgPreview = document.getElementById('about-img-preview');
     if (aboutImageInput) {
         aboutImageInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    alert(`Ukuran file "${file.name}" melebihi batas maksimal 5 MB (${(file.size / (1024 * 1024)).toFixed(2)} MB). Silakan pilih file lain.`);
+                    this.value = '';
+                    return;
+                }
                 const reader = new FileReader();
                 reader.onload = function(evt) {
                     if (aboutImgPreview) {
@@ -1173,7 +1272,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Image Previews for Gallery Section (Slot 01 - 05)
+    // Image Previews & 5MB Validation for Gallery Section (Slot 01 - 05)
     for (let i = 1; i <= 5; i++) {
         const galInput = document.getElementById(`gallery_item_${i}_image`);
         const galPreview = document.getElementById(`gallery-preview-${i}`);
@@ -1181,6 +1280,11 @@ document.addEventListener('DOMContentLoaded', function() {
             galInput.addEventListener('change', function(e) {
                 const file = e.target.files[0];
                 if (file) {
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert(`Ukuran file foto Slot 0${i} melebihi batas maksimal 5 MB (${(file.size / (1024 * 1024)).toFixed(2)} MB). Silakan pilih file dengan ukuran maksimal 5 MB.`);
+                        this.value = '';
+                        return;
+                    }
                     const reader = new FileReader();
                     reader.onload = function(evt) {
                         if (galPreview) {

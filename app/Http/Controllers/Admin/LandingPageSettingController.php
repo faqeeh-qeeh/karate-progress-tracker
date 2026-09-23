@@ -140,6 +140,29 @@ class LandingPageSettingController extends Controller
             'gallery_item_5_label' => 'required|string|max:100',
             'gallery_item_5_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'delete_gallery_item_5_image' => 'nullable|boolean',
+
+            // Seksi Footer & Media Sosial
+            'footer_description' => 'required|string|max:500',
+            'footer_instagram_url' => 'nullable|url|max:255',
+            'footer_youtube_url' => 'nullable|url|max:255',
+            'footer_tiktok_url' => 'nullable|url|max:255',
+            'footer_whatsapp_url' => 'nullable|url|max:255',
+            'footer_email' => 'required|email|max:100',
+            'footer_address' => 'required|string|max:255',
+            'footer_copyright' => 'required|string|max:255',
+        ], [
+            'about_image.max' => 'Ukuran foto Tentang Kami maksimal 5 MB.',
+            'about_image.image' => 'File foto Tentang Kami harus berupa gambar (JPG, JPEG, PNG, WEBP).',
+            'gallery_item_1_image.max' => 'Ukuran foto Galeri Slot 01 maksimal 5 MB.',
+            'gallery_item_1_image.image' => 'File foto Galeri Slot 01 harus berupa gambar (JPG, JPEG, PNG, WEBP).',
+            'gallery_item_2_image.max' => 'Ukuran foto Galeri Slot 02 maksimal 5 MB.',
+            'gallery_item_2_image.image' => 'File foto Galeri Slot 02 harus berupa gambar (JPG, JPEG, PNG, WEBP).',
+            'gallery_item_3_image.max' => 'Ukuran foto Galeri Slot 03 maksimal 5 MB.',
+            'gallery_item_3_image.image' => 'File foto Galeri Slot 03 harus berupa gambar (JPG, JPEG, PNG, WEBP).',
+            'gallery_item_4_image.max' => 'Ukuran foto Galeri Slot 04 maksimal 5 MB.',
+            'gallery_item_4_image.image' => 'File foto Galeri Slot 04 harus berupa gambar (JPG, JPEG, PNG, WEBP).',
+            'gallery_item_5_image.max' => 'Ukuran foto Galeri Slot 05 maksimal 5 MB.',
+            'gallery_item_5_image.image' => 'File foto Galeri Slot 05 harus berupa gambar (JPG, JPEG, PNG, WEBP).',
         ]);
 
         // Simpan toggle seksi
@@ -274,6 +297,16 @@ class LandingPageSettingController extends Controller
                 LandingSetting::set("gallery_item_{$i}_image", 'uploads/landing/' . $fileName, 'gallery', 'string');
             }
         }
+
+        // Simpan setting Footer & Media Sosial
+        LandingSetting::set('footer_description', $validated['footer_description'], 'footer', 'string');
+        LandingSetting::set('footer_instagram_url', $validated['footer_instagram_url'] ?? '', 'footer', 'string');
+        LandingSetting::set('footer_youtube_url', $validated['footer_youtube_url'] ?? '', 'footer', 'string');
+        LandingSetting::set('footer_tiktok_url', $validated['footer_tiktok_url'] ?? '', 'footer', 'string');
+        LandingSetting::set('footer_whatsapp_url', $validated['footer_whatsapp_url'] ?? '', 'footer', 'string');
+        LandingSetting::set('footer_email', $validated['footer_email'], 'footer', 'string');
+        LandingSetting::set('footer_address', $validated['footer_address'], 'footer', 'string');
+        LandingSetting::set('footer_copyright', $validated['footer_copyright'], 'footer', 'string');
 
         return redirect()->route('admin.landing-page.index')
             ->with('success', 'Pengaturan Landing Page berhasil diperbarui!');

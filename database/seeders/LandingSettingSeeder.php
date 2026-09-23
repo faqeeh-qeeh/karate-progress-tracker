@@ -109,6 +109,16 @@ class LandingSettingSeeder extends Seeder
 
             ['key' => 'gallery_item_5_image', 'value' => null, 'group' => 'gallery', 'type' => 'string'],
             ['key' => 'gallery_item_5_label', 'value' => 'Opening Ceremony', 'group' => 'gallery', 'type' => 'string'],
+
+            // ── Section Footer & Media Sosial ──────────────────
+            ['key' => 'footer_description', 'value' => 'Unit Kegiatan Mahasiswa Karate Polindra — membentuk generasi atlet berkarakter melalui disiplin, teknik, dan semangat juang tanpa henti.', 'group' => 'footer', 'type' => 'string'],
+            ['key' => 'footer_instagram_url', 'value' => 'https://instagram.com', 'group' => 'footer', 'type' => 'string'],
+            ['key' => 'footer_youtube_url', 'value' => 'https://youtube.com', 'group' => 'footer', 'type' => 'string'],
+            ['key' => 'footer_tiktok_url', 'value' => 'https://tiktok.com', 'group' => 'footer', 'type' => 'string'],
+            ['key' => 'footer_whatsapp_url', 'value' => 'https://wa.me', 'group' => 'footer', 'type' => 'string'],
+            ['key' => 'footer_email', 'value' => 'karate@polindra.ac.id', 'group' => 'footer', 'type' => 'string'],
+            ['key' => 'footer_address', 'value' => 'Politeknik Negeri Indramayu, Jl. Lohbener Lama No. 08, Indramayu', 'group' => 'footer', 'type' => 'string'],
+            ['key' => 'footer_copyright', 'value' => '© 2026 UKM Karate Politeknik Negeri Indramayu. Hak cipta dilindungi.', 'group' => 'footer', 'type' => 'string'],
         ];
 
         foreach ($settings as $setting) {
