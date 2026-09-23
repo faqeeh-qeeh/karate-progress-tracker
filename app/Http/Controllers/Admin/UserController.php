@@ -185,7 +185,6 @@ class UserController extends Controller
             'gender' => ['required', 'in:male,female'],
             'phone' => ['required', 'string', 'max:20'],
             'address' => ['required', 'string'],
-            'password' => ['nullable', 'string', 'min:6', 'confirmed'],
         ], [
             'name.required' => 'Nama lengkap pengguna wajib diisi.',
             'email.required' => 'Alamat email wajib diisi.',
@@ -198,11 +197,9 @@ class UserController extends Controller
             'gender.in' => 'Pilihan jenis kelamin tidak valid.',
             'phone.required' => 'Nomor kontak/telepon wajib diisi.',
             'address.required' => 'Alamat lengkap wajib diisi.',
-            'password.min' => 'Password baru minimal 6 karakter.',
-            'password.confirmed' => 'Konfirmasi password tidak cocok.',
         ]);
 
-        $userData = [
+        $user->update([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'role_id' => $validated['role_id'],
@@ -211,13 +208,7 @@ class UserController extends Controller
             'gender' => $validated['gender'],
             'phone' => $validated['phone'],
             'address' => $validated['address'],
-        ];
-
-        if (!empty($validated['password'])) {
-            $userData['password'] = Hash::make($validated['password']);
-        }
-
-        $user->update($userData);
+        ]);
 
         $kohaiRole = Role::whereRaw('LOWER(nama) = ?', ['kohai'])->first();
         if ($user->role_id == $kohaiRole?->id) {
