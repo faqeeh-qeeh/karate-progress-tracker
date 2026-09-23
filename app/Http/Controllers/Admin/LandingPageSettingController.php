@@ -72,9 +72,40 @@ class LandingPageSettingController extends Controller
             // Stat 4: Event Diikuti
             'stat_events_active' => 'nullable|boolean',
             'stat_events_mode' => 'required|in:auto,manual',
-            'stat_events_value' => 'required|integer|min:0',
+            'stat_events_value' => 'nullable|integer|min:0',
             'stat_events_suffix' => 'nullable|string|max:10',
             'stat_events_label' => 'required|string|max:50',
+
+            // Seksi Tentang Kami (About Us)
+            'about_badge_label' => 'required|string|max:50',
+            'about_title_1' => 'required|string|max:100',
+            'about_title_2' => 'required|string|max:100',
+            'about_title_highlight' => 'required|string|max:100',
+            'about_description_1' => 'required|string|max:1000',
+            'about_description_2' => 'nullable|string|max:1000',
+            'about_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'delete_about_image' => 'nullable|boolean',
+
+            // 4 Pilar Latihan
+            'about_pillar_1_active' => 'nullable|boolean',
+            'about_pillar_1_icon' => 'required|string|max:20',
+            'about_pillar_1_title' => 'required|string|max:50',
+            'about_pillar_1_desc' => 'required|string|max:255',
+
+            'about_pillar_2_active' => 'nullable|boolean',
+            'about_pillar_2_icon' => 'required|string|max:20',
+            'about_pillar_2_title' => 'required|string|max:50',
+            'about_pillar_2_desc' => 'required|string|max:255',
+
+            'about_pillar_3_active' => 'nullable|boolean',
+            'about_pillar_3_icon' => 'required|string|max:20',
+            'about_pillar_3_title' => 'required|string|max:50',
+            'about_pillar_3_desc' => 'required|string|max:255',
+
+            'about_pillar_4_active' => 'nullable|boolean',
+            'about_pillar_4_icon' => 'required|string|max:20',
+            'about_pillar_4_title' => 'required|string|max:50',
+            'about_pillar_4_desc' => 'required|string|max:255',
         ]);
 
         // Simpan toggle seksi
@@ -113,11 +144,55 @@ class LandingPageSettingController extends Controller
 
         LandingSetting::set('stat_events_active', $request->boolean('stat_events_active'), 'stats', 'boolean');
         LandingSetting::set('stat_events_mode', $validated['stat_events_mode'], 'stats', 'string');
-        LandingSetting::set('stat_events_value', (int) $validated['stat_events_value'], 'stats', 'integer');
+        LandingSetting::set('stat_events_value', (int) ($validated['stat_events_value'] ?? 20), 'stats', 'integer');
         LandingSetting::set('stat_events_suffix', $validated['stat_events_suffix'] ?? '+', 'stats', 'string');
         LandingSetting::set('stat_events_label', $validated['stat_events_label'], 'stats', 'string');
 
+        // Simpan setting Tentang Kami (About Us)
+        LandingSetting::set('about_badge_label', $validated['about_badge_label'], 'about', 'string');
+        LandingSetting::set('about_title_1', $validated['about_title_1'], 'about', 'string');
+        LandingSetting::set('about_title_2', $validated['about_title_2'], 'about', 'string');
+        LandingSetting::set('about_title_highlight', $validated['about_title_highlight'], 'about', 'string');
+        LandingSetting::set('about_description_1', $validated['about_description_1'], 'about', 'string');
+        LandingSetting::set('about_description_2', $validated['about_description_2'] ?? '', 'about', 'string');
+
+        // Handle hapus/reset gambar Tentang Kami jika diminta
+        if ($request->boolean('delete_about_image')) {
+            $currentImage = LandingSetting::get('about_image');
+            if ($currentImage && str_starts_with($currentImage, 'uploads/') && file_exists(public_path($currentImage))) {
+                @unlink(public_path($currentImage));
+            }
+            LandingSetting::set('about_image', null, 'about', 'string');
+        }
+
+        // Handle upload gambar baru Tentang Kami (gantikan & hapus gambar lama)
+        if ($request->hasFile('about_image') && $request->file('about_image')->isValid()) {
+            $currentImage = LandingSetting::get('about_image');
+            if ($currentImage && str_starts_with($currentImage, 'uploads/') && file_exists(public_path($currentImage))) {
+                @unlink(public_path($currentImage));
+            }
+
+            $file = $request->file('about_image');
+            $uploadDir = public_path('uploads/landing');
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+
+            $fileName = 'about_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move($uploadDir, $fileName);
+
+            LandingSetting::set('about_image', 'uploads/landing/' . $fileName, 'about', 'string');
+        }
+
+        // Simpan 4 Pilar beserta status aktifnya
+        for ($i = 1; $i <= 4; $i++) {
+            LandingSetting::set("about_pillar_{$i}_active", $request->boolean("about_pillar_{$i}_active"), 'about', 'boolean');
+            LandingSetting::set("about_pillar_{$i}_icon", $validated["about_pillar_{$i}_icon"], 'about', 'string');
+            LandingSetting::set("about_pillar_{$i}_title", $validated["about_pillar_{$i}_title"], 'about', 'string');
+            LandingSetting::set("about_pillar_{$i}_desc", $validated["about_pillar_{$i}_desc"], 'about', 'string');
+        }
+
         return redirect()->route('admin.landing-page.index')
-            ->with('success', 'Pengaturan Landing Page berhasil diperbarui!');
+            ->with('success', 'Pengaturan Landing Page (Statistik & Tentang Kami) berhasil diperbarui!');
     }
 }

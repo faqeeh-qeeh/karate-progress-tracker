@@ -456,11 +456,15 @@ body::before {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
 }
 .hero-stat-item {
-  padding: 20px 0;
+  flex: 1 1 0;
+  min-width: 140px;
+  padding: 20px 12px;
   text-align: center;
   border-right: 1px solid var(--border);
 }
@@ -1380,8 +1384,9 @@ footer::before {
 @media (max-width: 768px) {
   .nav-links, .btn-ghost { display: none; }
   .nav-hamburger { display: flex; }
-  .hero-stats-inner { grid-template-columns: repeat(2, 1fr); }
-  .hero-stat-item:nth-child(2) { border-right: none; }
+  .hero-stats-inner { flex-wrap: wrap; }
+  .hero-stat-item { flex: 1 1 45%; min-width: 120px; }
+  .hero-stat-item:nth-child(2n) { border-right: none; }
   .achievements-grid { grid-template-columns: 1fr; }
   .join-steps { grid-template-columns: 1fr; gap: 40px; }
   .join-steps::before { display: none; }

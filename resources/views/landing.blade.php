@@ -156,10 +156,19 @@
     <div class="about-grid">
       {{-- Image --}}
       <div class="about-img-wrap reveal">
-        @if(file_exists(public_path('images/landing/about-team.jpeg')))
+        @php
+          $aboutImgSrc = null;
+          if (!empty($settings['about_image']) && file_exists(public_path($settings['about_image']))) {
+              $aboutImgSrc = asset($settings['about_image']);
+          } elseif (file_exists(public_path('images/landing/about-team.jpeg'))) {
+              $aboutImgSrc = asset('images/landing/about-team.jpeg');
+          }
+        @endphp
+
+        @if($aboutImgSrc)
           <img
-            src="{{ asset('images/landing/about-team.jpeg') }}"
-            alt="Tim Karate Polindra"
+            src="{{ $aboutImgSrc }}"
+            alt="Tentang UKM Karate Polindra"
             class="about-img"
           >
         @else
@@ -174,41 +183,41 @@
 
       {{-- Content --}}
       <div class="about-content reveal">
-        <div class="section-label">Tentang Kami</div>
-        <h2>Disiplin<br>Membentuk<br><em>Juara</em></h2>
+        <div class="section-label">{{ $settings['about_badge_label'] ?? 'Tentang Kami' }}</div>
+        <h2>{{ $settings['about_title_1'] ?? 'Disiplin' }}<br>{{ $settings['about_title_2'] ?? 'Membentuk' }}<br><em>{{ $settings['about_title_highlight'] ?? 'Juara' }}</em></h2>
         <p>
-          UKM Karate Politeknik Negeri Indramayu adalah wadah resmi bagi mahasiswa
-          yang ingin mengembangkan kemampuan bela diri karate di lingkungan kampus.
-          Kami bernaung di bawah WKF (World Karate Federation) dan aktif mengikuti
-          berbagai kejuaraan tingkat regional maupun nasional.
+          {!! nl2br(e($settings['about_description_1'] ?? 'UKM Karate Politeknik Negeri Indramayu adalah wadah resmi bagi mahasiswa yang ingin mengembangkan kemampuan bela diri karate di lingkungan kampus. Kami bernaung di bawah WKF (World Karate Federation) dan aktif mengikuti berbagai kejuaraan tingkat regional maupun nasional.')) !!}
         </p>
-        <p>
-          Dengan pelatih berpengalaman dan program latihan terstruktur, kami memastikan
-          setiap anggota berkembang — baik dalam teknik, mental, maupun karakter.
-        </p>
+        @if(!empty($settings['about_description_2']))
+          <p>
+            {!! nl2br(e($settings['about_description_2'])) !!}
+          </p>
+        @endif
 
-        <div class="about-pillars">
-          <div class="about-pillar">
-            <div class="about-pillar-icon">⚡</div>
-            <div class="about-pillar-title">Kihon</div>
-            <div class="about-pillar-desc">Latihan teknik dasar yang konsisten setiap sesi</div>
+        @php
+          $activePillars = [];
+          for ($i = 1; $i <= 4; $i++) {
+              if ($settings["about_pillar_{$i}_active"] ?? true) {
+                  $activePillars[] = [
+                      'icon' => $settings["about_pillar_{$i}_icon"] ?? '⚡',
+                      'title' => $settings["about_pillar_{$i}_title"] ?? 'Pilar',
+                      'desc' => $settings["about_pillar_{$i}_desc"] ?? '',
+                  ];
+              }
+          }
+        @endphp
+
+        @if(!empty($activePillars))
+          <div class="about-pillars" style="{{ count($activePillars) === 1 ? 'grid-template-columns: 1fr;' : (count($activePillars) === 3 ? 'grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));' : '') }}">
+            @foreach($activePillars as $pillar)
+              <div class="about-pillar">
+                <div class="about-pillar-icon">{{ $pillar['icon'] }}</div>
+                <div class="about-pillar-title">{{ $pillar['title'] }}</div>
+                <div class="about-pillar-desc">{{ $pillar['desc'] }}</div>
+              </div>
+            @endforeach
           </div>
-          <div class="about-pillar">
-            <div class="about-pillar-icon">🥋</div>
-            <div class="about-pillar-title">Kata</div>
-            <div class="about-pillar-desc">Rangkaian gerakan terstandar sebagai fondasi seni</div>
-          </div>
-          <div class="about-pillar">
-            <div class="about-pillar-icon">🥊</div>
-            <div class="about-pillar-title">Kumite</div>
-            <div class="about-pillar-desc">Pertarungan terkontrol untuk mengasah insting & refleks</div>
-          </div>
-          <div class="about-pillar">
-            <div class="about-pillar-icon">🏆</div>
-            <div class="about-pillar-title">Kompetisi</div>
-            <div class="about-pillar-desc">Mengikuti kejuaraan sebagai uji kemampuan nyata</div>
-          </div>
-        </div>
+        @endif
       </div>
     </div>
   </div>

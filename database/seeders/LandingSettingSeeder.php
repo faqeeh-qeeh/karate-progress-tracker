@@ -48,6 +48,36 @@ class LandingSettingSeeder extends Seeder
             ['key' => 'stat_events_value', 'value' => 20, 'group' => 'stats', 'type' => 'integer'],
             ['key' => 'stat_events_suffix', 'value' => '+', 'group' => 'stats', 'type' => 'string'],
             ['key' => 'stat_events_label', 'value' => 'Event Diikuti', 'group' => 'stats', 'type' => 'string'],
+
+            // ── Section Tentang Kami (About Us) ───────────────
+            ['key' => 'about_badge_label', 'value' => 'Tentang Kami', 'group' => 'about', 'type' => 'string'],
+            ['key' => 'about_title_1', 'value' => 'Disiplin', 'group' => 'about', 'type' => 'string'],
+            ['key' => 'about_title_2', 'value' => 'Membentuk', 'group' => 'about', 'type' => 'string'],
+            ['key' => 'about_title_highlight', 'value' => 'Juara', 'group' => 'about', 'type' => 'string'],
+            ['key' => 'about_description_1', 'value' => 'UKM Karate Politeknik Negeri Indramayu adalah wadah resmi bagi mahasiswa yang ingin mengembangkan kemampuan bela diri karate di lingkungan kampus. Kami bernaung di bawah WKF (World Karate Federation) dan aktif mengikuti berbagai kejuaraan tingkat regional maupun nasional.', 'group' => 'about', 'type' => 'string'],
+            ['key' => 'about_description_2', 'value' => 'Dengan pelatih berpengalaman dan program latihan terstruktur, kami memastikan setiap anggota berkembang — baik dalam teknik, mental, maupun karakter.', 'group' => 'about', 'type' => 'string'],
+            ['key' => 'about_image', 'value' => null, 'group' => 'about', 'type' => 'string'],
+
+            // ── 4 Pilar Latihan ──────────────────────────────
+            ['key' => 'about_pillar_1_active', 'value' => true, 'group' => 'about', 'type' => 'boolean'],
+            ['key' => 'about_pillar_1_icon', 'value' => '⚡', 'group' => 'about', 'type' => 'string'],
+            ['key' => 'about_pillar_1_title', 'value' => 'Kihon', 'group' => 'about', 'type' => 'string'],
+            ['key' => 'about_pillar_1_desc', 'value' => 'Latihan teknik dasar yang konsisten setiap sesi', 'group' => 'about', 'type' => 'string'],
+
+            ['key' => 'about_pillar_2_active', 'value' => true, 'group' => 'about', 'type' => 'boolean'],
+            ['key' => 'about_pillar_2_icon', 'value' => '🥋', 'group' => 'about', 'type' => 'string'],
+            ['key' => 'about_pillar_2_title', 'value' => 'Kata', 'group' => 'about', 'type' => 'string'],
+            ['key' => 'about_pillar_2_desc', 'value' => 'Rangkaian gerakan terstandar sebagai fondasi seni', 'group' => 'about', 'type' => 'string'],
+
+            ['key' => 'about_pillar_3_active', 'value' => true, 'group' => 'about', 'type' => 'boolean'],
+            ['key' => 'about_pillar_3_icon', 'value' => '🥊', 'group' => 'about', 'type' => 'string'],
+            ['key' => 'about_pillar_3_title', 'value' => 'Kumite', 'group' => 'about', 'type' => 'string'],
+            ['key' => 'about_pillar_3_desc', 'value' => 'Pertarungan terkontrol untuk mengasah insting & refleks', 'group' => 'about', 'type' => 'string'],
+
+            ['key' => 'about_pillar_4_active', 'value' => true, 'group' => 'about', 'type' => 'boolean'],
+            ['key' => 'about_pillar_4_icon', 'value' => '🏆', 'group' => 'about', 'type' => 'string'],
+            ['key' => 'about_pillar_4_title', 'value' => 'Kompetisi', 'group' => 'about', 'type' => 'string'],
+            ['key' => 'about_pillar_4_desc', 'value' => 'Mengikuti kejuaraan sebagai uji kemampuan nyata', 'group' => 'about', 'type' => 'string'],
         ];
 
         foreach ($settings as $setting) {

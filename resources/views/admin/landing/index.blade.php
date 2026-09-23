@@ -34,7 +34,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.landing-page.settings.update') }}" method="POST" class="space-y-6">
+    <form action="{{ route('admin.landing-page.settings.update') }}" method="POST" enctype="multipart/form-data" id="landing-settings-form" class="space-y-6">
         @csrf
 
         <!-- ═════════════════════════════════════════════════════
@@ -49,71 +49,75 @@
                     </h2>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Atur angka, label, mode otomatis, atau sembunyikan stat tertentu pada bar statistik hero.</p>
                 </div>
-                <span class="text-[11px] px-2.5 py-1 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 text-amber-700 dark:text-amber-300 font-bold rounded-lg self-start sm:self-auto">
-                    Live Reactive Counter
+                <span class="text-[11px] px-2.5 py-1 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 font-bold rounded-lg self-start sm:self-auto flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>Live Reactive Preview</span>
                 </span>
             </div>
 
-            <!-- Preview Card Bar -->
-            <div class="mb-6 p-4 rounded-xl bg-slate-950 text-white border border-slate-800 shadow-inner">
-                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span>Preview Tampilan Hero Stats di Landing Page</span>
+            <!-- Preview Card Bar (Real-time Updated) -->
+            <div class="mb-6 p-4 sm:p-5 rounded-2xl bg-slate-950 text-white border border-slate-800 shadow-inner">
+                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                        <span>Preview Tampilan Hero Stats di Landing Page (Real-Time)</span>
+                    </div>
+                    <span class="text-[9px] text-slate-400 italic">Perubahan langsung ter-update otomatis di kotak ini</span>
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-center divide-x divide-slate-800/80">
-                    <div class="p-2">
-                        <div class="text-lg sm:text-xl font-black text-red-500">{{ $settings['stat_founded_year'] ?? 2016 }}</div>
-                        <div class="text-[10px] sm:text-xs font-semibold text-slate-300">{{ $settings['stat_founded_label'] ?? 'Tahun Berdiri' }}</div>
-                        <span class="text-[9px] text-slate-500 block mt-0.5">{{ ($settings['stat_founded_active'] ?? true) ? '● Aktif' : '○ Sembunyi' }}</span>
+                    <!-- Stat 1 Preview -->
+                    <div id="preview-stat-1" class="p-2 transition-all duration-200">
+                        <div id="preview-stat-1-num" class="text-xl sm:text-2xl font-black text-red-500">{{ $settings['stat_founded_year'] ?? 2016 }}</div>
+                        <div id="preview-stat-1-label" class="text-xs font-semibold text-slate-300 mt-0.5">{{ $settings['stat_founded_label'] ?? 'Tahun Berdiri' }}</div>
+                        <span id="preview-stat-1-status" class="text-[10px] font-bold block mt-1.5 {{ ($settings['stat_founded_active'] ?? true) ? 'text-emerald-400' : 'text-slate-500 line-through' }}">
+                            {{ ($settings['stat_founded_active'] ?? true) ? '● Aktif' : '○ Sembunyi' }}
+                        </span>
                     </div>
-                    <div class="p-2">
-                        <div class="text-lg sm:text-xl font-black text-white">
-                            @if(($settings['stat_members_mode'] ?? '') === 'auto_polindra')
-                                {{ $realStats['kohai_polindra_count'] }}{{ $settings['stat_members_suffix'] ?? '+' }}
-                            @elseif(($settings['stat_members_mode'] ?? '') === 'auto_all')
-                                {{ $realStats['kohai_all_count'] }}{{ $settings['stat_members_suffix'] ?? '+' }}
-                            @else
-                                {{ $settings['stat_members_custom_value'] ?? 80 }}{{ $settings['stat_members_suffix'] ?? '+' }}
-                            @endif
-                        </div>
-                        <div class="text-[10px] sm:text-xs font-semibold text-slate-300">{{ $settings['stat_members_label'] ?? 'Anggota Aktif' }}</div>
-                        <span class="text-[9px] text-slate-500 block mt-0.5">{{ ($settings['stat_members_active'] ?? true) ? '● Aktif' : '○ Sembunyi' }}</span>
+
+                    <!-- Stat 2 Preview -->
+                    <div id="preview-stat-2" class="p-2 transition-all duration-200">
+                        <div id="preview-stat-2-num" class="text-xl sm:text-2xl font-black text-white">80+</div>
+                        <div id="preview-stat-2-label" class="text-xs font-semibold text-slate-300 mt-0.5">{{ $settings['stat_members_label'] ?? 'Anggota Aktif' }}</div>
+                        <span id="preview-stat-2-status" class="text-[10px] font-bold block mt-1.5 {{ ($settings['stat_members_active'] ?? true) ? 'text-emerald-400' : 'text-slate-500 line-through' }}">
+                            {{ ($settings['stat_members_active'] ?? true) ? '● Aktif' : '○ Sembunyi' }}
+                        </span>
                     </div>
-                    <div class="p-2">
-                        <div class="text-lg sm:text-xl font-black text-white">
-                            @if(($settings['stat_medals_mode'] ?? '') === 'auto')
-                                {{ $realStats['medals_auto_count'] }}{{ $settings['stat_medals_suffix'] ?? '+' }}
-                            @else
-                                {{ $settings['stat_medals_custom_value'] ?? 50 }}{{ $settings['stat_medals_suffix'] ?? '+' }}
-                            @endif
-                        </div>
-                        <div class="text-[10px] sm:text-xs font-semibold text-slate-300">{{ $settings['stat_medals_label'] ?? 'Medali Kejuaraan' }}</div>
-                        <span class="text-[9px] text-slate-500 block mt-0.5">{{ ($settings['stat_medals_active'] ?? true) ? '● Aktif' : '○ Sembunyi' }}</span>
+
+                    <!-- Stat 3 Preview -->
+                    <div id="preview-stat-3" class="p-2 transition-all duration-200">
+                        <div id="preview-stat-3-num" class="text-xl sm:text-2xl font-black text-blue-400">50+</div>
+                        <div id="preview-stat-3-label" class="text-xs font-semibold text-slate-300 mt-0.5">{{ $settings['stat_medals_label'] ?? 'Medali Kejuaraan' }}</div>
+                        <span id="preview-stat-3-status" class="text-[10px] font-bold block mt-1.5 {{ ($settings['stat_medals_active'] ?? true) ? 'text-emerald-400' : 'text-slate-500 line-through' }}">
+                            {{ ($settings['stat_medals_active'] ?? true) ? '● Aktif' : '○ Sembunyi' }}
+                        </span>
                     </div>
-                    <div class="p-2">
-                        <div class="text-lg sm:text-xl font-black text-white">
-                            @if(($settings['stat_events_mode'] ?? '') === 'auto')
-                                {{ $realStats['events_auto_count'] }}{{ $settings['stat_events_suffix'] ?? '+' }}
-                            @else
-                                {{ $settings['stat_events_value'] ?? 20 }}{{ $settings['stat_events_suffix'] ?? '+' }}
-                            @endif
-                        </div>
-                        <div class="text-[10px] sm:text-xs font-semibold text-slate-300">{{ $settings['stat_events_label'] ?? 'Event Diikuti' }}</div>
-                        <span class="text-[9px] text-slate-500 block mt-0.5">{{ ($settings['stat_events_active'] ?? true) ? '● Aktif' : '○ Sembunyi' }}</span>
+
+                    <!-- Stat 4 Preview -->
+                    <div id="preview-stat-4" class="p-2 transition-all duration-200">
+                        <div id="preview-stat-4-num" class="text-xl sm:text-2xl font-black text-white">20+</div>
+                        <div id="preview-stat-4-label" class="text-xs font-semibold text-slate-300 mt-0.5">{{ $settings['stat_events_label'] ?? 'Event Diikuti' }}</div>
+                        <span id="preview-stat-4-status" class="text-[10px] font-bold block mt-1.5 {{ ($settings['stat_events_active'] ?? true) ? 'text-emerald-400' : 'text-slate-500 line-through' }}">
+                            {{ ($settings['stat_events_active'] ?? true) ? '● Aktif' : '○ Sembunyi' }}
+                        </span>
                     </div>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- STAT 1: TAHUN BERDIRI -->
-                <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 space-y-4">
-                    <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-700/60">
-                        <div class="flex items-center gap-2">
-                            <span class="text-base">📅</span>
-                            <span class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Stat 1: Tahun Berdiri</span>
+                <!-- ── STAT 1: TAHUN BERDIRI ─────────────────── -->
+                <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 space-y-4 shadow-2xs">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-700/60">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-red-100 dark:bg-red-950/60 text-brand-primary flex items-center justify-center text-sm font-black">
+                                01
+                            </div>
+                            <div>
+                                <span class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider block">Tahun Berdiri</span>
+                                <span class="text-[10px] text-slate-500">Angka tahun berdirinya UKM</span>
+                            </div>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" name="stat_founded_active" value="1" {{ ($settings['stat_founded_active'] ?? true) ? 'checked' : '' }} class="sr-only peer">
+                            <input type="checkbox" id="stat_founded_active" name="stat_founded_active" value="1" {{ ($settings['stat_founded_active'] ?? true) ? 'checked' : '' }} class="sr-only peer">
                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-primary"></div>
                             <span class="ml-2 text-xs font-bold text-slate-700 dark:text-slate-300">Tampilkan</span>
                         </label>
@@ -122,24 +126,29 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Tahun Berdiri</label>
-                            <input type="number" name="stat_founded_year" value="{{ old('stat_founded_year', $settings['stat_founded_year'] ?? 2016) }}" min="1950" max="2099" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                            <input type="number" id="stat_founded_year" name="stat_founded_year" value="{{ old('stat_founded_year', $settings['stat_founded_year'] ?? 2016) }}" min="1950" max="2099" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Label Teks</label>
-                            <input type="text" name="stat_founded_label" value="{{ old('stat_founded_label', $settings['stat_founded_label'] ?? 'Tahun Berdiri') }}" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                            <input type="text" id="stat_founded_label" name="stat_founded_label" value="{{ old('stat_founded_label', $settings['stat_founded_label'] ?? 'Tahun Berdiri') }}" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
                         </div>
                     </div>
                 </div>
 
-                <!-- STAT 2: ANGGOTA AKTIF -->
-                <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 space-y-4">
-                    <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-700/60">
-                        <div class="flex items-center gap-2">
-                            <span class="text-base">🥋</span>
-                            <span class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Stat 2: Anggota Aktif</span>
+                <!-- ── STAT 2: ANGGOTA AKTIF ─────────────────── -->
+                <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 space-y-4 shadow-2xs">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-700/60">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-blue-100 dark:bg-blue-950/60 text-blue-600 flex items-center justify-center text-sm font-black">
+                                02
+                            </div>
+                            <div>
+                                <span class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider block">Anggota Aktif</span>
+                                <span class="text-[10px] text-slate-500">Hitung otomatis atau manual</span>
+                            </div>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" name="stat_members_active" value="1" {{ ($settings['stat_members_active'] ?? true) ? 'checked' : '' }} class="sr-only peer">
+                            <input type="checkbox" id="stat_members_active" name="stat_members_active" value="1" {{ ($settings['stat_members_active'] ?? true) ? 'checked' : '' }} class="sr-only peer">
                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-primary"></div>
                             <span class="ml-2 text-xs font-bold text-slate-700 dark:text-slate-300">Tampilkan</span>
                         </label>
@@ -147,12 +156,12 @@
 
                     <div>
                         <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Mode Perhitungan Angka</label>
-                        <select name="stat_members_mode" id="stat_members_mode" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary cursor-pointer">
+                        <select name="stat_members_mode" id="stat_members_mode" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary cursor-pointer">
                             <option value="auto_polindra" {{ ($settings['stat_members_mode'] ?? '') === 'auto_polindra' ? 'selected' : '' }}>
-                                ⚡ Otomatis: Hitung Kohai Polindra (Total saat ini: {{ $realStats['kohai_polindra_count'] }} akun)
+                                ⚡ Otomatis: Hitung Kohai Polindra (Saat ini: {{ $realStats['kohai_polindra_count'] }} akun)
                             </option>
                             <option value="auto_all" {{ ($settings['stat_members_mode'] ?? '') === 'auto_all' ? 'selected' : '' }}>
-                                ⚡ Otomatis: Hitung Seluruh Kohai (Total saat ini: {{ $realStats['kohai_all_count'] }} akun)
+                                ⚡ Otomatis: Hitung Seluruh Kohai (Saat ini: {{ $realStats['kohai_all_count'] }} akun)
                             </option>
                             <option value="manual" {{ ($settings['stat_members_mode'] ?? '') === 'manual' ? 'selected' : '' }}>
                                 ✍️ Manual: Input angka kustom sendiri
@@ -160,31 +169,45 @@
                         </select>
                     </div>
 
+                    <!-- Dynamic Auto Info Box (Tampil saat mode Otomatis) -->
+                    <div id="members_auto_info" class="p-3 rounded-xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-800/60 text-xs text-blue-900 dark:text-blue-300 font-medium flex items-center gap-2">
+                        <span class="text-base">⚡</span>
+                        <div>
+                            <span class="font-bold">Mode Otomatis Aktif:</span> Angka dihitung langsung dari total akun Kohai di database (<span id="members_auto_count_val" class="font-bold underline">{{ $realStats['kohai_polindra_count'] }}</span> anggota). Input angka dinonaktifkan.
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div class="sm:col-span-1">
-                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Angka Kustom</label>
-                            <input type="number" name="stat_members_custom_value" value="{{ old('stat_members_custom_value', $settings['stat_members_custom_value'] ?? 80) }}" min="0" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                        <!-- Custom value input (Hanya muncul saat mode Manual) -->
+                        <div id="members_custom_container" class="sm:col-span-1 hidden">
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Angka Manual</label>
+                            <input type="number" id="stat_members_custom_value" name="stat_members_custom_value" value="{{ old('stat_members_custom_value', $settings['stat_members_custom_value'] ?? 80) }}" min="0" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
                         </div>
                         <div class="sm:col-span-1">
                             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Simbol Suffix</label>
-                            <input type="text" name="stat_members_suffix" value="{{ old('stat_members_suffix', $settings['stat_members_suffix'] ?? '+') }}" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                            <input type="text" id="stat_members_suffix" name="stat_members_suffix" value="{{ old('stat_members_suffix', $settings['stat_members_suffix'] ?? '+') }}" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
                         </div>
-                        <div class="sm:col-span-1">
+                        <div id="members_label_container" class="sm:col-span-2">
                             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Label Teks</label>
-                            <input type="text" name="stat_members_label" value="{{ old('stat_members_label', $settings['stat_members_label'] ?? 'Anggota Aktif') }}" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                            <input type="text" id="stat_members_label" name="stat_members_label" value="{{ old('stat_members_label', $settings['stat_members_label'] ?? 'Anggota Aktif') }}" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
                         </div>
                     </div>
                 </div>
 
-                <!-- STAT 3: MEDALI KEJUARAAN -->
-                <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 space-y-4">
-                    <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-700/60">
-                        <div class="flex items-center gap-2">
-                            <span class="text-base">🥇</span>
-                            <span class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Stat 3: Medali Kejuaraan</span>
+                <!-- ── STAT 3: MEDALI KEJUARAAN ──────────────── -->
+                <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 space-y-4 shadow-2xs">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-700/60">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-600 flex items-center justify-center text-sm font-black">
+                                03
+                            </div>
+                            <div>
+                                <span class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider block">Medali Kejuaraan</span>
+                                <span class="text-[10px] text-slate-500">Hitung otomatis dari input prestasi</span>
+                            </div>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" name="stat_medals_active" value="1" {{ ($settings['stat_medals_active'] ?? true) ? 'checked' : '' }} class="sr-only peer">
+                            <input type="checkbox" id="stat_medals_active" name="stat_medals_active" value="1" {{ ($settings['stat_medals_active'] ?? true) ? 'checked' : '' }} class="sr-only peer">
                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-primary"></div>
                             <span class="ml-2 text-xs font-bold text-slate-700 dark:text-slate-300">Tampilkan</span>
                         </label>
@@ -192,41 +215,55 @@
 
                     <div>
                         <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Mode Perhitungan Medali</label>
-                        <select name="stat_medals_mode" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary cursor-pointer">
+                        <select name="stat_medals_mode" id="stat_medals_mode" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary cursor-pointer">
                             <option value="auto" {{ ($settings['stat_medals_mode'] ?? '') === 'auto' ? 'selected' : '' }}>
-                                ⚡ Otomatis: Hitung dari input Prestasi Kejuaraan (Total: {{ $realStats['medals_auto_count'] }} prestasi aktif)
+                                ⚡ Otomatis: Hitung dari input Prestasi (Saat ini: {{ $realStats['medals_auto_count'] }} medali aktif)
                             </option>
                             <option value="manual" {{ ($settings['stat_medals_mode'] ?? '') === 'manual' ? 'selected' : '' }}>
-                                ✍️ Manual: Input angka kustom
+                                ✍️ Manual: Input angka kustom sendiri
                             </option>
                         </select>
                     </div>
 
+                    <!-- Dynamic Auto Info Box (Tampil saat mode Otomatis) -->
+                    <div id="medals_auto_info" class="p-3 rounded-xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 text-xs text-amber-900 dark:text-amber-300 font-medium flex items-center gap-2">
+                        <span class="text-base">🥇</span>
+                        <div>
+                            <span class="font-bold">Mode Otomatis Aktif:</span> Angka dihitung dari data <a href="{{ route('admin.achievements.index') }}" class="underline font-bold">Prestasi Kejuaraan</a> (<span class="font-bold underline">{{ $realStats['medals_auto_count'] }}</span> medali). Input angka dinonaktifkan.
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div class="sm:col-span-1">
-                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Angka Kustom</label>
-                            <input type="number" name="stat_medals_custom_value" value="{{ old('stat_medals_custom_value', $settings['stat_medals_custom_value'] ?? 50) }}" min="0" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                        <!-- Custom value input (Hanya muncul saat mode Manual) -->
+                        <div id="medals_custom_container" class="sm:col-span-1 hidden">
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Angka Manual</label>
+                            <input type="number" id="stat_medals_custom_value" name="stat_medals_custom_value" value="{{ old('stat_medals_custom_value', $settings['stat_medals_custom_value'] ?? 50) }}" min="0" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
                         </div>
                         <div class="sm:col-span-1">
                             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Simbol Suffix</label>
-                            <input type="text" name="stat_medals_suffix" value="{{ old('stat_medals_suffix', $settings['stat_medals_suffix'] ?? '+') }}" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                            <input type="text" id="stat_medals_suffix" name="stat_medals_suffix" value="{{ old('stat_medals_suffix', $settings['stat_medals_suffix'] ?? '+') }}" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
                         </div>
-                        <div class="sm:col-span-1">
+                        <div id="medals_label_container" class="sm:col-span-2">
                             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Label Teks</label>
-                            <input type="text" name="stat_medals_label" value="{{ old('stat_medals_label', $settings['stat_medals_label'] ?? 'Medali Kejuaraan') }}" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                            <input type="text" id="stat_medals_label" name="stat_medals_label" value="{{ old('stat_medals_label', $settings['stat_medals_label'] ?? 'Medali Kejuaraan') }}" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
                         </div>
                     </div>
                 </div>
 
-                <!-- STAT 4: EVENT DIIKUTI -->
-                <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 space-y-4">
-                    <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-700/60">
-                        <div class="flex items-center gap-2">
-                            <span class="text-base">🏆</span>
-                            <span class="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Stat 4: Event Diikuti</span>
+                <!-- ── STAT 4: EVENT DIIKUTI ─────────────────── -->
+                <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 space-y-4 shadow-2xs">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-700/60">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center text-sm font-black">
+                                04
+                            </div>
+                            <div>
+                                <span class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider block">Event Diikuti</span>
+                                <span class="text-[10px] text-slate-500">Input biasa atau hitung otomatis</span>
+                            </div>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" name="stat_events_active" value="1" {{ ($settings['stat_events_active'] ?? true) ? 'checked' : '' }} class="sr-only peer">
+                            <input type="checkbox" id="stat_events_active" name="stat_events_active" value="1" {{ ($settings['stat_events_active'] ?? true) ? 'checked' : '' }} class="sr-only peer">
                             <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-primary"></div>
                             <span class="ml-2 text-xs font-bold text-slate-700 dark:text-slate-300">Tampilkan</span>
                         </label>
@@ -234,28 +271,37 @@
 
                     <div>
                         <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Mode Event</label>
-                        <select name="stat_events_mode" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary cursor-pointer">
+                        <select name="stat_events_mode" id="stat_events_mode" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary cursor-pointer">
                             <option value="manual" {{ ($settings['stat_events_mode'] ?? '') === 'manual' ? 'selected' : '' }}>
                                 ✍️ Input Biasa / Manual (Sesuai keinginan)
                             </option>
                             <option value="auto" {{ ($settings['stat_events_mode'] ?? '') === 'auto' ? 'selected' : '' }}>
-                                ⚡ Otomatis: Hitung dari Event Unik Kejuaraan (Total: {{ $realStats['events_auto_count'] }} event unik)
+                                ⚡ Otomatis: Hitung dari Event Unik Kejuaraan (Saat ini: {{ $realStats['events_auto_count'] }} event)
                             </option>
                         </select>
                     </div>
 
+                    <!-- Dynamic Auto Info Box (Tampil saat mode Otomatis) -->
+                    <div id="events_auto_info" class="p-3 rounded-xl bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/60 text-xs text-emerald-900 dark:text-emerald-300 font-medium flex items-center gap-2 hidden">
+                        <span class="text-base">🏆</span>
+                        <div>
+                            <span class="font-bold">Mode Otomatis Aktif:</span> Angka dihitung dari nama event unik di data prestasi (<span class="font-bold underline">{{ $realStats['events_auto_count'] }}</span> event). Input angka dinonaktifkan.
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div class="sm:col-span-1">
+                        <!-- Custom value input (Hanya muncul saat mode Manual) -->
+                        <div id="events_custom_container" class="sm:col-span-1">
                             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Jumlah Event</label>
-                            <input type="number" name="stat_events_value" value="{{ old('stat_events_value', $settings['stat_events_value'] ?? 20) }}" min="0" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                            <input type="number" id="stat_events_value" name="stat_events_value" value="{{ old('stat_events_value', $settings['stat_events_value'] ?? 20) }}" min="0" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
                         </div>
                         <div class="sm:col-span-1">
                             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Simbol Suffix</label>
-                            <input type="text" name="stat_events_suffix" value="{{ old('stat_events_suffix', $settings['stat_events_suffix'] ?? '+') }}" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                            <input type="text" id="stat_events_suffix" name="stat_events_suffix" value="{{ old('stat_events_suffix', $settings['stat_events_suffix'] ?? '+') }}" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
                         </div>
-                        <div class="sm:col-span-1">
+                        <div id="events_label_container" class="sm:col-span-1">
                             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Label Teks</label>
-                            <input type="text" name="stat_events_label" value="{{ old('stat_events_label', $settings['stat_events_label'] ?? 'Event Diikuti') }}" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary focus:border-brand-primary">
+                            <input type="text" id="stat_events_label" name="stat_events_label" value="{{ old('stat_events_label', $settings['stat_events_label'] ?? 'Event Diikuti') }}" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-semibold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
                         </div>
                     </div>
                 </div>
@@ -263,7 +309,260 @@
         </div>
 
         <!-- ═════════════════════════════════════════════════════
-             BAGIAN 2: TOGGLE AKTIF / NONAKTIF SEKSI LANDING PAGE
+             BAGIAN 2: PENGATURAN SEKSI TENTANG KAMI (ABOUT US)
+             ═════════════════════════════════════════════════════ -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 transition-colors">
+            <div class="border-b border-slate-100 dark:border-slate-800 pb-4 mb-6">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">🥋</span>
+                    <h2 class="text-base sm:text-lg font-black text-slate-900 dark:text-white">Pengaturan Seksi Tentang Kami (About Us)</h2>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Kelola foto utama tim/kegiatan, narasi penjelasan organisasi, dan teks 4 pilar latihan (Kihon, Kata, Kumite, Kompetisi).</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Kolom Kiri: Foto Utama (4 Kolom) -->
+                <div class="lg:col-span-4 space-y-4">
+                    <div class="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 space-y-3">
+                        <label class="block text-xs font-bold text-slate-800 dark:text-slate-200">
+                            Foto Seksi Tentang Kami
+                        </label>
+
+                        <!-- Box Preview Gambar -->
+                        <div class="relative w-full aspect-4/3 rounded-xl overflow-hidden border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 flex items-center justify-center group shadow-inner">
+                            @php
+                                $currentAboutImg = $settings['about_image'] ?? null;
+                                $hasCustomImg = !empty($currentAboutImg) && file_exists(public_path($currentAboutImg));
+                                $imgSrc = $hasCustomImg ? asset($currentAboutImg) : (file_exists(public_path('images/landing/about-team.jpeg')) ? asset('images/landing/about-team.jpeg') : null);
+                            @endphp
+
+                            @if($imgSrc)
+                                <img id="about-img-preview" src="{{ $imgSrc }}" alt="Preview Foto Tentang Kami" class="w-full h-full object-cover">
+                            @else
+                                <div id="about-img-placeholder" class="text-center p-4 text-slate-400">
+                                    <svg class="w-10 h-10 mx-auto mb-1 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    <span class="text-xs">Belum ada foto</span>
+                                </div>
+                            @endif
+
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <label for="about_image" class="px-3 py-1.5 bg-white/90 text-slate-900 rounded-lg text-xs font-bold cursor-pointer hover:bg-white shadow">
+                                    Ganti Foto
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Status Gambar -->
+                        <div class="flex items-center justify-between text-[11px]">
+                            <span class="font-medium text-slate-500 dark:text-slate-400">Status Foto:</span>
+                            @if($hasCustomImg)
+                                <span class="px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-bold">Foto Kustom Aktif</span>
+                            @else
+                                <span class="px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold">Foto Default Bawaan</span>
+                            @endif
+                        </div>
+
+                        <!-- Input File -->
+                        <div>
+                            <input type="file" id="about_image" name="about_image" accept="image/jpeg,image/png,image/jpg,image/webp" class="block w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-red-50 file:text-brand-primary hover:file:bg-red-100 dark:file:bg-red-950/60 dark:file:text-red-300 cursor-pointer">
+                        </div>
+
+                        @if($hasCustomImg)
+                            <!-- Option to reset to default -->
+                            <div class="pt-2 border-t border-slate-200 dark:border-slate-700/60">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" name="delete_about_image" value="1" class="rounded border-slate-300 text-brand-primary focus:ring-brand-primary">
+                                    <span class="text-xs font-medium text-rose-600 dark:text-rose-400">Kembalikan ke Foto Default Bawaan</span>
+                                </label>
+                            </div>
+                        @endif
+
+                        <p class="text-[10px] text-slate-400 dark:text-slate-500 leading-relaxed">
+                            💡 Format: JPG, PNG, WEBP (Maks. 5MB). Ketika foto baru diunggah, file foto lama akan <strong>otomatis terhapus</strong> dari server.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Teks Judul & Penjelasan (8 Kolom) -->
+                <div class="lg:col-span-8 space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-3.5">
+                        <div class="sm:col-span-1">
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Badge Label</label>
+                            <input type="text" name="about_badge_label" value="{{ old('about_badge_label', $settings['about_badge_label'] ?? 'Tentang Kami') }}" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                        </div>
+                        <div class="sm:col-span-1">
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Judul Baris 1</label>
+                            <input type="text" name="about_title_1" value="{{ old('about_title_1', $settings['about_title_1'] ?? 'Disiplin') }}" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                        </div>
+                        <div class="sm:col-span-1">
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Judul Baris 2</label>
+                            <input type="text" name="about_title_2" value="{{ old('about_title_2', $settings['about_title_2'] ?? 'Membentuk') }}" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                        </div>
+                        <div class="sm:col-span-1">
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Kata Aksen/Italic</label>
+                            <input type="text" name="about_title_highlight" value="{{ old('about_title_highlight', $settings['about_title_highlight'] ?? 'Juara') }}" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm font-bold text-brand-primary focus:ring-2 focus:ring-brand-primary">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Paragraf Penjelasan 1 (Wajib)</label>
+                        <textarea name="about_description_1" rows="3" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary resize-none leading-relaxed">{{ old('about_description_1', $settings['about_description_1'] ?? 'UKM Karate Politeknik Negeri Indramayu adalah wadah resmi bagi mahasiswa yang ingin mengembangkan kemampuan bela diri karate di lingkungan kampus. Kami bernaung di bawah WKF (World Karate Federation) dan aktif mengikuti berbagai kejuaraan tingkat regional maupun nasional.') }}</textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Paragraf Penjelasan 2 (Opsional)</label>
+                        <textarea name="about_description_2" rows="2" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs sm:text-sm text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary resize-none leading-relaxed">{{ old('about_description_2', $settings['about_description_2'] ?? 'Dengan pelatih berpengalaman dan program latihan terstruktur, kami memastikan setiap anggota berkembang — baik dalam teknik, mental, maupun karakter.') }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── 4 PILAR LATIHAN ────────────────────────────── -->
+            <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
+                    <div>
+                        <h3 class="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
+                            <span>⚡</span>
+                            <span>Pengaturan 4 Pilar Latihan (Kihon, Kata, Kumite, Kompetisi)</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                            Pilih pilar yang ingin ditampilkan di Landing Page (Bisa 1, 2, 3, 4 pilar, atau dinonaktifkan semua).
+                        </p>
+                    </div>
+                    <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full self-start sm:self-auto">
+                        Layout otomatis menyesuaikan jumlah pilar aktif
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- ── PILAR 1 ── -->
+                    @php $p1Active = $settings['about_pillar_1_active'] ?? true; @endphp
+                    <div id="pillar-card-1" class="p-4 sm:p-5 rounded-2xl border transition-all {{ $p1Active ? 'border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/50' : 'border-dashed border-slate-300 dark:border-slate-800 bg-slate-100/40 dark:bg-slate-900/40 opacity-60' }} space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-200/80 dark:border-slate-700/60">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 text-xs font-black flex items-center justify-center">01</span>
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-200">Pilar Pertama</span>
+                            </div>
+                            <label class="flex items-center gap-2 cursor-pointer select-none">
+                                <span class="text-[11px] font-bold {{ $p1Active ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400' }}">Tampilkan</span>
+                                <input type="checkbox" name="about_pillar_1_active" value="1" {{ $p1Active ? 'checked' : '' }} onchange="document.getElementById('pillar-card-1').classList.toggle('opacity-60', !this.checked)" class="rounded border-slate-300 text-brand-primary focus:ring-brand-primary w-4 h-4">
+                            </label>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="grid grid-cols-12 gap-3">
+                                <div class="col-span-3 sm:col-span-3">
+                                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Emoji / Icon</label>
+                                    <input type="text" name="about_pillar_1_icon" value="{{ old('about_pillar_1_icon', $settings['about_pillar_1_icon'] ?? '⚡') }}" required class="w-full text-center text-lg h-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                                </div>
+                                <div class="col-span-9 sm:col-span-9">
+                                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Nama Pilar</label>
+                                    <input type="text" name="about_pillar_1_title" value="{{ old('about_pillar_1_title', $settings['about_pillar_1_title'] ?? 'Kihon') }}" placeholder="Contoh: Kihon" required class="w-full px-3.5 h-10 text-xs sm:text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Deskripsi / Penjelasan Singkat</label>
+                                <textarea name="about_pillar_1_desc" rows="2" placeholder="Penjelasan singkat materi latihan..." required class="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 resize-none leading-relaxed focus:ring-2 focus:ring-brand-primary">{{ old('about_pillar_1_desc', $settings['about_pillar_1_desc'] ?? 'Latihan teknik dasar yang konsisten setiap sesi') }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── PILAR 2 ── -->
+                    @php $p2Active = $settings['about_pillar_2_active'] ?? true; @endphp
+                    <div id="pillar-card-2" class="p-4 sm:p-5 rounded-2xl border transition-all {{ $p2Active ? 'border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/50' : 'border-dashed border-slate-300 dark:border-slate-800 bg-slate-100/40 dark:bg-slate-900/40 opacity-60' }} space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-200/80 dark:border-slate-700/60">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-lg bg-red-100 dark:bg-red-950/60 text-red-700 dark:text-red-400 text-xs font-black flex items-center justify-center">02</span>
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-200">Pilar Kedua</span>
+                            </div>
+                            <label class="flex items-center gap-2 cursor-pointer select-none">
+                                <span class="text-[11px] font-bold {{ $p2Active ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400' }}">Tampilkan</span>
+                                <input type="checkbox" name="about_pillar_2_active" value="1" {{ $p2Active ? 'checked' : '' }} onchange="document.getElementById('pillar-card-2').classList.toggle('opacity-60', !this.checked)" class="rounded border-slate-300 text-brand-primary focus:ring-brand-primary w-4 h-4">
+                            </label>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="grid grid-cols-12 gap-3">
+                                <div class="col-span-3 sm:col-span-3">
+                                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Emoji / Icon</label>
+                                    <input type="text" name="about_pillar_2_icon" value="{{ old('about_pillar_2_icon', $settings['about_pillar_2_icon'] ?? '🥋') }}" required class="w-full text-center text-lg h-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                                </div>
+                                <div class="col-span-9 sm:col-span-9">
+                                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Nama Pilar</label>
+                                    <input type="text" name="about_pillar_2_title" value="{{ old('about_pillar_2_title', $settings['about_pillar_2_title'] ?? 'Kata') }}" placeholder="Contoh: Kata" required class="w-full px-3.5 h-10 text-xs sm:text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Deskripsi / Penjelasan Singkat</label>
+                                <textarea name="about_pillar_2_desc" rows="2" placeholder="Penjelasan singkat materi latihan..." required class="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 resize-none leading-relaxed focus:ring-2 focus:ring-brand-primary">{{ old('about_pillar_2_desc', $settings['about_pillar_2_desc'] ?? 'Rangkaian gerakan terstandar sebagai fondasi seni') }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── PILAR 3 ── -->
+                    @php $p3Active = $settings['about_pillar_3_active'] ?? true; @endphp
+                    <div id="pillar-card-3" class="p-4 sm:p-5 rounded-2xl border transition-all {{ $p3Active ? 'border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/50' : 'border-dashed border-slate-300 dark:border-slate-800 bg-slate-100/40 dark:bg-slate-900/40 opacity-60' }} space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-200/80 dark:border-slate-700/60">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-lg bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-400 text-xs font-black flex items-center justify-center">03</span>
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-200">Pilar Ketiga</span>
+                            </div>
+                            <label class="flex items-center gap-2 cursor-pointer select-none">
+                                <span class="text-[11px] font-bold {{ $p3Active ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400' }}">Tampilkan</span>
+                                <input type="checkbox" name="about_pillar_3_active" value="1" {{ $p3Active ? 'checked' : '' }} onchange="document.getElementById('pillar-card-3').classList.toggle('opacity-60', !this.checked)" class="rounded border-slate-300 text-brand-primary focus:ring-brand-primary w-4 h-4">
+                            </label>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="grid grid-cols-12 gap-3">
+                                <div class="col-span-3 sm:col-span-3">
+                                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Emoji / Icon</label>
+                                    <input type="text" name="about_pillar_3_icon" value="{{ old('about_pillar_3_icon', $settings['about_pillar_3_icon'] ?? '🥊') }}" required class="w-full text-center text-lg h-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                                </div>
+                                <div class="col-span-9 sm:col-span-9">
+                                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Nama Pilar</label>
+                                    <input type="text" name="about_pillar_3_title" value="{{ old('about_pillar_3_title', $settings['about_pillar_3_title'] ?? 'Kumite') }}" placeholder="Contoh: Kumite" required class="w-full px-3.5 h-10 text-xs sm:text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Deskripsi / Penjelasan Singkat</label>
+                                <textarea name="about_pillar_3_desc" rows="2" placeholder="Penjelasan singkat materi latihan..." required class="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 resize-none leading-relaxed focus:ring-2 focus:ring-brand-primary">{{ old('about_pillar_3_desc', $settings['about_pillar_3_desc'] ?? 'Pertarungan terkontrol untuk mengasah insting & refleks') }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ── PILAR 4 ── -->
+                    @php $p4Active = $settings['about_pillar_4_active'] ?? true; @endphp
+                    <div id="pillar-card-4" class="p-4 sm:p-5 rounded-2xl border transition-all {{ $p4Active ? 'border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/50' : 'border-dashed border-slate-300 dark:border-slate-800 bg-slate-100/40 dark:bg-slate-900/40 opacity-60' }} space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-200/80 dark:border-slate-700/60">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-lg bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-400 text-xs font-black flex items-center justify-center">04</span>
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-200">Pilar Keempat</span>
+                            </div>
+                            <label class="flex items-center gap-2 cursor-pointer select-none">
+                                <span class="text-[11px] font-bold {{ $p4Active ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400' }}">Tampilkan</span>
+                                <input type="checkbox" name="about_pillar_4_active" value="1" {{ $p4Active ? 'checked' : '' }} onchange="document.getElementById('pillar-card-4').classList.toggle('opacity-60', !this.checked)" class="rounded border-slate-300 text-brand-primary focus:ring-brand-primary w-4 h-4">
+                            </label>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="grid grid-cols-12 gap-3">
+                                <div class="col-span-3 sm:col-span-3">
+                                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Emoji / Icon</label>
+                                    <input type="text" name="about_pillar_4_icon" value="{{ old('about_pillar_4_icon', $settings['about_pillar_4_icon'] ?? '🏆') }}" required class="w-full text-center text-lg h-10 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                                </div>
+                                <div class="col-span-9 sm:col-span-9">
+                                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Nama Pilar</label>
+                                    <input type="text" name="about_pillar_4_title" value="{{ old('about_pillar_4_title', $settings['about_pillar_4_title'] ?? 'Kompetisi') }}" placeholder="Contoh: Kompetisi" required class="w-full px-3.5 h-10 text-xs sm:text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Deskripsi / Penjelasan Singkat</label>
+                                <textarea name="about_pillar_4_desc" rows="2" placeholder="Penjelasan singkat materi latihan..." required class="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 resize-none leading-relaxed focus:ring-2 focus:ring-brand-primary">{{ old('about_pillar_4_desc', $settings['about_pillar_4_desc'] ?? 'Mengikuti kejuaraan sebagai uji kemampuan nyata') }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═════════════════════════════════════════════════════
+             BAGIAN 3: TOGGLE AKTIF / NONAKTIF SEKSI LANDING PAGE
              ═════════════════════════════════════════════════════ -->
         <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 transition-colors">
             <div class="border-b border-slate-100 dark:border-slate-800 pb-4 mb-6">
@@ -422,4 +721,229 @@
         </div>
     </form>
 </div>
+
+<!-- ═════════════════════════════════════════════════════
+     LIVE REACTIVE JAVASCRIPT LOGIC
+     ═════════════════════════════════════════════════════ -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Database real auto counts from PHP
+    const realAutoData = {
+        kohai_polindra: {{ (int) $realStats['kohai_polindra_count'] }},
+        kohai_all: {{ (int) $realStats['kohai_all_count'] }},
+        medals_auto: {{ (int) $realStats['medals_auto_count'] }},
+        events_auto: {{ (int) $realStats['events_auto_count'] }}
+    };
+
+    // Elements
+    const stat1Active = document.getElementById('stat_founded_active');
+    const stat1Year = document.getElementById('stat_founded_year');
+    const stat1Label = document.getElementById('stat_founded_label');
+
+    const stat2Active = document.getElementById('stat_members_active');
+    const stat2Mode = document.getElementById('stat_members_mode');
+    const stat2CustomVal = document.getElementById('stat_members_custom_value');
+    const stat2Suffix = document.getElementById('stat_members_suffix');
+    const stat2Label = document.getElementById('stat_members_label');
+    const membersAutoInfo = document.getElementById('members_auto_info');
+    const membersCustomContainer = document.getElementById('members_custom_container');
+    const membersLabelContainer = document.getElementById('members_label_container');
+    const membersAutoCountVal = document.getElementById('members_auto_count_val');
+
+    const stat3Active = document.getElementById('stat_medals_active');
+    const stat3Mode = document.getElementById('stat_medals_mode');
+    const stat3CustomVal = document.getElementById('stat_medals_custom_value');
+    const stat3Suffix = document.getElementById('stat_medals_suffix');
+    const stat3Label = document.getElementById('stat_medals_label');
+    const medalsAutoInfo = document.getElementById('medals_auto_info');
+    const medalsCustomContainer = document.getElementById('medals_custom_container');
+    const medalsLabelContainer = document.getElementById('medals_label_container');
+
+    const stat4Active = document.getElementById('stat_events_active');
+    const stat4Mode = document.getElementById('stat_events_mode');
+    const stat4Val = document.getElementById('stat_events_value');
+    const stat4Suffix = document.getElementById('stat_events_suffix');
+    const stat4Label = document.getElementById('stat_events_label');
+    const eventsAutoInfo = document.getElementById('events_auto_info');
+    const eventsCustomContainer = document.getElementById('events_custom_container');
+    const eventsLabelContainer = document.getElementById('events_label_container');
+
+    // Preview Elements
+    const p1 = document.getElementById('preview-stat-1');
+    const p1Num = document.getElementById('preview-stat-1-num');
+    const p1Label = document.getElementById('preview-stat-1-label');
+    const p1Status = document.getElementById('preview-stat-1-status');
+
+    const p2 = document.getElementById('preview-stat-2');
+    const p2Num = document.getElementById('preview-stat-2-num');
+    const p2Label = document.getElementById('preview-stat-2-label');
+    const p2Status = document.getElementById('preview-stat-2-status');
+
+    const p3 = document.getElementById('preview-stat-3');
+    const p3Num = document.getElementById('preview-stat-3-num');
+    const p3Label = document.getElementById('preview-stat-3-label');
+    const p3Status = document.getElementById('preview-stat-3-status');
+
+    const p4 = document.getElementById('preview-stat-4');
+    const p4Num = document.getElementById('preview-stat-4-num');
+    const p4Label = document.getElementById('preview-stat-4-label');
+    const p4Status = document.getElementById('preview-stat-4-status');
+
+    function syncFormAndPreview() {
+        // ── 1. Update Mode Toggles (Show / Hide manual inputs) ──
+        // Stat 2: Members
+        if (stat2Mode.value === 'manual') {
+            membersAutoInfo.classList.add('hidden');
+            membersCustomContainer.classList.remove('hidden');
+            membersLabelContainer.classList.remove('sm:col-span-2');
+            membersLabelContainer.classList.add('sm:col-span-1');
+            stat2CustomVal.required = true;
+        } else {
+            membersAutoInfo.classList.remove('hidden');
+            membersCustomContainer.classList.add('hidden');
+            membersLabelContainer.classList.remove('sm:col-span-1');
+            membersLabelContainer.classList.add('sm:col-span-2');
+            stat2CustomVal.required = false;
+
+            if (stat2Mode.value === 'auto_polindra') {
+                membersAutoCountVal.textContent = realAutoData.kohai_polindra;
+            } else {
+                membersAutoCountVal.textContent = realAutoData.kohai_all;
+            }
+        }
+
+        // Stat 3: Medals
+        if (stat3Mode.value === 'manual') {
+            medalsAutoInfo.classList.add('hidden');
+            medalsCustomContainer.classList.remove('hidden');
+            medalsLabelContainer.classList.remove('sm:col-span-2');
+            medalsLabelContainer.classList.add('sm:col-span-1');
+            stat3CustomVal.required = true;
+        } else {
+            medalsAutoInfo.classList.remove('hidden');
+            medalsCustomContainer.classList.add('hidden');
+            medalsLabelContainer.classList.remove('sm:col-span-1');
+            medalsLabelContainer.classList.add('sm:col-span-2');
+            stat3CustomVal.required = false;
+        }
+
+        // Stat 4: Events
+        if (stat4Mode.value === 'manual') {
+            eventsAutoInfo.classList.add('hidden');
+            eventsCustomContainer.classList.remove('hidden');
+            eventsLabelContainer.classList.remove('sm:col-span-2');
+            eventsLabelContainer.classList.add('sm:col-span-1');
+            stat4Val.required = true;
+        } else {
+            eventsAutoInfo.classList.remove('hidden');
+            eventsCustomContainer.classList.add('hidden');
+            eventsLabelContainer.classList.remove('sm:col-span-1');
+            eventsLabelContainer.classList.add('sm:col-span-2');
+            stat4Val.required = false;
+        }
+
+        // ── 2. Update Live Preview Box Content ──
+        // Stat 1 Preview
+        p1Num.textContent = stat1Year.value || '2016';
+        p1Label.textContent = stat1Label.value || 'Tahun Berdiri';
+        if (stat1Active.checked) {
+            p1.style.opacity = '1';
+            p1Status.textContent = '● Aktif';
+            p1Status.className = 'text-[10px] font-bold block mt-1.5 text-emerald-400';
+        } else {
+            p1.style.opacity = '0.35';
+            p1Status.textContent = '○ Sembunyi';
+            p1Status.className = 'text-[10px] font-bold block mt-1.5 text-slate-500 line-through';
+        }
+
+        // Stat 2 Preview
+        let s2Val = 80;
+        if (stat2Mode.value === 'auto_polindra') {
+            s2Val = realAutoData.kohai_polindra;
+        } else if (stat2Mode.value === 'auto_all') {
+            s2Val = realAutoData.kohai_all;
+        } else {
+            s2Val = stat2CustomVal.value || 0;
+        }
+        p2Num.textContent = s2Val + (stat2Suffix.value || '');
+        p2Label.textContent = stat2Label.value || 'Anggota Aktif';
+        if (stat2Active.checked) {
+            p2.style.opacity = '1';
+            p2Status.textContent = '● Aktif';
+            p2Status.className = 'text-[10px] font-bold block mt-1.5 text-emerald-400';
+        } else {
+            p2.style.opacity = '0.35';
+            p2Status.textContent = '○ Sembunyi';
+            p2Status.className = 'text-[10px] font-bold block mt-1.5 text-slate-500 line-through';
+        }
+
+        // Stat 3 Preview
+        let s3Val = 50;
+        if (stat3Mode.value === 'auto') {
+            s3Val = realAutoData.medals_auto;
+        } else {
+            s3Val = stat3CustomVal.value || 0;
+        }
+        p3Num.textContent = s3Val + (stat3Suffix.value || '');
+        p3Label.textContent = stat3Label.value || 'Medali Kejuaraan';
+        if (stat3Active.checked) {
+            p3.style.opacity = '1';
+            p3Status.textContent = '● Aktif';
+            p3Status.className = 'text-[10px] font-bold block mt-1.5 text-emerald-400';
+        } else {
+            p3.style.opacity = '0.35';
+            p3Status.textContent = '○ Sembunyi';
+            p3Status.className = 'text-[10px] font-bold block mt-1.5 text-slate-500 line-through';
+        }
+
+        // Stat 4 Preview
+        let s4Val = 20;
+        if (stat4Mode.value === 'auto') {
+            s4Val = realAutoData.events_auto;
+        } else {
+            s4Val = stat4Val.value || 0;
+        }
+        p4Num.textContent = s4Val + (stat4Suffix.value || '');
+        p4Label.textContent = stat4Label.value || 'Event Diikuti';
+        if (stat4Active.checked) {
+            p4.style.opacity = '1';
+            p4Status.textContent = '● Aktif';
+            p4Status.className = 'text-[10px] font-bold block mt-1.5 text-emerald-400';
+        } else {
+            p4.style.opacity = '0.35';
+            p4Status.textContent = '○ Sembunyi';
+            p4Status.className = 'text-[10px] font-bold block mt-1.5 text-slate-500 line-through';
+        }
+    }
+
+    // Attach listeners to all inputs in the form
+    const form = document.getElementById('landing-settings-form');
+    form.querySelectorAll('input, select').forEach(input => {
+        input.addEventListener('input', syncFormAndPreview);
+        input.addEventListener('change', syncFormAndPreview);
+        input.addEventListener('keyup', syncFormAndPreview);
+    });
+
+    // Image Preview for About Section
+    const aboutImageInput = document.getElementById('about_image');
+    const aboutImgPreview = document.getElementById('about-img-preview');
+    if (aboutImageInput) {
+        aboutImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    if (aboutImgPreview) {
+                        aboutImgPreview.src = evt.target.result;
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Run on initial load
+    syncFormAndPreview();
+});
+</script>
 @endsection
