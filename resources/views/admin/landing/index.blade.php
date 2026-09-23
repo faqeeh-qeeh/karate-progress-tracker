@@ -647,7 +647,153 @@
         </div>
 
         <!-- ═════════════════════════════════════════════════════
-             BAGIAN 4: TOGGLE AKTIF / NONAKTIF SEKSI LANDING PAGE
+             BAGIAN 4: PENGATURAN SEKSI GALERI MOMEN (GALLERY)
+             ═════════════════════════════════════════════════════ -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 transition-colors">
+            <div class="border-b border-slate-100 dark:border-slate-800 pb-4 mb-6">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">📸</span>
+                    <h2 class="text-base sm:text-lg font-black text-slate-900 dark:text-white">Pengaturan Seksi Galeri Momen (Gallery)</h2>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Atur judul pengantar serta ganti 5 foto dokumentasi momen terbaik yang tampil pada grid galeri Landing Page.</p>
+            </div>
+
+            <!-- Teks Judul & Narasi Galeri -->
+            <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 mb-6 space-y-4">
+                <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                    <span>📝</span>
+                    <span>Teks Header Seksi Galeri</span>
+                </h3>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Badge Label</label>
+                        <input type="text" name="gallery_badge_label" value="{{ old('gallery_badge_label', $settings['gallery_badge_label'] ?? 'Galeri') }}" required class="w-full px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Judul Baris 1</label>
+                        <input type="text" name="gallery_title_1" value="{{ old('gallery_title_1', $settings['gallery_title_1'] ?? 'Momen') }}" required class="w-full px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Kata Highlight (Merah)</label>
+                        <input type="text" name="gallery_title_highlight" value="{{ old('gallery_title_highlight', $settings['gallery_title_highlight'] ?? 'Terbaik') }}" required class="w-full px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-brand-primary focus:ring-2 focus:ring-brand-primary">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Deskripsi Samping Header</label>
+                    <textarea name="gallery_description" rows="2" required class="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary resize-none leading-relaxed">{{ old('gallery_description', $settings['gallery_description'] ?? 'Setiap latihan, setiap pertandingan — diabadikan.') }}</textarea>
+                </div>
+            </div>
+
+            <!-- 5 Item Foto Galeri -->
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                        <span>🖼️</span>
+                        <span>5 Slot Foto Dokumentasi & Label</span>
+                    </h3>
+                    <span class="text-[10px] text-slate-400">Foto lama otomatis terhapus saat foto baru diunggah</span>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                    <!-- Foto 1: Slot Utama (Large) -->
+                    @php
+                        $g1Img = $settings['gallery_item_1_image'] ?? null;
+                        $hasCustomG1 = !empty($g1Img) && file_exists(public_path($g1Img));
+                        $g1Src = $hasCustomG1 ? asset($g1Img) : (file_exists(public_path('images/landing/gallery-1.jpeg')) ? asset('images/landing/gallery-1.jpeg') : null);
+                    @endphp
+                    <div class="lg:col-span-12 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/40">
+                        <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200/80 dark:border-slate-700/60">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded-lg bg-red-100 dark:bg-red-950/60 text-brand-primary text-xs font-black">Slot 01 (Utama / Lebar)</span>
+                                <span class="text-xs font-bold text-slate-800 dark:text-slate-200">Foto Utama Galeri</span>
+                            </div>
+                            @if($hasCustomG1)
+                                <span class="px-2 py-0.5 text-[10px] rounded-full bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-bold">Foto Kustom Aktif</span>
+                            @else
+                                <span class="px-2 py-0.5 text-[10px] rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold">Foto Default</span>
+                            @endif
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+                            <div class="sm:col-span-4">
+                                <div class="relative w-full aspect-16/9 rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-900 flex items-center justify-center">
+                                    @if($g1Src)
+                                        <img id="gallery-preview-1" src="{{ $g1Src }}" alt="Preview Foto 1" class="w-full h-full object-cover">
+                                    @else
+                                        <span class="text-xs text-slate-400">Belum ada foto</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="sm:col-span-8 space-y-3">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Label / Judul Foto 01</label>
+                                    <input type="text" name="gallery_item_1_label" value="{{ old('gallery_item_1_label', $settings['gallery_item_1_label'] ?? 'Sesi Latihan') }}" required placeholder="Contoh: Sesi Latihan" class="w-full px-3.5 py-2 text-xs sm:text-sm font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-600 dark:text-slate-400 mb-1">Upload File Foto Baru</label>
+                                    <input type="file" id="gallery_item_1_image" name="gallery_item_1_image" accept="image/jpeg,image/png,image/jpg,image/webp" class="block w-full text-xs text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-red-50 file:text-brand-primary hover:file:bg-red-100 dark:file:bg-red-950/60 dark:file:text-red-300 cursor-pointer">
+                                </div>
+                                @if($hasCustomG1)
+                                    <label class="inline-flex items-center gap-2 cursor-pointer pt-1">
+                                        <input type="checkbox" name="delete_gallery_item_1_image" value="1" class="rounded border-slate-300 text-brand-primary focus:ring-brand-primary">
+                                        <span class="text-xs font-medium text-rose-600 dark:text-rose-400">Kembalikan ke Foto Default Bawaan</span>
+                                    </label>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Foto 2 s/d 5: Grid 4 Kolom -->
+                    @for($i = 2; $i <= 5; $i++)
+                        @php
+                            $gImg = $settings["gallery_item_{$i}_image"] ?? null;
+                            $hasCustomG = !empty($gImg) && file_exists(public_path($gImg));
+                            $gSrc = $hasCustomG ? asset($gImg) : (file_exists(public_path("images/landing/gallery-{$i}.jpeg")) ? asset("images/landing/gallery-{$i}.jpeg") : null);
+                        @endphp
+                        <div class="lg:col-span-3 sm:col-span-6 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/40 space-y-3">
+                            <div class="flex items-center justify-between pb-2 border-b border-slate-200/80 dark:border-slate-700/60">
+                                <span class="px-2 py-0.5 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-black">Slot 0{{ $i }}</span>
+                                @if($hasCustomG)
+                                    <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400">Kustom</span>
+                                @else
+                                    <span class="text-[10px] text-slate-400">Default</span>
+                                @endif
+                            </div>
+
+                            <div class="relative w-full aspect-4/3 rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-900 flex items-center justify-center">
+                                @if($gSrc)
+                                    <img id="gallery-preview-{{ $i }}" src="{{ $gSrc }}" alt="Preview Foto {{ $i }}" class="w-full h-full object-cover">
+                                @else
+                                    <span class="text-xs text-slate-400">Belum ada foto</span>
+                                @endif
+                            </div>
+
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-600 dark:text-slate-400 mb-1">Label Foto</label>
+                                <input type="text" name="gallery_item_{{ $i }}_label" value="{{ old("gallery_item_{$i}_label", $settings["gallery_item_{$i}_label"] ?? "Foto {$i}") }}" required class="w-full px-3 py-1.5 text-xs font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white focus:ring-2 focus:ring-brand-primary">
+                            </div>
+
+                            <div>
+                                <label class="block text-[10px] font-bold text-slate-600 dark:text-slate-400 mb-1">Ganti Foto</label>
+                                <input type="file" id="gallery_item_{{ $i }}_image" name="gallery_item_{{ $i }}_image" accept="image/jpeg,image/png,image/jpg,image/webp" class="block w-full text-[11px] text-slate-500 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-red-50 file:text-brand-primary hover:file:bg-red-100 dark:file:bg-red-950/60 dark:file:text-red-300 cursor-pointer">
+                            </div>
+
+                            @if($hasCustomG)
+                                <label class="inline-flex items-center gap-1.5 cursor-pointer pt-1">
+                                    <input type="checkbox" name="delete_gallery_item_{{ $i }}_image" value="1" class="rounded border-slate-300 text-brand-primary focus:ring-brand-primary text-xs">
+                                    <span class="text-[10px] font-medium text-rose-600 dark:text-rose-400">Reset Default</span>
+                                </label>
+                            @endif
+                        </div>
+                    @endfor
+                </div>
+            </div>
+        </div>
+
+        <!-- ═════════════════════════════════════════════════════
+             BAGIAN 5: TOGGLE AKTIF / NONAKTIF SEKSI LANDING PAGE
              ═════════════════════════════════════════════════════ -->
         <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm p-5 sm:p-6 transition-colors">
             <div class="border-b border-slate-100 dark:border-slate-800 pb-4 mb-6">
@@ -1025,6 +1171,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 reader.readAsDataURL(file);
             }
         });
+    }
+
+    // Image Previews for Gallery Section (Slot 01 - 05)
+    for (let i = 1; i <= 5; i++) {
+        const galInput = document.getElementById(`gallery_item_${i}_image`);
+        const galPreview = document.getElementById(`gallery-preview-${i}`);
+        if (galInput) {
+            galInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        if (galPreview) {
+                            galPreview.src = evt.target.result;
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
     }
 
     // Run on initial load

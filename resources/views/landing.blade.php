@@ -337,64 +337,36 @@
   <div class="container">
     <div class="gallery-header reveal">
       <div>
-        <div class="section-label">Galeri</div>
-        <h2>Momen <span>Terbaik</span></h2>
+        <div class="section-label">{{ $settings['gallery_badge_label'] ?? 'Galeri' }}</div>
+        <h2>{{ $settings['gallery_title_1'] ?? 'Momen' }} <span>{{ $settings['gallery_title_highlight'] ?? 'Terbaik' }}</span></h2>
       </div>
       <p style="font-size:14px;color:var(--muted);max-width:260px;text-align:right;">
-        Setiap latihan, setiap pertandingan — diabadikan.
+        {{ $settings['gallery_description'] ?? 'Setiap latihan, setiap pertandingan — diabadikan.' }}
       </p>
     </div>
 
     <div class="gallery-grid reveal">
-      {{-- Item 1 (large) --}}
-      <div class="gallery-item" id="gallery-item-1">
-        @if(file_exists(public_path('images/landing/gallery-1.jpeg')))
-          <img src="{{ asset('images/landing/gallery-1.jpeg') }}" alt="Latihan Karate Polindra" loading="lazy">
-        @else
-          <div class="gallery-placeholder">Foto Latihan</div>
-        @endif
-        <div class="gallery-item-label"><span>Sesi Latihan</span></div>
-      </div>
+      @for($i = 1; $i <= 5; $i++)
+        @php
+          $customImg = $settings["gallery_item_{$i}_image"] ?? null;
+          $imgSrc = null;
+          if (!empty($customImg) && file_exists(public_path($customImg))) {
+              $imgSrc = asset($customImg);
+          } elseif (file_exists(public_path("images/landing/gallery-{$i}.jpeg"))) {
+              $imgSrc = asset("images/landing/gallery-{$i}.jpeg");
+          }
+          $itemLabel = $settings["gallery_item_{$i}_label"] ?? "Foto {$i}";
+        @endphp
 
-      {{-- Item 2 --}}
-      <div class="gallery-item" id="gallery-item-2">
-        @if(file_exists(public_path('images/landing/gallery-2.jpeg')))
-          <img src="{{ asset('images/landing/gallery-2.jpeg') }}" alt="Foto Karate" loading="lazy">
-        @else
-          <div class="gallery-placeholder">Foto Latihan</div>
-        @endif
-        <div class="gallery-item-label"><span>Kihon</span></div>
-      </div>
-
-      {{-- Item 3 --}}
-      <div class="gallery-item" id="gallery-item-3">
-        @if(file_exists(public_path('images/landing/gallery-3.jpeg')))
-          <img src="{{ asset('images/landing/gallery-3.jpeg') }}" alt="Kejuaraan Karate" loading="lazy">
-        @else
-          <div class="gallery-placeholder">Kejuaraan</div>
-        @endif
-        <div class="gallery-item-label"><span>Kejuaraan</span></div>
-      </div>
-
-      {{-- Item 4 --}}
-      <div class="gallery-item" id="gallery-item-4">
-        @if(file_exists(public_path('images/landing/gallery-4.jpeg')))
-          <img src="{{ asset('images/landing/gallery-4.jpeg') }}" alt="Atlet Podium" loading="lazy">
-        @else
-          <div class="gallery-placeholder">Podium</div>
-        @endif
-        <div class="gallery-item-label"><span>Podium</span></div>
-      </div>
-
-      {{-- Item 5 --}}
-      <div class="gallery-item" id="gallery-item-5">
-        @if(file_exists(public_path('images/landing/gallery-5.jpeg')))
-          <img src="{{ asset('images/landing/gallery-5.jpeg') }}" alt="Upacara Kejuaraan" loading="lazy">
-        @else
-          <div class="gallery-placeholder">Event</div>
-        @endif
-        <div class="gallery-item-label"><span>Opening Ceremony</span></div>
-      </div>
+        <div class="gallery-item" id="gallery-item-{{ $i }}">
+          @if($imgSrc)
+            <img src="{{ $imgSrc }}" alt="{{ $itemLabel }}" loading="lazy">
+          @else
+            <div class="gallery-placeholder">{{ $itemLabel }}</div>
+          @endif
+          <div class="gallery-item-label"><span>{{ $itemLabel }}</span></div>
+        </div>
+      @endfor
     </div>
   </div>
 </section>

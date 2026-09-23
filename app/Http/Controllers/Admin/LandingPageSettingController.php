@@ -119,6 +119,27 @@ class LandingPageSettingController extends Controller
             'schedule_location_name' => 'required|string|max:150',
             'schedule_location_address' => 'required|string|max:255',
             'schedule_maps_url' => 'nullable|url|max:500',
+
+            // Seksi Galeri Momen (Gallery)
+            'gallery_badge_label' => 'required|string|max:50',
+            'gallery_title_1' => 'required|string|max:100',
+            'gallery_title_highlight' => 'required|string|max:100',
+            'gallery_description' => 'required|string|max:1000',
+            'gallery_item_1_label' => 'required|string|max:100',
+            'gallery_item_1_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'delete_gallery_item_1_image' => 'nullable|boolean',
+            'gallery_item_2_label' => 'required|string|max:100',
+            'gallery_item_2_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'delete_gallery_item_2_image' => 'nullable|boolean',
+            'gallery_item_3_label' => 'required|string|max:100',
+            'gallery_item_3_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'delete_gallery_item_3_image' => 'nullable|boolean',
+            'gallery_item_4_label' => 'required|string|max:100',
+            'gallery_item_4_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'delete_gallery_item_4_image' => 'nullable|boolean',
+            'gallery_item_5_label' => 'required|string|max:100',
+            'gallery_item_5_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'delete_gallery_item_5_image' => 'nullable|boolean',
         ]);
 
         // Simpan toggle seksi
@@ -214,6 +235,45 @@ class LandingPageSettingController extends Controller
         LandingSetting::set('schedule_location_name', $validated['schedule_location_name'], 'schedule', 'string');
         LandingSetting::set('schedule_location_address', $validated['schedule_location_address'], 'schedule', 'string');
         LandingSetting::set('schedule_maps_url', $validated['schedule_maps_url'] ?? '', 'schedule', 'string');
+
+        // Simpan setting Galeri Momen (Gallery)
+        LandingSetting::set('gallery_badge_label', $validated['gallery_badge_label'], 'gallery', 'string');
+        LandingSetting::set('gallery_title_1', $validated['gallery_title_1'], 'gallery', 'string');
+        LandingSetting::set('gallery_title_highlight', $validated['gallery_title_highlight'], 'gallery', 'string');
+        LandingSetting::set('gallery_description', $validated['gallery_description'], 'gallery', 'string');
+
+        $uploadDir = public_path('uploads/landing');
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        // Simpan 5 Item Galeri (Label & Gambar)
+        for ($i = 1; $i <= 5; $i++) {
+            LandingSetting::set("gallery_item_{$i}_label", $validated["gallery_item_{$i}_label"], 'gallery', 'string');
+
+            // Handle delete/reset image to default
+            if ($request->boolean("delete_gallery_item_{$i}_image")) {
+                $currentImg = LandingSetting::get("gallery_item_{$i}_image");
+                if ($currentImg && str_starts_with($currentImg, 'uploads/') && file_exists(public_path($currentImg))) {
+                    @unlink(public_path($currentImg));
+                }
+                LandingSetting::set("gallery_item_{$i}_image", null, 'gallery', 'string');
+            }
+
+            // Handle new upload
+            if ($request->hasFile("gallery_item_{$i}_image") && $request->file("gallery_item_{$i}_image")->isValid()) {
+                $currentImg = LandingSetting::get("gallery_item_{$i}_image");
+                if ($currentImg && str_starts_with($currentImg, 'uploads/') && file_exists(public_path($currentImg))) {
+                    @unlink(public_path($currentImg));
+                }
+
+                $file = $request->file("gallery_item_{$i}_image");
+                $fileName = "gallery_{$i}_" . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move($uploadDir, $fileName);
+
+                LandingSetting::set("gallery_item_{$i}_image", 'uploads/landing/' . $fileName, 'gallery', 'string');
+            }
+        }
 
         return redirect()->route('admin.landing-page.index')
             ->with('success', 'Pengaturan Landing Page berhasil diperbarui!');

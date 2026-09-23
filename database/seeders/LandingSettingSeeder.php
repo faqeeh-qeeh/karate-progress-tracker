@@ -88,6 +88,27 @@ class LandingSettingSeeder extends Seeder
             ['key' => 'schedule_location_name', 'value' => 'GOR / Hall Olahraga Polindra', 'group' => 'schedule', 'type' => 'string'],
             ['key' => 'schedule_location_address', 'value' => 'Jl. Lohbener Lama No. 08, Indramayu, Jawa Barat', 'group' => 'schedule', 'type' => 'string'],
             ['key' => 'schedule_maps_url', 'value' => 'https://maps.app.goo.gl/Rd7vgrC7bLRvxGsL7', 'group' => 'schedule', 'type' => 'string'],
+
+            // ── Section Galeri Momen (Gallery) ─────────────────
+            ['key' => 'gallery_badge_label', 'value' => 'Galeri', 'group' => 'gallery', 'type' => 'string'],
+            ['key' => 'gallery_title_1', 'value' => 'Momen', 'group' => 'gallery', 'type' => 'string'],
+            ['key' => 'gallery_title_highlight', 'value' => 'Terbaik', 'group' => 'gallery', 'type' => 'string'],
+            ['key' => 'gallery_description', 'value' => 'Setiap latihan, setiap pertandingan — diabadikan.', 'group' => 'gallery', 'type' => 'string'],
+
+            ['key' => 'gallery_item_1_image', 'value' => null, 'group' => 'gallery', 'type' => 'string'],
+            ['key' => 'gallery_item_1_label', 'value' => 'Sesi Latihan', 'group' => 'gallery', 'type' => 'string'],
+
+            ['key' => 'gallery_item_2_image', 'value' => null, 'group' => 'gallery', 'type' => 'string'],
+            ['key' => 'gallery_item_2_label', 'value' => 'Kihon', 'group' => 'gallery', 'type' => 'string'],
+
+            ['key' => 'gallery_item_3_image', 'value' => null, 'group' => 'gallery', 'type' => 'string'],
+            ['key' => 'gallery_item_3_label', 'value' => 'Kejuaraan', 'group' => 'gallery', 'type' => 'string'],
+
+            ['key' => 'gallery_item_4_image', 'value' => null, 'group' => 'gallery', 'type' => 'string'],
+            ['key' => 'gallery_item_4_label', 'value' => 'Podium', 'group' => 'gallery', 'type' => 'string'],
+
+            ['key' => 'gallery_item_5_image', 'value' => null, 'group' => 'gallery', 'type' => 'string'],
+            ['key' => 'gallery_item_5_label', 'value' => 'Opening Ceremony', 'group' => 'gallery', 'type' => 'string'],
         ];
 
         foreach ($settings as $setting) {
