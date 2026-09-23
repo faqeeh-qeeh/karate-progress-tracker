@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AccountActivationController;
 use App\Http\Controllers\Admin\AcademicClassController;
+use App\Http\Controllers\Admin\AchievementController;
 use App\Http\Controllers\Admin\BeltController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\LandingPageSettingController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\RankController;
 use App\Http\Controllers\Admin\SettingController as AdminSettingController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\Admin\TrainingScheduleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\Kohai\AttendanceController as KohaiAttendanceController;
 use App\Http\Controllers\Kohai\DashboardController as KohaiDashboardController;
 use App\Http\Controllers\Kohai\KumiteController as KohaiKumiteController;
@@ -28,13 +31,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // Landing Page or Role Dashboard
-Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect(Auth::user()->getDashboardRoute());
-    }
-
-    return view('landing');
-})->name('landing');
+Route::get('/', [LandingPageController::class, 'index'])->name('landing');
 
 // Guest Routes (Auth Manual & OAuth)
 Route::middleware('guest')->group(function () {
@@ -84,6 +81,13 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('training-schedules/{trainingSchedule}/send-reminder', [TrainingScheduleController::class, 'showSendReminder'])->name('training-schedules.send-reminder');
     Route::post('training-schedules/{trainingSchedule}/send-reminder', [TrainingScheduleController::class, 'sendReminder'])->name('training-schedules.send-reminder.post');
     Route::patch('training-schedules/{trainingSchedule}/toggle-active', [TrainingScheduleController::class, 'toggleActive'])->name('training-schedules.toggle-active');
+
+    // Kelola Landing Page & Prestasi Kejuaraan
+    Route::get('landing-page', [LandingPageSettingController::class, 'index'])->name('landing-page.index');
+    Route::post('landing-page/settings', [LandingPageSettingController::class, 'updateSettings'])->name('landing-page.settings.update');
+    Route::patch('achievements/{achievement}/toggle-publish', [AchievementController::class, 'togglePublish'])->name('achievements.toggle-publish');
+    Route::patch('achievements/{achievement}/toggle-featured', [AchievementController::class, 'toggleFeatured'])->name('achievements.toggle-featured');
+    Route::resource('achievements', AchievementController::class);
 });
 
 // Role: Senpai Routes

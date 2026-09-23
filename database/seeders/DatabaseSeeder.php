@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             BeltAndRankSeeder::class,
             AcademicStructureSeeder::class,
             AttendanceAndKumiteSeeder::class,
+            LandingSettingSeeder::class,
+            AchievementSeeder::class,
         ]);
     }
 }

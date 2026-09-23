@@ -28,11 +28,11 @@
     </a>
 
     <ul class="nav-links" id="nav-links">
-      <li><a href="#about">Tentang</a></li>
-      <li><a href="#achievements">Prestasi</a></li>
-      <li><a href="#schedule">Jadwal</a></li>
-      <li><a href="#gallery">Galeri</a></li>
-      <li><a href="#join">Bergabung</a></li>
+      @if($settings['section_about'] ?? true) <li><a href="#about">Tentang</a></li> @endif
+      @if($settings['section_achievements'] ?? true) <li><a href="#achievements">Prestasi</a></li> @endif
+      @if($settings['section_schedule'] ?? true) <li><a href="#schedule">Jadwal</a></li> @endif
+      @if($settings['section_gallery'] ?? true) <li><a href="#gallery">Galeri</a></li> @endif
+      @if($settings['section_join'] ?? true) <li><a href="#join">Bergabung</a></li> @endif
     </ul>
 
     <div class="nav-cta">
@@ -46,11 +46,11 @@
 
   {{-- Mobile menu --}}
   <div class="nav-mobile" id="nav-mobile">
-    <a href="#about">Tentang UKM</a>
-    <a href="#achievements">Prestasi</a>
-    <a href="#schedule">Jadwal Latihan</a>
-    <a href="#gallery">Galeri</a>
-    <a href="#join">Cara Bergabung</a>
+    @if($settings['section_about'] ?? true) <a href="#about">Tentang UKM</a> @endif
+    @if($settings['section_achievements'] ?? true) <a href="#achievements">Prestasi</a> @endif
+    @if($settings['section_schedule'] ?? true) <a href="#schedule">Jadwal Latihan</a> @endif
+    @if($settings['section_gallery'] ?? true) <a href="#gallery">Galeri</a> @endif
+    @if($settings['section_join'] ?? true) <a href="#join">Cara Bergabung</a> @endif
     <a href="{{ route('login') }}" class="btn-ghost" style="text-align:center;margin-top:8px;" id="mobile-login-btn">Masuk ke Sistem</a>
     <a href="{{ route('register') }}" class="btn-primary" id="mobile-register-btn">Daftar Sekarang</a>
   </div>
@@ -60,12 +60,13 @@
 {{-- ===================================================
      HERO
      =================================================== --}}
+@if($settings['section_hero'] ?? true)
 <section id="hero">
-  {{-- Background: gunakan hero-banner.jpg jika tersedia --}}
+  {{-- Background: gunakan hero-banner.jpeg jika tersedia --}}
   <div class="hero-img-fallback"></div>
-  @if(file_exists(public_path('images/landing/hero-banner.jpg')))
+  @if(file_exists(public_path('images/landing/hero-banner.jpeg')))
     <img
-      src="{{ asset('images/landing/hero-banner.jpg') }}"
+      src="{{ asset('images/landing/hero-banner.jpeg') }}"
       alt="UKM Karate Polindra"
       class="hero-img"
       loading="eager"
@@ -109,40 +110,55 @@
   </div>
 
   {{-- Stats bar --}}
+  @if($settings['section_stats'] ?? true)
   <div class="hero-stats">
     <div class="hero-stats-inner">
+      @if($stats['founded']['active'] ?? true)
       <div class="hero-stat-item">
-        <div class="hero-stat-num" data-count="2016">2016</div>
-        <div class="hero-stat-label">Tahun Berdiri</div>
+        <div class="hero-stat-num" data-count="{{ $stats['founded']['year'] ?? 2016 }}">{{ $stats['founded']['year'] ?? 2016 }}</div>
+        <div class="hero-stat-label">{{ $stats['founded']['label'] ?? 'Tahun Berdiri' }}</div>
       </div>
+      @endif
+
+      @if($stats['members']['active'] ?? true)
       <div class="hero-stat-item">
-        <div class="hero-stat-num"><span id="count-members">80</span><span>+</span></div>
-        <div class="hero-stat-label">Anggota Aktif</div>
+        <div class="hero-stat-num"><span id="count-members" data-target="{{ $stats['members']['count'] ?? 80 }}">{{ $stats['members']['count'] ?? 80 }}</span><span>{{ $stats['members']['suffix'] ?? '+' }}</span></div>
+        <div class="hero-stat-label">{{ $stats['members']['label'] ?? 'Anggota Aktif' }}</div>
       </div>
+      @endif
+
+      @if($stats['medals']['active'] ?? true)
       <div class="hero-stat-item">
-        <div class="hero-stat-num"><span id="count-medals">50</span><span>+</span></div>
-        <div class="hero-stat-label">Medali Kejuaraan</div>
+        <div class="hero-stat-num"><span id="count-medals" data-target="{{ $stats['medals']['count'] ?? 50 }}">{{ $stats['medals']['count'] ?? 50 }}</span><span>{{ $stats['medals']['suffix'] ?? '+' }}</span></div>
+        <div class="hero-stat-label">{{ $stats['medals']['label'] ?? 'Medali Kejuaraan' }}</div>
       </div>
+      @endif
+
+      @if($stats['events']['active'] ?? true)
       <div class="hero-stat-item">
-        <div class="hero-stat-num"><span id="count-events">20</span><span>+</span></div>
-        <div class="hero-stat-label">Event Diikuti</div>
+        <div class="hero-stat-num"><span id="count-events" data-target="{{ $stats['events']['count'] ?? 20 }}">{{ $stats['events']['count'] ?? 20 }}</span><span>{{ $stats['events']['suffix'] ?? '+' }}</span></div>
+        <div class="hero-stat-label">{{ $stats['events']['label'] ?? 'Event Diikuti' }}</div>
       </div>
+      @endif
     </div>
   </div>
+  @endif
 </section>
+@endif
 
 
 {{-- ===================================================
      ABOUT
      =================================================== --}}
+@if($settings['section_about'] ?? true)
 <section id="about">
   <div class="container">
     <div class="about-grid">
       {{-- Image --}}
       <div class="about-img-wrap reveal">
-        @if(file_exists(public_path('images/landing/about-team.jpg')))
+        @if(file_exists(public_path('images/landing/about-team.jpeg')))
           <img
-            src="{{ asset('images/landing/about-team.jpg') }}"
+            src="{{ asset('images/landing/about-team.jpeg') }}"
             alt="Tim Karate Polindra"
             class="about-img"
           >
@@ -197,11 +213,13 @@
     </div>
   </div>
 </section>
+@endif
 
 
 {{-- ===================================================
      ACHIEVEMENTS
      =================================================== --}}
+@if($settings['section_achievements'] ?? true)
 <section id="achievements">
   <div class="container">
     <div class="achievements-header reveal">
@@ -210,63 +228,29 @@
     </div>
 
     <div class="achievements-grid">
-
-      {{-- Card 1 --}}
-      <div class="achievement-card featured-card reveal">
-        <div class="achievement-medal medal-gold">🥇</div>
-        <div class="achievement-event">POMNAS 2024</div>
-        <div class="achievement-title">Juara 1 Kata Perorangan Putra</div>
-        <div class="achievement-meta">Jakarta · Agustus 2024</div>
-      </div>
-
-      {{-- Card 2 --}}
-      <div class="achievement-card reveal">
-        <div class="achievement-medal medal-silver">🥈</div>
-        <div class="achievement-event">Kejurda Jabar 2024</div>
-        <div class="achievement-title">Juara 2 Kumite -60kg Putra</div>
-        <div class="achievement-meta">Bandung · April 2024</div>
-      </div>
-
-      {{-- Card 3 --}}
-      <div class="achievement-card reveal">
-        <div class="achievement-medal medal-gold">🥇</div>
-        <div class="achievement-event">Kejuaraan Politeknik</div>
-        <div class="achievement-title">Juara Umum Se-Jawa Barat</div>
-        <div class="achievement-meta">Bekasi · November 2023</div>
-      </div>
-
-      {{-- Card 4 --}}
-      <div class="achievement-card reveal">
-        <div class="achievement-medal medal-bronze">🥉</div>
-        <div class="achievement-event">Piala Rektor 2023</div>
-        <div class="achievement-title">Juara 3 Kata Beregu Putri</div>
-        <div class="achievement-meta">Cirebon · Oktober 2023</div>
-      </div>
-
-      {{-- Card 5 --}}
-      <div class="achievement-card reveal">
-        <div class="achievement-medal medal-silver">🥈</div>
-        <div class="achievement-event">Forki Cup 2023</div>
-        <div class="achievement-title">Juara 2 Kumite -55kg Putri</div>
-        <div class="achievement-meta">Indramayu · Maret 2023</div>
-      </div>
-
-      {{-- Card 6 --}}
-      <div class="achievement-card reveal">
-        <div class="achievement-medal medal-gold">🥇</div>
-        <div class="achievement-event">Open Championship 2022</div>
-        <div class="achievement-title">Juara 1 Kata Beregu Putra</div>
-        <div class="achievement-meta">Karawang · Desember 2022</div>
-      </div>
-
+      @forelse($achievements as $achievement)
+        <div class="achievement-card {{ $achievement->is_featured ? 'featured-card' : '' }} reveal">
+          <div class="achievement-medal {{ $achievement->medal_class }}">{{ $achievement->medal_emoji }}</div>
+          <div class="achievement-event">{{ $achievement->event_name }}</div>
+          <div class="achievement-title">{{ $achievement->title }}</div>
+          <div class="achievement-meta">{{ $achievement->formatted_meta }}</div>
+        </div>
+      @empty
+        <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: var(--muted);">
+          <div style="font-size: 32px; margin-bottom: 8px;">🏅</div>
+          <p style="font-weight: 600;">Belum ada data prestasi kejuaraan yang dipublikasikan.</p>
+        </div>
+      @endforelse
     </div>
   </div>
 </section>
+@endif
 
 
 {{-- ===================================================
      SCHEDULE
      =================================================== --}}
+@if($settings['section_schedule'] ?? true)
 <section id="schedule">
   <div class="container">
     <div class="schedule-grid">
@@ -344,11 +328,13 @@
     </div>
   </div>
 </section>
+@endif
 
 
 {{-- ===================================================
      GALLERY
      =================================================== --}}
+@if($settings['section_gallery'] ?? true)
 <section id="gallery">
   <div class="container">
     <div class="gallery-header reveal">
@@ -364,8 +350,8 @@
     <div class="gallery-grid reveal">
       {{-- Item 1 (large) --}}
       <div class="gallery-item" id="gallery-item-1">
-        @if(file_exists(public_path('images/landing/gallery-1.jpg')))
-          <img src="{{ asset('images/landing/gallery-1.jpg') }}" alt="Latihan Karate Polindra" loading="lazy">
+        @if(file_exists(public_path('images/landing/gallery-1.jpeg')))
+          <img src="{{ asset('images/landing/gallery-1.jpeg') }}" alt="Latihan Karate Polindra" loading="lazy">
         @else
           <div class="gallery-placeholder">Foto Latihan</div>
         @endif
@@ -374,8 +360,8 @@
 
       {{-- Item 2 --}}
       <div class="gallery-item" id="gallery-item-2">
-        @if(file_exists(public_path('images/landing/gallery-2.jpg')))
-          <img src="{{ asset('images/landing/gallery-2.jpg') }}" alt="Foto Karate" loading="lazy">
+        @if(file_exists(public_path('images/landing/gallery-2.jpeg')))
+          <img src="{{ asset('images/landing/gallery-2.jpeg') }}" alt="Foto Karate" loading="lazy">
         @else
           <div class="gallery-placeholder">Foto Latihan</div>
         @endif
@@ -384,8 +370,8 @@
 
       {{-- Item 3 --}}
       <div class="gallery-item" id="gallery-item-3">
-        @if(file_exists(public_path('images/landing/gallery-3.jpg')))
-          <img src="{{ asset('images/landing/gallery-3.jpg') }}" alt="Kejuaraan Karate" loading="lazy">
+        @if(file_exists(public_path('images/landing/gallery-3.jpeg')))
+          <img src="{{ asset('images/landing/gallery-3.jpeg') }}" alt="Kejuaraan Karate" loading="lazy">
         @else
           <div class="gallery-placeholder">Kejuaraan</div>
         @endif
@@ -394,8 +380,8 @@
 
       {{-- Item 4 --}}
       <div class="gallery-item" id="gallery-item-4">
-        @if(file_exists(public_path('images/landing/gallery-4.jpg')))
-          <img src="{{ asset('images/landing/gallery-4.jpg') }}" alt="Atlet Podium" loading="lazy">
+        @if(file_exists(public_path('images/landing/gallery-4.jpeg')))
+          <img src="{{ asset('images/landing/gallery-4.jpeg') }}" alt="Atlet Podium" loading="lazy">
         @else
           <div class="gallery-placeholder">Podium</div>
         @endif
@@ -404,8 +390,8 @@
 
       {{-- Item 5 --}}
       <div class="gallery-item" id="gallery-item-5">
-        @if(file_exists(public_path('images/landing/gallery-5.jpg')))
-          <img src="{{ asset('images/landing/gallery-5.jpg') }}" alt="Upacara Kejuaraan" loading="lazy">
+        @if(file_exists(public_path('images/landing/gallery-5.jpeg')))
+          <img src="{{ asset('images/landing/gallery-5.jpeg') }}" alt="Upacara Kejuaraan" loading="lazy">
         @else
           <div class="gallery-placeholder">Event</div>
         @endif
@@ -420,11 +406,13 @@
   <button id="lightbox-close" aria-label="Tutup">✕</button>
   <img id="lightbox-img" src="" alt="Galeri foto">
 </div>
+@endif
 
 
 {{-- ===================================================
      HOW TO JOIN
      =================================================== --}}
+@if($settings['section_join'] ?? true)
 <section id="join">
   <div class="container">
     <div class="join-header reveal">
@@ -485,11 +473,13 @@
     </div>
   </div>
 </section>
+@endif
 
 
 {{-- ===================================================
      FOOTER
      =================================================== --}}
+@if($settings['section_footer'] ?? true)
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -531,11 +521,11 @@
       <div class="footer-col">
         <h4>Navigasi</h4>
         <ul>
-          <li><a href="#about">Tentang UKM</a></li>
-          <li><a href="#achievements">Prestasi</a></li>
-          <li><a href="#schedule">Jadwal Latihan</a></li>
-          <li><a href="#gallery">Galeri</a></li>
-          <li><a href="#join">Cara Bergabung</a></li>
+          @if($settings['section_about'] ?? true) <li><a href="#about">Tentang UKM</a></li> @endif
+          @if($settings['section_achievements'] ?? true) <li><a href="#achievements">Prestasi</a></li> @endif
+          @if($settings['section_schedule'] ?? true) <li><a href="#schedule">Jadwal Latihan</a></li> @endif
+          @if($settings['section_gallery'] ?? true) <li><a href="#gallery">Galeri</a></li> @endif
+          @if($settings['section_join'] ?? true) <li><a href="#join">Cara Bergabung</a></li> @endif
         </ul>
       </div>
 
@@ -563,6 +553,7 @@
     </div>
   </div>
 </footer>
+@endif
 
 
 {{-- ===================================================
@@ -575,39 +566,43 @@
   // ── Navbar scroll behavior ────────────────────────
   const navbar = document.getElementById('navbar');
   let lastScroll = 0;
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    if (y > 40) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-    lastScroll = y;
-  }, { passive: true });
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (y > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+      lastScroll = y;
+    }, { passive: true });
+  }
 
   // ── Hamburger toggle ──────────────────────────────
   const hamburger = document.getElementById('hamburger-btn');
   const mobileMenu = document.getElementById('nav-mobile');
-  hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
-    const spans = hamburger.querySelectorAll('span');
-    const isOpen = mobileMenu.classList.contains('open');
-    if (isOpen) {
-      spans[0].style.cssText = 'transform: rotate(45deg) translate(5px, 5px)';
-      spans[1].style.opacity = '0';
-      spans[2].style.cssText = 'transform: rotate(-45deg) translate(5px, -5px)';
-    } else {
-      spans.forEach(s => s.style.cssText = '');
-    }
-  });
-
-  // Close mobile menu on link click
-  mobileMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      hamburger.querySelectorAll('span').forEach(s => s.style.cssText = '');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      const spans = hamburger.querySelectorAll('span');
+      const isOpen = mobileMenu.classList.contains('open');
+      if (isOpen) {
+        spans[0].style.cssText = 'transform: rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.cssText = 'transform: rotate(-45deg) translate(5px, -5px)';
+      } else {
+        spans.forEach(s => s.style.cssText = '');
+      }
     });
-  });
+
+    // Close mobile menu on link click
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.querySelectorAll('span').forEach(s => s.style.cssText = '');
+      });
+    });
+  }
 
   // ── Scroll reveal ─────────────────────────────────
   const revealEls = document.querySelectorAll('.reveal');
@@ -631,6 +626,7 @@
 
   // ── Counter animation ─────────────────────────────
   function animateCount(el, target, duration = 1800) {
+    if (!el) return;
     let start = 0;
     const step = (timestamp) => {
       if (!start) start = timestamp;
@@ -643,13 +639,28 @@
   }
 
   const counterObserver = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-      animateCount(document.getElementById('count-members'), 80);
-      animateCount(document.getElementById('count-medals'), 50);
-      animateCount(document.getElementById('count-events'), 20);
+    if (entries[0] && entries[0].isIntersecting) {
+      const elMembers = document.getElementById('count-members');
+      const elMedals = document.getElementById('count-medals');
+      const elEvents = document.getElementById('count-events');
+
+      if (elMembers) {
+        const val = parseInt(elMembers.getAttribute('data-target') || elMembers.textContent, 10) || 80;
+        animateCount(elMembers, val);
+      }
+      if (elMedals) {
+        const val = parseInt(elMedals.getAttribute('data-target') || elMedals.textContent, 10) || 50;
+        animateCount(elMedals, val);
+      }
+      if (elEvents) {
+        const val = parseInt(elEvents.getAttribute('data-target') || elEvents.textContent, 10) || 20;
+        animateCount(elEvents, val);
+      }
+
       counterObserver.disconnect();
     }
-  }, { threshold: 0.5 });
+  }, { threshold: 0.3 });
+
   const statsEl = document.querySelector('.hero-stats');
   if (statsEl) counterObserver.observe(statsEl);
 
@@ -671,29 +682,31 @@
   const lightboxImg = document.getElementById('lightbox-img');
   const lightboxClose = document.getElementById('lightbox-close');
 
-  document.querySelectorAll('.gallery-item img').forEach(img => {
-    img.style.cursor = 'zoom-in';
-    img.addEventListener('click', () => {
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
-      lightbox.classList.add('open');
-      document.body.style.overflow = 'hidden';
+  if (lightbox && lightboxImg && lightboxClose) {
+    document.querySelectorAll('.gallery-item img').forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', () => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
     });
-  });
 
-  function closeLightbox() {
-    lightbox.classList.remove('open');
-    document.body.style.overflow = '';
-    setTimeout(() => { lightboxImg.src = ''; }, 300);
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(() => { lightboxImg.src = ''; }, 300);
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
   }
-
-  lightboxClose.addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', e => {
-    if (e.target === lightbox) closeLightbox();
-  });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeLightbox();
-  });
 
   // ── Parallax hero (subtle) ────────────────────────
   const heroImg = document.querySelector('.hero-img');
