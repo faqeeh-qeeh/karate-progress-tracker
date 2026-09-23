@@ -9,7 +9,7 @@
   <meta property="og:description" content="Unit Kegiatan Mahasiswa Karate resmi Politeknik Negeri Indramayu">
   <meta property="og:type" content="website">
   <title>UKM Karate Polindra — Satu Jiwa, Satu Tekad</title>
-  <link rel="icon" href="{{ asset('favicon.ico') }}">
+  <link rel="icon" type="image/png" href="{{ asset('images/LOGO KARATE.png') }}">
   <link rel="stylesheet" href="{{ asset('css/landing.css') }}">
 </head>
 <body>
@@ -20,7 +20,11 @@
 <nav id="navbar">
   <div class="nav-inner">
     <a href="#hero" class="nav-logo" id="nav-logo-link">
-      <img src="{{ asset('images/LOGO KARATER POLINDRA.png') }}" alt="Logo UKM Karate Polindra">
+      <div class="nav-brand-logos">
+        <img src="{{ asset('images/Politeknik Negeri Indramayu.png') }}" alt="Logo Politeknik Negeri Indramayu" class="nav-logo-campus">
+        <div class="nav-logo-divider"></div>
+        <img src="{{ asset('images/LOGO KARATE POLINDRA.png') }}" alt="Logo UKM Karate Polindra" class="nav-logo-ukm">
+      </div>
       <div class="nav-logo-text">
         <span class="name">UKM KARATE</span>
         <span class="sub">Politeknik Negeri Indramayu</span>
@@ -78,7 +82,10 @@
   <div class="hero-content container">
     <div class="hero-eyebrow">
       <div class="hero-eyebrow-line"></div>
-      <span class="hero-eyebrow-text">Politeknik Negeri Indramayu</span>
+      <div class="hero-eyebrow-badge">
+        <img src="{{ asset('images/Politeknik Negeri Indramayu.png') }}" alt="Logo Politeknik Negeri Indramayu" class="hero-eyebrow-logo">
+        <span class="hero-eyebrow-text">Politeknik Negeri Indramayu</span>
+      </div>
     </div>
 
     <h1 class="hero-title">
@@ -454,8 +461,12 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="#hero" class="nav-logo" id="footer-logo-link">
-          <img src="{{ asset('images/LOGO KARATER POLINDRA.png') }}" alt="Logo" style="height:40px;">
+        <a href="#hero" class="nav-logo footer-logo" id="footer-logo-link">
+          <div class="nav-brand-logos">
+            <img src="{{ asset('images/Politeknik Negeri Indramayu.png') }}" alt="Logo Politeknik Negeri Indramayu" class="nav-logo-campus" style="height:36px;">
+            <div class="nav-logo-divider" style="height:24px;"></div>
+            <img src="{{ asset('images/LOGO KARATE POLINDRA.png') }}" alt="Logo UKM Karate Polindra" class="nav-logo-ukm" style="height:38px;">
+          </div>
           <div class="nav-logo-text">
             <span class="name">UKM KARATE</span>
             <span class="sub">Politeknik Negeri Indramayu</span>

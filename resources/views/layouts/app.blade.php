@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Dashboard') - Karate Polindra Tracker</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/LOGO KARATE.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-brand-light min-h-screen flex flex-col selection:bg-brand-secondary selection:text-white">
@@ -13,7 +14,7 @@
             <div class="flex items-center justify-between h-16">
                 <!-- Brand Logo & Name -->
                 <div class="flex items-center space-x-3">
-                    <img src="{{ asset('images/LOGO KARATER POLINDRA.png') }}" alt="Logo Polindra" class="w-10 h-10 object-contain shrink-0">
+                    <img src="{{ asset('images/LOGO KARATE POLINDRA.png') }}" alt="Logo Polindra" class="w-10 h-10 object-contain shrink-0">
                     <div>
                         <a href="{{ url('/') }}" class="text-xl font-black tracking-wider text-white hover:text-brand-secondary transition">
                             KARATE<span class="text-brand-secondary">POLINDRA</span>

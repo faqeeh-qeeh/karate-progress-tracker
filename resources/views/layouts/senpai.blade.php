@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Senpai Dashboard') - Karate Tracker</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/LOGO KARATE.png') }}">
     <!-- Anti-FOUC Theme Script -->
     <script>
         (function() {
@@ -25,7 +26,7 @@
         <!-- Sidebar Brand Header -->
         <div class="h-16 flex items-center px-5 border-b border-slate-800/80 gap-3 shrink-0">
             <div class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700/80 p-1.5 flex items-center justify-center shrink-0">
-                <img src="{{ asset('images/LOGO KARATER POLINDRA.png') }}" alt="Logo Polindra" class="w-full h-full object-contain">
+                    <img src="{{ asset('images/LOGO KARATE POLINDRA.png') }}" alt="Logo Polindra" class="w-full h-full object-contain">
             </div>
             <div>
                 <a href="{{ route('senpai.dashboard') }}" class="text-base font-extrabold tracking-tight text-white block leading-tight">
@@ -102,7 +103,7 @@
         <div class="fixed inset-y-0 left-0 w-72 max-w-[85vw] bg-slate-900 text-white flex flex-col z-10 shadow-2xl transition-transform duration-300">
             <div class="h-16 flex items-center justify-between px-5 border-b border-slate-800 shrink-0">
                 <div class="flex items-center gap-2.5">
-                    <img src="{{ asset('images/LOGO KARATER POLINDRA.png') }}" alt="Logo Polindra" class="w-8 h-8 object-contain shrink-0">
+                    <img src="{{ asset('images/LOGO KARATE POLINDRA.png') }}" alt="Logo Polindra" class="w-8 h-8 object-contain shrink-0">
                     <span class="text-base font-extrabold tracking-tight text-white">SENPAI<span class="text-brand-secondary">DOJO</span></span>
                 </div>
                 <button id="close-mobile-sidebar" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800">

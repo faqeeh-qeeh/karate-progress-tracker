@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Otentikasi') — UKM Karate Polindra</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/LOGO KARATE.png') }}">
     <meta name="description" content="Sistem KARATER — UKM Karate Politeknik Negeri Indramayu">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -167,10 +168,16 @@
             <div class="auth-side-content h-full flex flex-col justify-between">
 
                 {{-- Logo --}}
-                <a href="{{ route('landing') }}" class="flex items-center gap-3 group shrink-0" id="auth-side-logo">
-                    <img src="{{ asset('images/LOGO KARATER POLINDRA.png') }}"
-                         alt="Logo UKM Karate Polindra"
-                         class="h-10 w-auto group-hover:scale-105 transition-transform duration-300">
+                <a href="{{ route('landing') }}" class="flex items-center gap-3.5 group shrink-0" id="auth-side-logo">
+                    <div class="flex items-center gap-2.5">
+                        <img src="{{ asset('images/Politeknik Negeri Indramayu.png') }}"
+                             alt="Logo Politeknik Negeri Indramayu"
+                             class="h-9 w-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-md">
+                        <div class="w-px h-6 bg-white/20"></div>
+                        <img src="{{ asset('images/LOGO KARATE POLINDRA.png') }}"
+                             alt="Logo UKM Karate Polindra"
+                             class="h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-md">
+                    </div>
                     <div class="flex flex-col leading-tight">
                         <span style="font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:0.08em;color:#f0f2f8;">
                             UKM KARATE
@@ -209,14 +216,24 @@
         {{-- ── Right: White Content Area (Scrolls independently) ── --}}
         <main class="flex-1 flex flex-col min-h-0 overflow-y-auto bg-white">
             {{-- Top mini nav --}}
-            <div class="flex-shrink-0 flex items-center justify-between px-6 sm:px-10 py-4 border-b border-slate-100 bg-white/90 backdrop-blur-sm sticky top-0 z-20">
-                <a href="{{ route('landing') }}" id="auth-back-landing"
-                   class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-slate-700 transition-colors">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                    </svg>
-                    Beranda
-                </a>
+            <div class="flex-shrink-0 flex items-center justify-between px-6 sm:px-10 py-3.5 border-b border-slate-100 bg-white/90 backdrop-blur-sm sticky top-0 z-20">
+                <div class="flex items-center gap-3">
+                    <a href="{{ route('landing') }}" id="auth-back-landing"
+                       class="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                        </svg>
+                        <span class="hidden sm:inline">Beranda</span>
+                    </a>
+
+                    {{-- Mobile Only Brand Header --}}
+                    <div class="md:hidden flex items-center gap-2 pl-3 border-l border-slate-200">
+                        <img src="{{ asset('images/Politeknik Negeri Indramayu.png') }}" alt="Logo Polindra" class="h-6 w-auto object-contain">
+                        <div class="w-px h-3.5 bg-slate-300"></div>
+                        <img src="{{ asset('images/LOGO KARATE POLINDRA.png') }}" alt="Logo Karate" class="h-6 w-auto object-contain">
+                        <span class="font-bold text-xs text-slate-800 tracking-tight">UKM KARATE</span>
+                    </div>
+                </div>
                 <div class="flex items-center gap-2">
                     <span class="text-xs text-slate-400">
                         @if(request()->routeIs('login'))

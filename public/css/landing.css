@@ -128,13 +128,36 @@ body::before {
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-decoration: none;
 }
-.nav-logo img {
-  height: 44px;
+.nav-brand-logos {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-logo-campus {
+  height: 40px;
   width: auto;
-  filter: brightness(1.1);
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+  transition: transform 0.25s ease;
+}
+.nav-logo-ukm {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(1.1) drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+  transition: transform 0.25s ease;
+}
+.nav-logo-divider {
+  width: 1px;
+  height: 26px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.25), transparent);
+}
+.nav-logo:hover .nav-logo-campus,
+.nav-logo:hover .nav-logo-ukm {
+  transform: scale(1.06);
 }
 .nav-logo-text {
   display: flex;
@@ -349,17 +372,33 @@ body::before {
 .hero-eyebrow {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   margin-bottom: 20px;
 }
 .hero-eyebrow-line {
-  width: 48px; height: 1px;
+  width: 36px; height: 1px;
   background: linear-gradient(to right, var(--red), var(--blue-light));
+}
+.hero-eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px 4px 8px;
+  background: rgba(77, 140, 255, 0.08);
+  border: 1px solid rgba(77, 140, 255, 0.2);
+  border-radius: 9999px;
+  backdrop-filter: blur(10px);
+}
+.hero-eyebrow-logo {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(77, 140, 255, 0.4));
 }
 .hero-eyebrow-text {
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--blue-light);
 }
@@ -1384,6 +1423,9 @@ footer::before {
 @media (max-width: 768px) {
   .nav-links, .btn-ghost { display: none; }
   .nav-hamburger { display: flex; }
+  .nav-logo-campus { height: 34px; }
+  .nav-logo-ukm { height: 36px; }
+  .nav-logo-divider { height: 22px; }
   .hero-stats-inner { flex-wrap: wrap; }
   .hero-stat-item { flex: 1 1 45%; min-width: 120px; }
   .hero-stat-item:nth-child(2n) { border-right: none; }
@@ -1404,6 +1446,13 @@ footer::before {
 }
 
 @media (max-width: 480px) {
+  .nav-logo { gap: 10px; }
+  .nav-brand-logos { gap: 6px; }
+  .nav-logo-campus { height: 30px; }
+  .nav-logo-ukm { height: 32px; }
+  .nav-logo-divider { height: 18px; }
+  .nav-logo-text .name { font-size: 15px; }
+  .nav-logo-text .sub { font-size: 8px; }
   .hero-title { font-size: 54px; }
   .about-pillars { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; text-align: center; }
