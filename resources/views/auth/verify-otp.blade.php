@@ -3,10 +3,10 @@
 @section('title', 'Verifikasi Kode OTP')
 
 @section('content')
-<div class="space-y-6">
+<div class="flex flex-col gap-6">
     <!-- Header Section -->
     <div class="text-center">
-        <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-50 text-brand-primary border border-blue-200 mb-3 shadow-xs">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 border border-blue-200 mb-3 shadow-2xs">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
             </svg>
@@ -15,26 +15,26 @@
         <p class="text-xs sm:text-sm text-slate-500 mt-1">
             Kode 6-digit telah dikirimkan ke email:
         </p>
-        <div class="mt-1.5 inline-block px-3 py-1 bg-slate-100 rounded-full font-mono text-xs font-bold text-slate-800 border border-slate-200">
+        <div class="mt-2 inline-block px-3.5 py-1 bg-slate-100 rounded-full font-mono text-xs font-bold text-slate-800 border border-slate-200">
             {{ $email }}
         </div>
     </div>
 
     <!-- Countdown Timer Card -->
-    <div class="p-3 bg-amber-50/70 rounded-xl border border-amber-200/80 flex items-center justify-between text-xs">
+    <div class="p-3.5 bg-amber-50/80 rounded-2xl border border-amber-200/80 flex items-center justify-between text-xs shadow-2xs">
         <span class="flex items-center gap-1.5 text-amber-800 font-semibold">
             <svg class="w-4 h-4 text-amber-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
             <span>Masa Berlaku Kode:</span>
         </span>
-        <span id="countdown-timer" class="font-mono font-extrabold text-amber-900 bg-amber-200/60 px-2 py-0.5 rounded-md">
+        <span id="countdown-timer" class="font-mono font-extrabold text-amber-900 bg-amber-200/60 px-2.5 py-1 rounded-lg">
             05:00
         </span>
     </div>
 
     <!-- OTP Verification Form -->
-    <form action="{{ route('password.otp.verify') }}" method="POST" class="space-y-5">
+    <form action="{{ route('password.otp.verify') }}" method="POST" class="flex flex-col gap-5">
         @csrf
 
         <!-- OTP Input -->
@@ -46,7 +46,7 @@
                 <input type="text" name="otp" id="otp" maxlength="6" inputmode="numeric" pattern="[0-9]{6}" required autofocus
                     placeholder="000000"
                     autocomplete="one-time-code"
-                    class="w-full text-center tracking-[12px] sm:tracking-[16px] font-mono font-black text-2xl sm:text-3xl py-3.5 px-4 rounded-xl border @error('otp') border-red-500 bg-red-50/30 text-red-900 @else border-slate-200 bg-slate-50/50 text-brand-primary @enderror focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary focus:bg-white transition duration-200 placeholder:text-slate-300">
+                    class="w-full text-center tracking-[12px] sm:tracking-[16px] font-mono font-black text-2xl sm:text-3xl py-3.5 px-4 rounded-xl border @error('otp') border-red-500 bg-red-50/30 text-red-900 @else border-slate-200 bg-slate-50/50 text-blue-700 @enderror focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:bg-white transition duration-200 placeholder:text-slate-300">
             </div>
             @error('otp')
                 <p class="text-xs text-red-600 mt-2 font-medium flex items-center justify-center gap-1 text-center">
@@ -58,19 +58,19 @@
 
         <!-- Submit Button -->
         <button type="submit"
-            class="w-full py-3.5 px-4 bg-gradient-to-r from-brand-primary via-blue-600 to-brand-secondary hover:from-brand-primary/90 hover:to-brand-secondary/90 text-white font-bold text-sm rounded-xl shadow-lg shadow-brand-primary/20 hover:shadow-xl transition-all duration-200 active:scale-[0.99] flex items-center justify-center gap-2">
+            class="w-full py-3.5 px-4 bg-red-600 hover:bg-red-700 text-white font-bold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer">
             <span>Verifikasi Kode OTP</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </button>
     </form>
 
     <!-- Resend OTP Section -->
-    <div class="pt-3 border-t border-slate-100 text-center space-y-2">
+    <div class="pt-3 border-t border-slate-200 text-center flex flex-col gap-1.5">
         <p class="text-xs text-slate-500">Tidak menerima email atau kode kedaluwarsa?</p>
         <form action="{{ route('password.otp.resend') }}" method="POST">
             @csrf
             <button type="submit" id="btn-resend-otp"
-                class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-primary hover:text-brand-secondary transition">
+                class="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-800 transition cursor-pointer">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                 <span>Kirim Ulang Kode OTP</span>
             </button>

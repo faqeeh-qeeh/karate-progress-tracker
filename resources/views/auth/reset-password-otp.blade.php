@@ -3,10 +3,10 @@
 @section('title', 'Buat Kata Sandi Baru')
 
 @section('content')
-<div class="space-y-6">
+<div class="flex flex-col gap-6">
     <!-- Header Section -->
     <div class="text-center">
-        <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 mb-3 shadow-xs">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 mb-3 shadow-2xs">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
             </svg>
@@ -16,8 +16,8 @@
     </div>
 
     <!-- Account Summary Card -->
-    <div class="bg-slate-50/80 rounded-xl p-4 border border-slate-200/90 space-y-2 text-xs">
-        <div class="flex items-center justify-between pb-1.5 border-b border-slate-200/60">
+    <div class="bg-slate-50/80 rounded-2xl p-4.5 border border-slate-200/90 space-y-2 text-xs shadow-2xs">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-200/60">
             <span class="text-slate-500 font-medium">Akun Pengguna</span>
             <span class="font-bold text-slate-900">{{ $user->name ?? 'Pengguna' }}</span>
         </div>
@@ -28,7 +28,7 @@
     </div>
 
     <!-- Reset Password Form -->
-    <form action="{{ route('password.reset.submit', ['token' => $token]) }}" method="POST" class="space-y-4">
+    <form action="{{ route('password.reset.submit', ['token' => $token]) }}" method="POST" class="flex flex-col gap-4.5">
         @csrf
 
         <!-- Password Field -->
@@ -44,9 +44,9 @@
                 </div>
                 <input type="password" name="password" id="password" required autofocus
                     placeholder="Minimal 6 karakter"
-                    class="w-full pl-10 pr-11 py-3 rounded-xl border @error('password') border-red-500 bg-red-50/30 text-red-900 @else border-slate-200 bg-slate-50/50 text-slate-900 @enderror text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary focus:bg-white transition duration-200 placeholder:text-slate-400">
+                    class="w-full pl-10 pr-11 py-3 rounded-xl border @error('password') border-red-500 bg-red-50/30 text-red-900 @else border-slate-200 bg-slate-50/50 text-slate-900 @enderror text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:bg-white transition duration-200 placeholder:text-slate-400">
                 <button type="button" onclick="togglePasswordVisibility('password', 'password-toggle-icon')"
-                    class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none transition-colors"
+                    class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none transition-colors cursor-pointer"
                     title="Tampilkan / Sembunyikan Kata Sandi">
                     <svg id="password-toggle-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -75,9 +75,9 @@
                 </div>
                 <input type="password" name="password_confirmation" id="password_confirmation" required
                     placeholder="Ulangi kata sandi baru"
-                    class="w-full pl-10 pr-11 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary focus:bg-white transition duration-200 placeholder:text-slate-400">
+                    class="w-full pl-10 pr-11 py-3 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:bg-white transition duration-200 placeholder:text-slate-400">
                 <button type="button" onclick="togglePasswordVisibility('password_confirmation', 'password-confirm-toggle-icon')"
-                    class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none transition-colors"
+                    class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none transition-colors cursor-pointer"
                     title="Tampilkan / Sembunyikan Konfirmasi Kata Sandi">
                     <svg id="password-confirm-toggle-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -88,8 +88,8 @@
         </div>
 
         <!-- Info Note -->
-        <div class="p-3 bg-blue-50/60 rounded-xl border border-blue-100 flex items-start gap-2.5">
-            <svg class="w-4 h-4 text-brand-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="p-3.5 bg-blue-50/70 rounded-2xl border border-blue-200/70 flex items-start gap-2.5">
+            <svg class="w-4 h-4 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <p class="text-[11px] text-slate-600 leading-relaxed">
@@ -99,7 +99,7 @@
 
         <!-- Submit Button -->
         <button type="submit"
-            class="w-full py-3.5 px-4 bg-gradient-to-r from-brand-primary via-blue-600 to-brand-secondary hover:from-brand-primary/90 hover:to-brand-secondary/90 text-white font-bold text-sm rounded-xl shadow-lg shadow-brand-primary/20 hover:shadow-xl transition-all duration-200 active:scale-[0.99] flex items-center justify-center gap-2">
+            class="w-full py-3.5 px-4 mt-1 bg-red-600 hover:bg-red-700 text-white font-bold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer">
             <span>Simpan Kata Sandi Baru</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
         </button>
@@ -107,7 +107,7 @@
 
     <!-- Return to Login link -->
     <div class="text-center pt-2">
-        <a href="{{ route('login') }}" class="text-xs text-slate-500 hover:text-brand-primary font-medium transition">
+        <a href="{{ route('login') }}" class="text-xs text-slate-500 hover:text-blue-600 font-medium transition">
             Batal dan <span class="font-bold underline">Kembali ke Halaman Login</span>
         </a>
     </div>

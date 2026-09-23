@@ -3,10 +3,10 @@
 @section('title', 'Lupa Kata Sandi')
 
 @section('content')
-<div class="space-y-6">
+<div class="flex flex-col gap-6">
     <!-- Header Section -->
     <div class="text-center">
-        <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 border border-amber-200 mb-3 shadow-xs">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 border border-amber-200 mb-3 shadow-2xs">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
             </svg>
@@ -16,8 +16,8 @@
     </div>
 
     <!-- Instructions Banner -->
-    <div class="p-3.5 bg-blue-50/70 rounded-xl border border-blue-200/70 flex items-start gap-3">
-        <svg class="w-5 h-5 text-brand-primary shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="p-4 bg-blue-50/70 rounded-2xl border border-blue-200/70 flex items-start gap-3 shadow-2xs">
+        <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <p class="text-xs text-slate-600 leading-relaxed">
@@ -26,7 +26,7 @@
     </div>
 
     <!-- Forgot Password Form -->
-    <form action="{{ route('password.email') }}" method="POST" class="space-y-4">
+    <form action="{{ route('password.email') }}" method="POST" class="flex flex-col gap-4.5">
         @csrf
 
         <!-- Email Field -->
@@ -42,7 +42,7 @@
                 </div>
                 <input type="email" name="email" id="email" value="{{ old('email') }}" required autofocus
                     placeholder="nama@email.com"
-                    class="w-full pl-10 pr-4 py-3 rounded-xl border @error('email') border-red-500 bg-red-50/30 text-red-900 @else border-slate-200 bg-slate-50/50 text-slate-900 @enderror text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary focus:bg-white transition duration-200 placeholder:text-slate-400">
+                    class="w-full pl-10 pr-4 py-3 rounded-xl border @error('email') border-red-500 bg-red-50/30 text-red-900 @else border-slate-200 bg-slate-50/50 text-slate-900 @enderror text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition duration-200 placeholder:text-slate-400">
             </div>
             @error('email')
                 <p class="text-xs text-red-600 mt-1.5 font-medium flex items-center gap-1">
@@ -65,7 +65,7 @@
                 </div>
                 <input type="tel" name="phone" id="phone" value="{{ old('phone') }}" required
                     placeholder="Contoh: 081234567890"
-                    class="w-full pl-10 pr-4 py-3 rounded-xl border @error('phone') border-red-500 bg-red-50/30 text-red-900 @else border-slate-200 bg-slate-50/50 text-slate-900 @enderror text-sm focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary focus:bg-white transition duration-200 placeholder:text-slate-400">
+                    class="w-full pl-10 pr-4 py-3 rounded-xl border @error('phone') border-red-500 bg-red-50/30 text-red-900 @else border-slate-200 bg-slate-50/50 text-slate-900 @enderror text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition duration-200 placeholder:text-slate-400">
             </div>
             @error('phone')
                 <p class="text-xs text-red-600 mt-1.5 font-medium flex items-center gap-1">
@@ -77,7 +77,7 @@
 
         <!-- Submit Button -->
         <button type="submit"
-            class="w-full py-3.5 px-4 bg-gradient-to-r from-brand-primary via-blue-600 to-brand-secondary hover:from-brand-primary/90 hover:to-brand-secondary/90 text-white font-bold text-sm rounded-xl shadow-lg shadow-brand-primary/20 hover:shadow-xl transition-all duration-200 active:scale-[0.99] flex items-center justify-center gap-2">
+            class="w-full py-3.5 px-4 mt-1 bg-red-600 hover:bg-red-700 text-white font-bold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer">
             <span>Kirim Kode OTP Verifikasi</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
         </button>
@@ -85,7 +85,7 @@
 
     <!-- Back to Login Link -->
     <div class="text-center pt-2">
-        <a href="{{ route('login') }}" class="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-brand-primary font-semibold transition">
+        <a href="{{ route('login') }}" class="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-blue-600 font-semibold transition">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
             <span>Kembali ke Halaman Login</span>
         </a>

@@ -1,376 +1,372 @@
 @extends('layouts.auth')
 
-@section('title', 'Tata Cara Registrasi Anggota Baru')
-@section('card-width', 'max-w-3xl')
+@section('title', 'Tata Cara Registrasi')
+@section('card-width', 'max-w-2xl')
 
 @section('content')
-<div class="space-y-8">
-    <!-- Header Banner -->
-    <div class="text-center space-y-2 border-b border-slate-100 pb-6">
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-semibold tracking-wide">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            Panduan Pendaftaran Akun
+<div class="flex flex-col gap-6 sm:gap-7">
+
+    {{-- Header --}}
+    <div>
+        <div class="inline-flex items-center gap-2 mb-3">
+            <div style="width:28px;height:2px;background:linear-gradient(to right,#c8102e,#1a56c9);"></div>
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#1a56c9;">
+                Panduan Pendaftaran
+            </span>
         </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            Tata Cara Registrasi Anggota
-        </h2>
-        <p class="text-xs sm:text-sm text-slate-500 max-w-xl mx-auto leading-relaxed">
-            Untuk menjaga validitas data anggota, pendaftaran akun dikelola langsung oleh <strong>Admin Karate Polindra</strong>. Ikuti tahapan di bawah ini untuk mengajukan pembuatan akun.
+        <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,3.5vw,38px);letter-spacing:0.04em;color:#0a0a12;line-height:1.05;margin-bottom:8px;">
+            TATA CARA<br>REGISTRASI ANGGOTA
+        </h1>
+        <p class="text-sm text-slate-500 leading-relaxed max-w-lg">
+            Pendaftaran akun dikelola langsung oleh <strong class="text-slate-700">Admin Karate Polindra</strong> untuk menjaga validitas data anggota.
         </p>
     </div>
 
-    <!-- Steps Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <!-- Step 1 -->
-        <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 flex items-start gap-3.5 hover:border-brand-primary/30 transition-all">
-            <div class="w-8 h-8 rounded-xl bg-brand-primary text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-sm">
+    {{-- Steps --}}
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+
+        {{-- Step 1 --}}
+        <div class="flex items-start gap-3.5 p-4 rounded-xl border border-slate-200/80 bg-slate-50/70 hover:border-red-200 hover:bg-red-50/30 transition-all group">
+            <div class="w-8 h-8 rounded-lg step-badge-red text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-xs">
                 1
             </div>
             <div>
-                <h4 class="text-sm font-bold text-slate-900">Siapkan Data Diri</h4>
+                <h4 class="text-sm font-bold text-slate-800 group-hover:text-slate-900">Siapkan Data Diri</h4>
                 <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                    Siapkan data identitas seperti nama lengkap, tempat/tanggal lahir, kontak WhatsApp aktif, dan riwayat sabuk.
+                    Nama lengkap, tempat/tanggal lahir, kontak WhatsApp aktif, dan riwayat sabuk.
                 </p>
             </div>
         </div>
 
-        <!-- Step 2 -->
-        <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 flex items-start gap-3.5 hover:border-brand-primary/30 transition-all">
-            <div class="w-8 h-8 rounded-xl bg-brand-primary text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-sm">
+        {{-- Step 2 --}}
+        <div class="flex items-start gap-3.5 p-4 rounded-xl border border-slate-200/80 bg-slate-50/70 hover:border-blue-200 hover:bg-blue-50/30 transition-all group">
+            <div class="w-8 h-8 rounded-lg step-badge-blue text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-xs">
                 2
             </div>
             <div>
-                <h4 class="text-sm font-bold text-slate-900">Lengkapi Format Pesan</h4>
+                <h4 class="text-sm font-bold text-slate-800 group-hover:text-slate-900">Lengkapi Format Pesan</h4>
                 <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                    Gunakan template format email yang sudah disiapkan di bawah. Cukup sesuaikan bagian di dalam tanda <code class="bg-slate-200/80 px-1 py-0.5 rounded text-[11px] text-slate-700">[ ... ]</code>.
+                    Gunakan template di bawah. Sesuaikan bagian dalam tanda
+                    <code class="bg-slate-200 px-1 py-0.5 rounded text-[10px] text-slate-700">[ ... ]</code>.
                 </p>
             </div>
         </div>
 
-        <!-- Step 3 -->
-        <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 flex items-start gap-3.5 hover:border-brand-primary/30 transition-all">
-            <div class="w-8 h-8 rounded-xl bg-brand-primary text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-sm">
+        {{-- Step 3 --}}
+        <div class="flex items-start gap-3.5 p-4 rounded-xl border border-slate-200/80 bg-slate-50/70 hover:border-red-200 hover:bg-red-50/30 transition-all group">
+            <div class="w-8 h-8 rounded-lg step-badge-red text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-xs">
                 3
             </div>
             <div>
-                <h4 class="text-sm font-bold text-slate-900">Kirim Email ke Admin</h4>
+                <h4 class="text-sm font-bold text-slate-800 group-hover:text-slate-900">Kirim Email ke Admin</h4>
                 <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                    Kirim pesan ke <strong class="text-slate-800">karatepolindra@gmail.com</strong> via tombol langsung Gmail atau salin format teks.
+                    Kirim ke <strong class="text-slate-700">karatepolindra@gmail.com</strong> via tombol langsung Gmail atau salin format teks.
                 </p>
             </div>
         </div>
 
-        <!-- Step 4 -->
-        <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80 flex items-start gap-3.5 hover:border-brand-primary/30 transition-all">
-            <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-sm">
-                4
+        {{-- Step 4 --}}
+        <div class="flex items-start gap-3.5 p-4 rounded-xl border border-slate-200/80 bg-slate-50/70 hover:border-blue-200 hover:bg-blue-50/30 transition-all group">
+            <div class="w-8 h-8 rounded-lg step-badge-blue text-white font-bold text-sm flex items-center justify-center shrink-0 shadow-xs">
+                ✓
             </div>
             <div>
-                <h4 class="text-sm font-bold text-slate-900">Aktivasi & Mulai Login</h4>
+                <h4 class="text-sm font-bold text-slate-800 group-hover:text-slate-900">Aktivasi & Mulai Login</h4>
                 <p class="text-xs text-slate-500 mt-1 leading-relaxed">
-                    Setelah admin memverifikasi data, Anda akan menerima email aktivasi untuk membuat password dan masuk ke sistem.
+                    Setelah admin verifikasi, Anda menerima email aktivasi untuk membuat password.
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- Interactive Quick Form (Optional live editor) -->
-    <div class="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm">
-        <div class="p-4 sm:p-5 bg-gradient-to-r from-slate-900 to-slate-800 text-white flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-brand-secondary">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    {{-- Email Template Card --}}
+    <div class="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm flex flex-col">
+
+        {{-- Card header --}}
+        <div class="px-5 py-4 flex flex-wrap items-center justify-between gap-3"
+             style="background:#06080f;">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center"
+                     style="background:rgba(200,16,46,0.15);">
+                    <svg class="w-5 h-5" fill="none" stroke="#c8102e" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-sm sm:text-base font-bold text-white">Format Email Pendaftaran</h3>
-                    <p class="text-[11px] sm:text-xs text-slate-300">Tujuan: <span class="text-brand-secondary font-semibold">karatepolindra@gmail.com</span></p>
+                    <h3 class="text-sm font-bold text-white">Format Email Pendaftaran</h3>
+                    <p style="font-size:11px;color:rgba(220,228,255,0.5);">
+                        Tujuan: <span style="color:#4d8cff;font-weight:600;">karatepolindra@gmail.com</span>
+                    </p>
                 </div>
             </div>
 
-            <!-- Toggle Live Input Form Button -->
             <button type="button" id="toggle-form-btn" onclick="toggleQuickForm()"
-                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-medium text-white transition-all">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-white transition-all cursor-pointer"
+                    style="background:rgba(255,255,255,0.08);"
+                    onmouseover="this.style.background='rgba(255,255,255,0.14)'"
+                    onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                 </svg>
                 <span id="toggle-form-text">Isi Data Langsung (Opsional)</span>
             </button>
         </div>
 
-        <!-- Optional Live Input Fields -->
-        <div id="quick-form-container" class="hidden p-5 bg-slate-50 border-b border-slate-200">
-            <div class="mb-3">
-                <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Form Pengisian Cepat</span>
-                <p class="text-xs text-slate-500">Ketik data Anda di bawah ini untuk mengisi format pesan secara otomatis, atau biarkan kosong jika ingin mengubahnya langsung di Gmail.</p>
-            </div>
+        {{-- Optional Live Input Fields --}}
+        <div id="quick-form-container" class="hidden p-5 border-b border-slate-100" style="background:#f8faff;">
+            <p class="text-xs text-slate-500 mb-3">
+                <strong class="text-slate-700">Form Pengisian Cepat</strong> —
+                Ketik data Anda di bawah untuk mengisi template secara otomatis.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                @php
+                $fields = [
+                    ['id'=>'input_name',    'label'=>'Nama Lengkap',             'placeholder'=>'Contoh: Muhammad Ali'],
+                    ['id'=>'input_nim',     'label'=>'NIM (Mahasiswa Polindra)', 'placeholder'=>'Contoh: 2201001 / -'],
+                    ['id'=>'input_major',   'label'=>'Jurusan / Prodi',          'placeholder'=>'Contoh: Teknik Informatika'],
+                    ['id'=>'input_class',   'label'=>'Kelas',                    'placeholder'=>'Contoh: D4-RPL-1A / -'],
+                    ['id'=>'input_birth',   'label'=>'Tempat, Tanggal Lahir',    'placeholder'=>'Contoh: Indramayu, 15 Jan 2004'],
+                    ['id'=>'input_phone',   'label'=>'No. WhatsApp Aktif',       'placeholder'=>'Contoh: 081234567890'],
+                    ['id'=>'input_belt',    'label'=>'Tingkatan Sabuk',          'placeholder'=>'Contoh: Pemula / Putih / Kuning'],
+                ];
+                @endphp
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Nama Lengkap</label>
-                    <input type="text" id="input_name" oninput="updateMessagePreview()" placeholder="Contoh: Muhammad Ali"
-                        class="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">NIM (Bila Mahasiswa Polindra)</label>
-                    <input type="text" id="input_nim" oninput="updateMessagePreview()" placeholder="Contoh: 2201001 / -"
-                        class="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Jurusan / Program Studi</label>
-                    <input type="text" id="input_major" oninput="updateMessagePreview()" placeholder="Contoh: Teknik Informatika"
-                        class="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Kelas</label>
-                    <input type="text" id="input_class" oninput="updateMessagePreview()" placeholder="Contoh: D4-RPL-1A / -"
-                        class="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Tempat, Tanggal Lahir</label>
-                    <input type="text" id="input_birth" oninput="updateMessagePreview()" placeholder="Contoh: Indramayu, 15 Januari 2004"
-                        class="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary">
-                </div>
+                @foreach($fields as $f)
+                    <div>
+                        <label class="block text-[11px] font-semibold text-slate-600 mb-1">{{ $f['label'] }}</label>
+                        <input type="text" id="{{ $f['id'] }}" oninput="updateMessagePreview()"
+                               placeholder="{{ $f['placeholder'] }}"
+                               class="w-full px-3 py-2 text-xs rounded-lg border border-slate-200 bg-white focus:outline-none transition"
+                               style="color:#1e293b;"
+                               onfocus="this.style.borderColor='#1a56c9';this.style.boxShadow='0 0 0 3px rgba(26,86,201,0.1)'"
+                               onblur="this.style.borderColor='';this.style.boxShadow=''">
+                    </div>
+                @endforeach
+
                 <div>
                     <label class="block text-[11px] font-semibold text-slate-600 mb-1">Jenis Kelamin</label>
                     <select id="input_gender" onchange="updateMessagePreview()"
-                        class="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary">
+                            class="w-full px-3 py-2 text-xs rounded-lg border border-slate-200 bg-white focus:outline-none transition"
+                            style="color:#1e293b;"
+                            onfocus="this.style.borderColor='#1a56c9';this.style.boxShadow='0 0 0 3px rgba(26,86,201,0.1)'"
+                            onblur="this.style.borderColor='';this.style.boxShadow=''">
                         <option value="">-- Pilih Jenis Kelamin --</option>
-                        <option value="Laki-laki">Laki-laki</option>
-                        <option value="Perempuan">Perempuan</option>
+                        <option>Laki-laki</option>
+                        <option>Perempuan</option>
                     </select>
                 </div>
-                <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">No. WhatsApp Aktif</label>
-                    <input type="text" id="input_phone" oninput="updateMessagePreview()" placeholder="Contoh: 081234567890"
-                        class="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-semibold text-slate-600 mb-1">Tingkatan Sabuk Saat Ini</label>
-                    <input type="text" id="input_belt" oninput="updateMessagePreview()" placeholder="Contoh: Pemula / Sabuk Putih / Kuning"
-                        class="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary">
-                </div>
+
                 <div class="sm:col-span-2">
                     <label class="block text-[11px] font-semibold text-slate-600 mb-1">Alamat Lengkap / Domisili</label>
-                    <input type="text" id="input_address" oninput="updateMessagePreview()" placeholder="Contoh: Jl. Mayor Dasuki No. 12, Indramayu"
-                        class="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-brand-primary">
+                    <input type="text" id="input_address" oninput="updateMessagePreview()"
+                           placeholder="Contoh: Jl. Mayor Dasuki No. 12, Indramayu"
+                           class="w-full px-3 py-2 text-xs rounded-lg border border-slate-200 bg-white focus:outline-none transition"
+                           style="color:#1e293b;"
+                           onfocus="this.style.borderColor='#1a56c9';this.style.boxShadow='0 0 0 3px rgba(26,86,201,0.1)'"
+                           onblur="this.style.borderColor='';this.style.boxShadow=''">
                 </div>
             </div>
         </div>
 
-        <!-- Message Body Preview Box -->
-        <div class="p-5 space-y-4">
+        {{-- Message Preview --}}
+        <div class="p-5 flex flex-col gap-4">
+            {{-- Subject --}}
             <div>
                 <div class="flex items-center justify-between mb-1.5">
-                    <label class="text-xs font-bold text-slate-700 uppercase tracking-wider">Subjek Email:</label>
-                    <span class="text-[11px] text-slate-400">Otomatis Terisi</span>
+                    <label class="text-xs font-bold text-slate-600 uppercase tracking-wider">Subjek Email</label>
+                    <span class="text-[10px] text-slate-400">Otomatis Terisi</span>
                 </div>
-                <div class="px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-800 font-mono" id="subject-preview">
+                <div id="subject-preview"
+                     class="px-3.5 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-xs font-mono text-slate-700">
                     Pendaftaran Anggota Baru Karate Polindra - [Nama Anda]
                 </div>
             </div>
 
+            {{-- Body --}}
             <div>
                 <div class="flex items-center justify-between mb-1.5">
-                    <label class="text-xs font-bold text-slate-700 uppercase tracking-wider">Pratinjau Isi Pesan:</label>
+                    <label class="text-xs font-bold text-slate-600 uppercase tracking-wider">Isi Pesan</label>
                     <button type="button" onclick="copyMessageTemplate()" id="copy-btn-top"
-                        class="inline-flex items-center gap-1 text-xs font-bold text-brand-primary hover:text-brand-secondary transition-colors">
+                            class="inline-flex items-center gap-1 text-xs font-bold transition-colors link-ao hover:underline underline-offset-2 cursor-pointer">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                         </svg>
-                        <span id="copy-btn-text">Salin Teks Pesan</span>
+                        <span id="copy-btn-text">Salin Teks</span>
                     </button>
                 </div>
-                <div class="relative">
-                    <textarea id="message-body" rows="12" readonly
-                        class="w-full p-4 rounded-xl bg-slate-900 text-slate-100 font-mono text-xs leading-relaxed border border-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-primary resize-none selection:bg-brand-primary selection:text-white"></textarea>
-                </div>
+                <textarea id="message-body" rows="11" readonly
+                          class="w-full p-4 rounded-xl font-mono text-xs leading-relaxed resize-none focus:outline-none border border-slate-800"
+                          style="background:#06080f;color:#c8d3ef;selection:background:#c8102e;"></textarea>
             </div>
         </div>
 
-        <!-- Action Buttons Section -->
-        <div class="p-5 bg-slate-50/80 border-t border-slate-200/80 space-y-3">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <!-- Direct Gmail Web Compose Button -->
+        {{-- Action buttons --}}
+        <div class="px-5 pb-5 pt-1 flex flex-col gap-2.5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {{-- Gmail --}}
                 <a id="btn-gmail-compose" href="#" target="_blank" rel="noopener noreferrer"
-                    class="flex items-center justify-center gap-2.5 py-3.5 px-4 rounded-xl bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-600 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all duration-200">
-                    <svg class="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24">
+                   class="flex items-center justify-center gap-2.5 py-3 px-4 rounded-xl text-white font-bold text-sm transition-all duration-200 shadow-sm"
+                   style="background:#c8102e;"
+                   onmouseover="this.style.background='#e0132f';this.style.boxShadow='0 6px 20px rgba(200,16,46,0.3)';this.style.transform='translateY(-1px)'"
+                   onmouseout="this.style.background='#c8102e';this.style.boxShadow='';this.style.transform=''">
+                    <svg class="fill-current shrink-0" width="18" height="18" viewBox="0 0 24 24">
                         <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.272H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
                     </svg>
-                    <span>Buka Langsung di Gmail</span>
+                    Buka di Gmail
                 </a>
 
-                <!-- Fallback Mailto Client Button -->
+                {{-- Mailto --}}
                 <a id="btn-mailto-compose" href="#"
-                    class="flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all duration-200">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                   class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-white font-bold text-sm transition-all duration-200 shadow-sm"
+                   style="background:#1a56c9;"
+                   onmouseover="this.style.background='#1d4ed8';this.style.boxShadow='0 6px 20px rgba(26,86,201,0.3)';this.style.transform='translateY(-1px)'"
+                   onmouseout="this.style.background='#1a56c9';this.style.boxShadow='';this.style.transform=''">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
-                    <span>Buka di Aplikasi Email</span>
+                    Buka di Aplikasi Email
                 </a>
             </div>
 
-            <!-- Copy Action Full Width -->
+            {{-- Copy full --}}
             <button type="button" onclick="copyMessageTemplate()"
-                class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-semibold text-xs border border-slate-300 shadow-sm transition-all">
-                <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    class="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 font-semibold text-xs transition-all cursor-pointer">
+                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                 </svg>
-                <span id="copy-btn-text-full">Salin Format Teks ke Papan Klip (Clipboard)</span>
+                <span id="copy-btn-text-full">Salin Format Teks ke Clipboard</span>
             </button>
         </div>
     </div>
 
-    <!-- Important Notice Box -->
-    <div class="rounded-2xl bg-amber-50 border border-amber-200/80 p-4 sm:p-5 flex items-start gap-3.5">
-        <div class="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 mt-0.5">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-        </div>
-        <div class="space-y-1">
-            <h4 class="text-xs sm:text-sm font-bold text-amber-900">Catatan Penting Pendaftaran:</h4>
-            <ul class="text-xs text-amber-800 space-y-1 list-disc list-inside leading-relaxed">
-                <li>Pastikan email pengirim yang Anda gunakan adalah email aktif, karena tautan aktivasi akun akan dikirimkan ke alamat tersebut.</li>
-                <li>Proses pembuatan akun oleh Admin biasanya memerlukan waktu <strong>1x24 jam</strong> pada hari kerja.</li>
-                <li>Jika sudah menerima email aktivasi, buka tautan tersebut untuk mengatur kata sandi awal akun Anda.</li>
+    {{-- Notice --}}
+    <div class="rounded-2xl border border-amber-200/90 bg-amber-50/90 p-4.5 flex items-start gap-3.5 shadow-2xs">
+        <div class="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0 mt-0.5 text-sm font-bold shadow-xs">!</div>
+        <div>
+            <h4 class="text-xs font-bold text-amber-900">Catatan Penting:</h4>
+            <ul class="text-xs text-amber-800 space-y-1 list-disc list-inside leading-relaxed mt-1">
+                <li>Gunakan email aktif — tautan aktivasi dikirim ke sana.</li>
+                <li>Proses pembuatan akun biasanya <strong>1×24 jam</strong> hari kerja.</li>
+                <li>Buka tautan aktivasi di email untuk mengatur password awal.</li>
             </ul>
         </div>
     </div>
 
-    <!-- Navigation Footer -->
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-200 text-xs">
-        <a href="{{ route('landing') }}" class="inline-flex items-center gap-1 text-slate-500 hover:text-slate-800 transition-colors font-medium">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    {{-- Navigation footer --}}
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-slate-200 text-xs">
+        <a href="{{ route('landing') }}" id="back-to-landing"
+           class="inline-flex items-center gap-1.5 text-slate-400 hover:text-slate-700 transition-colors font-medium">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
             </svg>
             Kembali ke Beranda
         </a>
-
-        <div class="text-slate-500">
-            Sudah memiliki akun?
-            <a href="{{ route('login') }}" class="font-bold text-brand-primary hover:text-brand-secondary transition-colors underline-offset-2 hover:underline ml-1">
-                Masuk ke Sistem &rarr;
+        <div class="text-slate-400">
+            Sudah punya akun?
+            <a href="{{ route('login') }}" id="goto-login-link"
+               class="font-bold link-ao hover:underline underline-offset-2 transition-colors ml-1">
+                Masuk ke Sistem →
             </a>
         </div>
     </div>
+
 </div>
 
-<!-- Copy Notification Toast -->
-<div id="copy-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-    <div class="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2.5 border border-slate-700">
-        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+{{-- Toast --}}
+<div id="copy-toast" class="fixed bottom-6 right-6 z-50 pointer-events-none"
+     style="opacity:0;transform:translateY(20px);transition:all 0.3s cubic-bezier(0.16,1,0.3,1);">
+    <div class="flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-2xl border"
+         style="background:#06080f;border-color:rgba(255,255,255,0.08);">
+        <svg class="w-4 h-4" fill="none" stroke="#22c55e" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
         </svg>
-        <span class="text-xs font-semibold">Format pesan berhasil disalin ke clipboard!</span>
+        <span class="text-xs font-semibold text-white">Format berhasil disalin!</span>
     </div>
 </div>
 
 <script>
-    const targetEmail = "karatepolindra@gmail.com";
+const targetEmail = "karatepolindra@gmail.com";
 
-    function generateMessageText() {
-        const nameVal = document.getElementById('input_name')?.value.trim() || '[Nama Anda]';
-        const nimVal = document.getElementById('input_nim')?.value.trim() || '[NIM Anda / - jika Umum]';
-        const majorVal = document.getElementById('input_major')?.value.trim() || '[Jurusan & Program Studi / -]';
-        const classVal = document.getElementById('input_class')?.value.trim() || '[Kelas / -]';
-        const birthVal = document.getElementById('input_birth')?.value.trim() || '[Kota Lahir, Tanggal-Bulan-Tahun]';
-        const genderVal = document.getElementById('input_gender')?.value || '[Laki-laki / Perempuan]';
-        const phoneVal = document.getElementById('input_phone')?.value.trim() || '[08xxxxxxxxxx]';
-        const beltVal = document.getElementById('input_belt')?.value.trim() || '[Pemula / Putih / Kuning / Hijau / Biru / Coklat / Hitam]';
-        const addressVal = document.getElementById('input_address')?.value.trim() || '[Alamat Lengkap Tempat Tinggal / Domisili]';
+function generateMessageText() {
+    const v = (id, fallback) => document.getElementById(id)?.value.trim() || fallback;
+    const nameVal    = v('input_name',    '[Nama Anda]');
+    const nimVal     = v('input_nim',     '[NIM / - jika Umum]');
+    const majorVal   = v('input_major',   '[Jurusan & Program Studi / -]');
+    const classVal   = v('input_class',   '[Kelas / -]');
+    const birthVal   = v('input_birth',   '[Kota, Tanggal-Bulan-Tahun]');
+    const genderVal  = document.getElementById('input_gender')?.value || '[Laki-laki / Perempuan]';
+    const phoneVal   = v('input_phone',   '[08xxxxxxxxxx]');
+    const beltVal    = v('input_belt',    '[Pemula / Putih / Kuning / Hijau / Biru / Coklat / Hitam]');
+    const addressVal = v('input_address', '[Alamat Lengkap / Domisili]');
 
-        const subject = `Pendaftaran Anggota Baru Karate Polindra - ${nameVal}`;
-
-        const body = `Halo Admin Karate Polindra,
+    const subject = `Pendaftaran Anggota Baru Karate Polindra - ${nameVal}`;
+    const body = `Halo Admin Karate Polindra,
 
 Saya bermaksud untuk mendaftar sebagai anggota baru Karate Polindra dan memohon pembuatan akun pada sistem Karate Tracker. Berikut adalah data diri saya:
 
-• Nama Lengkap: ${nameVal}
-• NIM (Mahasiswa Polindra): ${nimVal}
-• Jurusan / Program Studi: ${majorVal}
-• Kelas: ${classVal}
-• Tempat, Tanggal Lahir: ${birthVal}
-• Jenis Kelamin: ${genderVal}
-• No. WhatsApp / HP Aktif: ${phoneVal}
-• Alamat Lengkap / Domisili: ${addressVal}
-• Tingkatan Sabuk Saat Ini: ${beltVal}
-• Pengalaman / Riwayat Karate (jika ada): [Nama Dojo/Perguruan Sebelumnya / Pemula]
+• Nama Lengkap              : ${nameVal}
+• NIM (Mahasiswa Polindra)  : ${nimVal}
+• Jurusan / Program Studi   : ${majorVal}
+• Kelas                     : ${classVal}
+• Tempat, Tanggal Lahir     : ${birthVal}
+• Jenis Kelamin             : ${genderVal}
+• No. WhatsApp / HP Aktif   : ${phoneVal}
+• Alamat Lengkap / Domisili : ${addressVal}
+• Tingkatan Sabuk Saat Ini  : ${beltVal}
+• Pengalaman Karate (jika ada): [Nama Dojo/Perguruan / Pemula]
 
-Catatan / Pesan Tambahan:
-[Tuliskan catatan tambahan di sini jika ada]
+Catatan Tambahan:
+[Tuliskan jika ada]
 
-Demikian data pendaftaran ini saya sampaikan dengan sebenar-benarnya. Mohon bantuannya untuk proses pendaftaran akun saya.
+Demikian data ini saya sampaikan dengan sebenar-benarnya.
 Terima kasih.
 
 Salam hormat,
 ${nameVal}`;
+    return { subject, body, nameVal };
+}
 
-        return { subject, body, nameVal };
-    }
+function updateMessagePreview() {
+    const { subject, body } = generateMessageText();
+    document.getElementById('message-body').value = body;
+    document.getElementById('subject-preview').innerText = subject;
 
-    function updateMessagePreview() {
-        const { subject, body } = generateMessageText();
-        
-        // Update textarea preview
-        document.getElementById('message-body').value = body;
-        document.getElementById('subject-preview').innerText = subject;
+    const enc = s => encodeURIComponent(s);
+    const gmailUrl  = `https://mail.google.com/mail/?view=cm&fs=1&to=${enc(targetEmail)}&su=${enc(subject)}&body=${enc(body)}`;
+    const mailtoUrl = `mailto:${targetEmail}?subject=${enc(subject)}&body=${enc(body)}`;
+    document.getElementById('btn-gmail-compose').href  = gmailUrl;
+    document.getElementById('btn-mailto-compose').href = mailtoUrl;
+}
 
-        // Update URLs
-        const encodedSubject = encodeURIComponent(subject);
-        const encodedBody = encodeURIComponent(body);
+function toggleQuickForm() {
+    const el   = document.getElementById('quick-form-container');
+    const text = document.getElementById('toggle-form-text');
+    const open = el.classList.toggle('hidden');
+    text.innerText = open ? 'Isi Data Langsung (Opsional)' : 'Sembunyikan Form';
+}
 
-        // Gmail compose web link
-        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(targetEmail)}&su=${encodedSubject}&body=${encodedBody}`;
-        document.getElementById('btn-gmail-compose').setAttribute('href', gmailUrl);
-
-        // Mailto link
-        const mailtoUrl = `mailto:${targetEmail}?subject=${encodedSubject}&body=${encodedBody}`;
-        document.getElementById('btn-mailto-compose').setAttribute('href', mailtoUrl);
-    }
-
-    function toggleQuickForm() {
-        const container = document.getElementById('quick-form-container');
-        const textSpan = document.getElementById('toggle-form-text');
-        if (container.classList.contains('hidden')) {
-            container.classList.remove('hidden');
-            textSpan.innerText = 'Sembunyikan Form';
-        } else {
-            container.classList.add('hidden');
-            textSpan.innerText = 'Isi Data Langsung (Opsional)';
-        }
-    }
-
-    function copyMessageTemplate() {
-        const { body } = generateMessageText();
-        navigator.clipboard.writeText(body).then(() => {
-            showToast();
-        }).catch(() => {
-            // Fallback
-            const textarea = document.getElementById('message-body');
-            textarea.select();
+function copyMessageTemplate() {
+    const { body } = generateMessageText();
+    navigator.clipboard.writeText(body)
+        .then(showToast)
+        .catch(() => {
+            const el = document.getElementById('message-body');
+            el.select();
             document.execCommand('copy');
             showToast();
         });
-    }
+}
 
-    function showToast() {
-        const toast = document.getElementById('copy-toast');
-        toast.classList.remove('translate-y-20', 'opacity-0');
-        toast.classList.add('translate-y-0', 'opacity-100');
+function showToast() {
+    const t = document.getElementById('copy-toast');
+    t.style.opacity = '1';
+    t.style.transform = 'translateY(0)';
+    setTimeout(() => {
+        t.style.opacity = '0';
+        t.style.transform = 'translateY(20px)';
+    }, 3000);
+}
 
-        setTimeout(() => {
-            toast.classList.remove('translate-y-0', 'opacity-100');
-            toast.classList.add('translate-y-20', 'opacity-0');
-        }, 3000);
-    }
-
-    // Initialize on page load
-    document.addEventListener('DOMContentLoaded', () => {
-        updateMessagePreview();
-    });
+document.addEventListener('DOMContentLoaded', updateMessagePreview);
 </script>
 @endsection
